@@ -22,7 +22,7 @@ const meta: Meta<StoryProps> = {
             },
         },
         intro: {
-            options: ['primaryStyle', 'notAvail'],
+            options: ['primaryStyle', 'hidden'],
             control: {
                 type: 'select',
             },
@@ -44,9 +44,6 @@ export const Primary: Story = {
     },
     render: ({...args}) => {
         return <NavBar 
-            logo="primaryStyle" 
-            intro="primaryStyle"
-            parent="primaryStyle"  
             {...args}
         />
     },

@@ -4,34 +4,38 @@ import rightBracket from '../assets/rightBracket.svg';
 import leftBracket from '../assets/leftBracket.svg';
 import Image from "next/image";
 
-type ButtonProps = {
+type NavProps = {
+  onClick?: () => void;
   logo: "primaryStyle";
-  intro: "primaryStyle";
+  intro: "primaryStyle" | 'hidden';
   parent: "primaryStyle";
   logoText?: React.ReactNode;
   introText?: React.ReactNode;
 };
 
-export const NavBar = ({  
+export const 
+NavBar = ({  
   logo = "primaryStyle", 
-  intro = "primaryStyle", 
+  intro = "hidden", 
   parent = "primaryStyle",
   logoText = 'SKINSTRIC',
-  introText = 'INTRO'
-}: ButtonProps) => {
+  introText = 'INTRO',
+}: NavProps) => {
   const parentClasses = {
-    primaryStyle: "w-full h-16 flex justify-start items-center p-4",
+    primaryStyle: "w-full h-16 flex justify-start items-center",
   };
   const logoClasses = {
-    primaryStyle: "text-black font-roobert font-semibold text-sm",
+    primaryStyle: "tracking-tighter text-black font-roobert font-semibold text-xs",
   };
   const introClasses = {
     primaryStyle: "ml-7 flex justify-center items-center text-gray-900 opacity-60",
+    hidden: 'hidden'
   };
 
   return (
     <nav className={`${parentClasses[parent]}`}>
-      <button className={`${logoClasses[logo]}`} >
+      <button className={`
+        ${logoClasses[logo]}`} >
         {logoText}
       </button>
       
