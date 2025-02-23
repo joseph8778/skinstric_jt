@@ -1,12 +1,12 @@
-import { NavBar } from '@/components/NavBar' 
+import { Header } from '@/components/Header' 
 import { ComponentProps } from 'react'
 import {fn} from '@storybook/test'
 import { Meta, StoryObj } from '@storybook/react'
 
-type StoryProps = ComponentProps<typeof NavBar> & {innerText: string;};
+type StoryProps = ComponentProps<typeof Header> & {innerText: string;};
 
 const meta: Meta<StoryProps> = {
-    component: NavBar,
+    component: Header,
     tags: ['autodocs'],
     argTypes: {
         parent: {
@@ -22,7 +22,7 @@ const meta: Meta<StoryProps> = {
             },
         },
         intro: {
-            options: ['primaryStyle', 'hidden'],
+            options: ['visible', 'hidden'],
             control: {
                 type: 'select',
             },
@@ -43,7 +43,7 @@ export const Primary: Story = {
         introText: "INTRO",
     },
     render: ({...args}) => {
-        return <NavBar 
+        return <Header 
             {...args}
         />
     },

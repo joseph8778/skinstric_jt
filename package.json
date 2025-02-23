@@ -11,6 +11,8 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "axios": "^1.7.9",
     "gsap": "^3.12.7",
     "lottie-web": "^5.12.2",
     "next": "15.1.7",

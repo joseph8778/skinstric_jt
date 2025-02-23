@@ -24,6 +24,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+<script 
+   src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyCj8b0YdfUkSZC-MobmBTI3onFqJ5JHPRw&libraries=places`} 
+   async 
+   defer
+></script>
+
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
