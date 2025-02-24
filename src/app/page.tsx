@@ -9,6 +9,7 @@ import { Input } from "@/components/Input";
 import { IntroSquare } from "@/components/IntroSquare";
 import { useState } from "react";
 import axios from "axios";
+import { LocInput } from "@/components/LocInput";
 
 
 // API LINK: https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseOne
@@ -114,7 +115,7 @@ flex justify-center items-center">
           </div>
           
           {page === 2 ? 
-            (<Input sendData = {sendData} value = {locationInput} setInput={setLocationInput} pageNum = {page} setPage={setPage} focusText = 'Where are you from?' topText = 'CLICK TO TYPE' placeholderText = 'Where are you from?'/>)
+            (<LocInput sendData = {sendData} value = {locationInput} setInput={setLocationInput} pageNum = {page} setPage={setPage} focusText = 'Where are you from?' topText = 'CLICK TO TYPE' placeholderText = 'Where are you from?'/>)
           : 
             (<Input setInput = {setNameInput} value = {nameInput} pageNum = {page} setPage = {setPage}  focusText = 'INTRODUCE YOURSELF' topText = 'CLICK TO TYPE' placeholderText = 'Introduce Yourself' />)
           }
