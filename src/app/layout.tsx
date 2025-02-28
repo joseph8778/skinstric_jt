@@ -26,14 +26,14 @@ export default function RootLayout({
     <html lang="en">
       <head>
 <script 
-   src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyCj8b0YdfUkSZC-MobmBTI3onFqJ5JHPRw&libraries=places`} 
+   src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyCj8b0YdfUkSZC-MobmBTI3onFqJ5JHPRw&libraries=places&loading=async`} 
    async 
    defer
 ></script>
 
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}
       >
         {children}
       </body>
