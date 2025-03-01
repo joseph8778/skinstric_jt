@@ -58,7 +58,9 @@ export const ExitPopup = ({
 
   return (
     <div ref={popupRef} className="exit__popup absolute top-[48px] left-[32px]">
-      <div className="w-[288px] h-[104px] flex flex-col shadow-lg relative bg-[#1A1B1C]">
+      <div className=" h-[104px] flex flex-col shadow-lg relative bg-[#1A1B1C]"
+      style={{ width: "clamp(200px, 50vw, 288px)" }}
+      >
         <div className="p-3 text-[12px] font-[500] text-[rgb(252,252,252)] w-[90%] h-[65%] text-start">
           {text.toUpperCase()}
         </div>

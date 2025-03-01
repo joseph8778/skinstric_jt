@@ -35,7 +35,7 @@ export const Popup = ({
       { width: "0%", duration: displayTime, ease: "linear" },
       "-=0.2",
     )
-    .add(hidePopup)
+    // .add(hidePopup)
   }, [popupType]);
   
   const hidePopup = () => {
@@ -66,7 +66,9 @@ export const Popup = ({
       <div
         ref={popupRef}
         onClick={() => {hidePopup(); }}
-        className="w-[365px] h-[82px] p-2 border-t-4 border-black flex items-center shadow-lg relative bg-white cursor-pointer overflow-hidden"
+        className="
+ h-[82px] p-2 border-t-4 border-black flex items-center shadow-lg relative bg-white cursor-pointer overflow-hidden"
+ style={{ width: "clamp(250px, 50vw, 365px)" }}
       >
         <div
           className="w-8 h-8 -rotate-45 bg-black relative ml-2"
@@ -83,3 +85,5 @@ export const Popup = ({
     </div>
   );
 };
+
+

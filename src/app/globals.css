@@ -31,6 +31,10 @@ body {
   box-sizing: border-box;
 }
 
+h1, h2, h3, h4, p {
+  font-family: 'Roobert TRIAL';
+}
+
 .main_input::placeholder {
   transition: opacity 0.1s ease-in-out;
 }
