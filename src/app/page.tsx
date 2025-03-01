@@ -5,15 +5,14 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { NavBtn } from "@/components/NavBtn";
 import { BgSquare } from "@/components/BgSquare";
-import { Input } from "@/components/Input";
+import { NameInput } from "@/components/NameInput";
 import { useState } from "react";
 import axios from "axios";
 import { LocInput } from "@/components/LocInput";
-import { IntroAnim } from "@/components/IntroAnim";
+import { IntroSqrAnim } from "@/components/IntroSqrAnim";
 import { Popup } from "@/components/Popup";
 
 export default function Home() {
-  
   const [nameInput, setNameInput] = useState("");
   const [locationInput, setLocationInput] = useState("");
   const [page, setPage] = useState(1);
@@ -25,18 +24,25 @@ export default function Home() {
 
   // INTRO ANIMATIONS
   useGSAP(() => {
-    gsap.fromTo(
-      ".textMount",
-      { clipPath: "inset(0% 50% 0% 50%)" },
-      { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, delay: 5 }
-    );
+    const context = gsap.context(() => {
 
-    gsap.from(".textMount2", { y: "100%", duration: 0.2, delay: 5 });
-    gsap.from(".buttonMountL", { x: "25%", opacity: 0, duration: 1, delay: 5 });
+      gsap.fromTo(
+        ".textMount",
+        { clipPath: "inset(0% 50% 0% 50%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, delay: 5 }
+      );
+      
+      gsap.from(".textMount2", { y: "100%", duration: 0.2, delay: 5 });
+      gsap.from(".buttonMountL", { x: "25%", opacity: 0, duration: 1, delay: 5 });
+    })
+      
+    return () => {
+      context.revert()
+    }
   });
 
   async function sendData(locationParam: string) {
-    setShowPopup({visible: true, popupType: 'loadingData', popupMsg: ''})
+    setShowPopup({visible: true, popupType: 'loading_Data', popupMsg: ''})
     try {
       const response = await axios.post(
         "https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseOne",
@@ -48,7 +54,6 @@ export default function Home() {
     catch (error: unknown) {
       console.error("Error sending data:", error);
       setShowPopup({visible: true, popupType: '', popupMsg: `Error Sending Data ${error}` })
-
     }
   }
 
@@ -56,19 +61,23 @@ export default function Home() {
     <>
       {showPopup.visible && (
         <Popup
-        popupMsg={showPopup.popupMsg}
-        popupType = {showPopup.popupType}  
-        setShowPopup={(value) => setShowPopup((prev) => ({...prev, visible: value}))} 
-        displayTime={5} />
+          popupMsg={showPopup.popupMsg}
+          popupType={showPopup.popupType}  
+          setShowPopup={(value) => setShowPopup((prev) => ({...prev, visible: value}))} 
+          displayTime={5} 
+        />
       )}
 
-      <IntroAnim 
-      linesAnimDuration={3} 
-      fadeOutDuration={1} />
+      <IntroSqrAnim 
+        linesAnimDuration={3} 
+        fadeOutDuration={1} 
+        aria-label="Introduction Animation"
+      />
 
       <div
         id="formPage"
         className="w-screen h-screen flex flex-col overflow-hidden px-8"
+        aria-labelledby="formPageTitle"
       >
         <Header
           intro="hidden"
@@ -76,10 +85,11 @@ export default function Home() {
           logoText="SKINSTRIC"
           logo="primaryStyle"
           parent="primaryStyle"
+          aria-label="Website Header"
         />
         <main className="flex-grow flex flex-col justify-center items-center relative">
           <div className="overflow-hidden absolute top-6 left-0 w-fit h-fit">
-            <h2 className="font-roobert font-bold text-[clamp(.65rem,1vw,0.75rem)] leading-none textMount2">
+            <h2 className="font-roobert font-bold text-[clamp(.65rem,1vw,0.75rem)] leading-none textMount2" id="formPageTitle">
               TO START ANALYSIS
             </h2>
           </div>
@@ -95,9 +105,10 @@ export default function Home() {
               focusText="Where are you from?"
               topText="CLICK TO TYPE"
               placeholderText="Where are you from?"
+              aria-label="Location Input"
             />
           ) : (
-            <Input
+            <NameInput
               setShowPopup={(bool, popType) => setShowPopup({visible: bool, popupType: popType, popupMsg: ''})}
               setInput={setNameInput}
               value={nameInput}
@@ -106,6 +117,7 @@ export default function Home() {
               focusText="INTRODUCE YOURSELF"
               topText="CLICK TO TYPE"
               placeholderText="Introduce Yourself"
+              aria-label="Name Input"
             />
           )}
 
@@ -115,9 +127,21 @@ export default function Home() {
         </main>
 
         <div className="footer w-full flex justify-between pb-10 px-0">
-          <NavBtn showGlobPop={(bool) => setShowPopup((prev) => ({...prev, visible: bool}))} pageNum={page} setPage={setPage} direction="left" />
+          <NavBtn 
+            showGlobPop={(bool) => setShowPopup((prev) => ({...prev, visible: bool}))} 
+            pageNum={page} 
+            setPage={setPage} 
+            direction="left"
+            aria-label="Previous page button"
+          />
           {nameInput.length > 0 && (
-          <NavBtn showGlobPop={(bool) => setShowPopup((prev) => ({...prev, visible: bool}))}  pageNum={page} setPage={setPage} direction="right" />
+            <NavBtn 
+              showGlobPop={(bool) => setShowPopup((prev) => ({...prev, visible: bool}))}  
+              pageNum={page} 
+              setPage={setPage} 
+              direction="right"
+              aria-label="Next page button"
+            />
           )}
         </div>
       </div>

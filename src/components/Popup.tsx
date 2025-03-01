@@ -52,14 +52,14 @@ export const Popup = ({
     location_error: "Select from location dropdown for collecting weather data",
     name_error: 'Please enter a valid name.',
     number_error: 'No numbers allowed in name',
-    loadingData: 'Adding you to our list...'
+    loading_Data: 'Adding you to our list...'
   }
 
   const message = popupMsg || popupText[popupType] || popupText['location_error']; 
 
   return (
     <div
-      className="popup absolute top-5 right-5 z-10"
+      className="popup overflow-hidden absolute p-5 top-0 right-0 z-10"
       onMouseEnter={() => timeline.current?.pause()}
       onMouseLeave={() => timeline.current?.resume()}
     >
@@ -75,7 +75,7 @@ export const Popup = ({
             X
           </div>
         </div>
-        <div className="text-[15px] font-medium text-gray-500 w-3/5 max-w-full max-h-full text-start ml-8 text-ellipsis">
+        <div className="text-[15px] font-medium text-gray-500 w-3/5 max-w-full max-h-full text-start ml-8 text-ellipsis" aria-live="assertive">
           {message}
         </div>
         <div className="progressBar absolute w-full h-1 bg-gray-200 bottom-0 left-0"></div>

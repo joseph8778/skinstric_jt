@@ -19,6 +19,7 @@ Header = ({
   logoText = 'SKINSTRIC',
   introText = 'INTRO',
 }: NavProps) => {
+  
   const parentClasses = {
     primaryStyle: "w-full h-16 flex justify-start items-center",
   };

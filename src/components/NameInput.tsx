@@ -12,8 +12,8 @@ type inputProps = {
  
 }
 
-export const Input = ({
-  value,
+export const NameInput = ({
+  value = '',
   setInput,
   setPage,
   setShowPopup,
@@ -22,7 +22,6 @@ export const Input = ({
   focusText = 'INTRODUCE YOURSELF',
   topText = 'CLICK TO TYPE'
 }: inputProps) => {
-
   
   const [isFocused, setIsFocused] = useState(false);
   
@@ -44,12 +43,10 @@ export const Input = ({
   return (
     <div className="group text-center pb-10">
       {isFocused || value.length > 0 ? ( <p className="font-roobert text-[clamp(.65rem,2vw,0.875rem)] opacity-35 ">{focusText}</p>) : (<p className="font-roobert text-[clamp(.65rem,2vw,0.875rem)] opacity-35 ">{topText}</p>)}
-      
-    
 
       <input
         type="text"
-        placeholder={isFocused && pageNum === 2 ? 'Enter a location' : placeholderText}
+        placeholder={placeholderText}
         style={{ width: "clamp(16rem, 90vw, 24rem)" }}
         onChange={(event) => { setInput(event.target.value) }}
         onKeyDown={handleKeyDown}

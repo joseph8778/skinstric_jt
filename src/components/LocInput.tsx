@@ -13,7 +13,7 @@ type inputProps = {
 }
 
 export const LocInput = ({
-  value,
+  value = '',
   sendData,
   setInput,
   setShowPopup,
@@ -63,8 +63,7 @@ export const LocInput = ({
 
 
   return (
-    <>
-     
+    <> 
     <div id='inputContainer' className="group text-center pb-10">
     {isFocused || value.length > 0 ? ( <p className="font-roobert text-[clamp(.65rem,2vw,0.875rem)] opacity-35 ">{focusText}</p>) : (<p className="font-roobert text-[clamp(.65rem,2vw,0.875rem)] opacity-35 ">{topText}</p>)}
       <input

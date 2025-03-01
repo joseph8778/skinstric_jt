@@ -7,7 +7,6 @@
   --foreground: #171717;
 }
 
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -31,7 +30,6 @@ body {
 * {
   box-sizing: border-box;
 }
-
 
 .main_input::placeholder {
   transition: opacity 0.1s ease-in-out;

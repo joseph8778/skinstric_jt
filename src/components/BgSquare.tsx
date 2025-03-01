@@ -28,8 +28,6 @@ return (
         animationDuration: animationTime[size],
         backgroundSize: "1px 100%, 100% 1px, 1px 100%, 100% 1px"
     }} />
-
-      
 )}
 
 

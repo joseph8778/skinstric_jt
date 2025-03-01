@@ -1,13 +1,13 @@
-import { Input } from "@/components/Input";
+import { NameInput } from "@/components/NameInput";
 import { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps } from "react";
 
 
-type StoryProps = ComponentProps<typeof Input>;
+type StoryProps = ComponentProps<typeof NameInput>;
 
 
 const meta: Meta<StoryProps> = {
-  component: Input,
+  component: NameInput,
   tags: ['autodocs'],  
   argTypes: {
     focusText: { control: { type: 'text' } },
@@ -25,5 +25,7 @@ export const DefaultInput: Story = {
     focusText: 'INTRODUCE YOURSELF',
     topText: 'CLICK TO TYPE',
     placeholderText: 'Introduce Yourself',
+  }, render: ({...args}) => {
+    return <NameInput {...args} />
   }
 }

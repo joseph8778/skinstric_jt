@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 type PopupProps = {
   popupText?: string;
@@ -15,13 +16,19 @@ export const ExitPopup = ({
   const [text, setText] = useState(popupText);
   const [leaveState, setLeaveState] = useState(false);
 
-  useEffect(() => {
-    if (popupRef.current) {
-      gsap.fromTo(
-        popupRef.current,
-        { x: "-100%", opacity: 0 },
-        { x: "0%", opacity: 1, duration: 0.5, ease: "power3.out" }
-      );
+  useGSAP(() => {
+    const context = gsap.context(() => {
+      if (popupRef.current) {
+        gsap.fromTo(
+          popupRef.current,
+          { x: "-100%", opacity: 0 },
+          { x: "0%", opacity: 1, duration: 0.5, ease: "power3.out" }
+        );
+      }
+      
+    })
+    return () => {
+      context.revert()
     }
   }, []);
 
@@ -33,8 +40,9 @@ export const ExitPopup = ({
         delay: delayTime,
         duration: 0.5,
         ease: "power3.in",
-        onComplete: () => {setIsVisible(false)
-            showPopUp(false)
+        onComplete: () => {
+          setIsVisible(false)
+          showPopUp(false)
         },
       });
     }
