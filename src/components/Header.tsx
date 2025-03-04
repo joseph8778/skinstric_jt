@@ -1,12 +1,13 @@
 import rightBracket from '../assets/rightBracket.svg';
 import leftBracket from '../assets/leftBracket.svg';
 import Image from "next/image";
+import Link from 'next/link';
 
 type NavProps = {
   onClick?: () => void;
-  logo: "primaryStyle";
-  intro: "visible" | 'hidden';
-  parent: "primaryStyle";
+  logo?: "primaryStyle";
+  intro?: "visible" | 'hidden';
+  parent?: "primaryStyle";
   logoText?: React.ReactNode;
   introText?: React.ReactNode;
 };
@@ -32,11 +33,11 @@ Header = ({
   };
 
   return (
-    <nav className={`${parentClasses[parent]}`}>
-      <button className={`
+    <div className={`${parentClasses[parent]}`}>
+      <Link href='/' className={`
         ${logoClasses[logo]}`} >
         {logoText}
-      </button>
+      </Link>
       
       <button className={`${introClasses[intro]}`} >
         <Image src={leftBracket} alt="leftBracket" />
@@ -45,6 +46,6 @@ Header = ({
         </span>
         <Image src={rightBracket} alt="rightBracket" />
       </button>
-    </nav>
+    </div>
   );
 };

@@ -28,7 +28,22 @@ body {
 }
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+span {
+  font: 'Roobert TRIAL';
+}
+
+.section_container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 h1, h2, h3, h4, p {

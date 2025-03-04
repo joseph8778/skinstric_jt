@@ -35,7 +35,7 @@ export const Popup = ({
       { width: "0%", duration: displayTime, ease: "linear" },
       "-=0.2",
     )
-    // .add(hidePopup)
+    .add(hidePopup)
   }, [popupType]);
   
   const hidePopup = () => {

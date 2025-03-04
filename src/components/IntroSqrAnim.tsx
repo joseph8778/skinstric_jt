@@ -4,8 +4,8 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
 type introProps = {
-    linesAnimDuration: number,
-    fadeOutDuration: number,
+    linesAnimDuration?: number,
+    fadeOutDuration?: number,
 }
 
 export const IntroSqrAnim = ({
@@ -18,7 +18,7 @@ export const IntroSqrAnim = ({
             
             tl.to('.introSquare', {
                 duration: linesAnimDuration,
-                stagger: 0.25, 
+                stagger: 0.1, 
                 keyframes: [
                     { backgroundSize: "1px 0%, 0% 1px, 1px 0%, 0% 1px", duration: 0.75 },
                     { backgroundSize: "1px 100%, 0% 1px, 1px 0%, 0% 1px", duration: 0.75 },
