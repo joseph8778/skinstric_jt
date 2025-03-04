@@ -9,9 +9,9 @@ type squareProps = {
 
 export const BgSquare = ({size = 'small', customSize, spinSpeed, customOpacity}: squareProps) => {
     const squareType = {
-        big: '300px, 60vw, 440px',
-        medium: '260px, 50vw, 400px',
-        small: '220px, 40vw, 360px',
+        big: '260px, 60vw, 380px',
+        medium: '200px, 50vw, 340px',
+        small: '160px, 40vw, 300px',
     }
     const animationTime = {
         big: '140s',

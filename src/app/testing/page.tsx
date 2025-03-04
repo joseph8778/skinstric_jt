@@ -8,11 +8,13 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import FilePopup from "@/components/FilePopup";
+import { useState } from "react";
 
 export default function TestingPage() {
+    const [galleryPopup, setGalleryPopup] = useState(false);
     useGSAP(() => {
         const context = gsap.context(() => {
-    
+
           gsap.fromTo(
             ".textMount",
             { clipPath: "inset(0% 50% 0% 50%)" },
@@ -27,6 +29,8 @@ export default function TestingPage() {
           context.revert()
         }
       });
+
+
   return (
     <>
 <IntroSqrAnim/>
@@ -39,7 +43,7 @@ export default function TestingPage() {
     </header>
 <main className="flex-grow flex  justify-around items-center relative">
 
-{/* <FilePopup></FilePopup> */}
+{galleryPopup && <FilePopup setPopup={setGalleryPopup} />}
     <div className="overflow-hidden absolute top-6 left-0 w-fit h-fit">
         <h2 className="font-roobert font-bold text-[clamp(.65rem,1vw,0.75rem)] leading-none textMount2" id="formPageTitle">
             TO START ANALYSIS
@@ -49,8 +53,8 @@ export default function TestingPage() {
             <span>TO GREATLY SPEED UP THE PROCESS</span>
         </h2>
     </div>
-    <ScanBtn scanType="Camera"/>
-    <ScanBtn scanType="Gallery"/>
+    <ScanBtn setPopup={setGalleryPopup} scanType="Camera"/>
+    <ScanBtn setPopup={setGalleryPopup} scanType="Gallery"/>
     <Image className="absolute bottom-16" src={selectionIcon} alt="Selection Icon"/>
 </main>
 </div>
