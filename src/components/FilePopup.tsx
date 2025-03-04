@@ -4,9 +4,10 @@ import React, { useRef } from "react";
 
 type fileProps = {
   setPopup: (value: boolean) => void;
+  setSelectedPhoto: (value: File) => void;
 };
 
-const FilePopup = ({ setPopup }: fileProps) => {
+const FilePopup = ({ setPopup, setSelectedPhoto }: fileProps) => {
   const containerRef = useRef(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -15,8 +16,8 @@ const FilePopup = ({ setPopup }: fileProps) => {
     const tl = gsap.timeline();
     tl.fromTo(
       containerRef.current,
-      { clipPath: "inset(0% 100% 83% 0%)" },
-      { clipPath: "inset(0% 0% 83% 0%)", ease: "power2.inOut", duration: 0.5 }
+      { clipPath: "inset(0% 100% 75% 0%)" },
+      { clipPath: "inset(0% 0% 75% 0%)", ease: "power2.inOut", duration: 0.5 }
     );
 
     tl.to(containerRef.current, {
@@ -39,6 +40,7 @@ const FilePopup = ({ setPopup }: fileProps) => {
     const file = event.target.files?.[0];
     if (file) {
       console.log('Selected File:', file);
+      setSelectedPhoto(file)
       handleClose();
     }
   };
