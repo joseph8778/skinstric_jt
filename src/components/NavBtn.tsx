@@ -6,7 +6,7 @@ import { ExitPopup } from './ExitPopup';
 type btnProps = {
     direction: 'left' | 'right';
     setPage: (value: number) => void;
-    pageNum: number;
+    pageNum?: number;
     showGlobPop: (bool: boolean) => void;
 };
 

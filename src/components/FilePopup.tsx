@@ -7,7 +7,7 @@ type fileProps = {
   setSelectedPhoto: (value: File) => void;
 };
 
-const FilePopup = ({ setPopup, setSelectedPhoto }: fileProps) => {
+export const FilePopup = ({ setPopup, setSelectedPhoto }: fileProps) => {
   const containerRef = useRef(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);

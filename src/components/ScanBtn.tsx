@@ -13,6 +13,7 @@ type ScanBtnProps = {
 }
 
 export const ScanBtn = ({scanType = 'Camera', setPopup}:ScanBtnProps) => {
+    const router = useRouter()
     const centerImg = {
         Camera: shutter,
         Gallery: gallery
@@ -22,7 +23,6 @@ export const ScanBtn = ({scanType = 'Camera', setPopup}:ScanBtnProps) => {
         Gallery: true
     }
     
-    const router = useRouter()
     return (
         <div className="buttonMount relative flex justify-center items-center">
     <BgSquare spinSpeed={75} customSize={240}/>
