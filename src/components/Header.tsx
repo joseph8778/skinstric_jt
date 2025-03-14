@@ -24,7 +24,7 @@ Header = ({
 }: NavProps) => {
   
   const parentClasses = {
-    primaryStyle: "w-full h-16 flex justify-between items-center bg-transparent",
+    primaryStyle: "w-full h-16 flex justify-between items-center ",
   };
   const logoClasses = {
     primaryStyle: "tracking-tighter text-black font-roobert font-semibold text-[clamp(.65rem,1vw,0.75rem)] textMount",
@@ -35,7 +35,7 @@ Header = ({
   };
 
   return (
-  <div className={`${parentClasses[parent]}`}>
+  <div className={`${parentClasses[parent]} pl-8 pr-8`}>
     <div className="flex items-center justify-center">
 
       <Link href='/' className={`

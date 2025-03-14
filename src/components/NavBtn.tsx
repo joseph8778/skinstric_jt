@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import triangle from '../assets/Polygon.svg';
 import Image from 'next/image';
 import { ExitPopup } from './ExitPopup';
+import { useRouter } from 'next/navigation';
 
 type btnProps = {
     direction: 'left' | 'right';
-    setPage: (value: number) => void;
+    setPage?: (value: number) => void;
     pageNum?: number;
-    showGlobPop: (bool: boolean) => void;
+    showGlobPop?: (bool: boolean) => void;
+    routerLink?: string
 };
 
-export const NavBtn = ({ pageNum, setPage, direction = 'left', showGlobPop }: btnProps) => {
+export const NavBtn = ({routerLink, pageNum, setPage, direction = 'left', showGlobPop }: btnProps) => {
     const [showPopup, setShowPopup] = useState(false);
+    const router = useRouter()
 
     const mountAnimation = {
         left: 'buttonMountL',
@@ -38,10 +41,16 @@ export const NavBtn = ({ pageNum, setPage, direction = 'left', showGlobPop }: bt
             {showPopup && pageNum === 1 && <ExitPopup showPopUp={setShowPopup} />}
             <button
                 onClick={() => {
-                    showGlobPop(false)
+                    if(showGlobPop) {
+                        showGlobPop(false)
+                    }
+                    if(routerLink) {
+                        router.push(routerLink)
+                        return
+                    }
                     if (pageNum === 1 && direction === 'left') {
                         setShowPopup(true);
-                    } else {
+                    } else if(setPage) {
                         setShowPopup(false);
                         setPage(page[direction]);
                     }

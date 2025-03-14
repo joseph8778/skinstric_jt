@@ -11,10 +11,16 @@ import FilePopup from "@/components/FilePopup";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Popup } from "@/components/Popup";
+import { PageLoader } from "@/components/PageLoader";
+import { NavBtn } from "@/components/NavBtn";
+
 
 export default function TestingPage() {
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null);
   const [galleryPopup, setGalleryPopup] = useState(false);
+  const [popup, setPopup] = useState(false);
+  const [pageLoader, setpageLoader] = useState(false);
   
   useGSAP(() => {
     const context = gsap.context(() => {
@@ -40,13 +46,10 @@ export default function TestingPage() {
     if (selectedPhoto) {
       const reader = new FileReader();
       
-      // Convert image to base64 when the file is read
       reader.onloadend = async () => {
         const base64Image = reader.result?.toString().split(',')[1];  // Remove the "data:image/*;base64," part
-        console.log(reader.result)
         if (base64Image) {
-          
-          //   const data = { Image: reader.result };  // Data to send to the API
+          setpageLoader(true)
           try {
             const response = await axios.post(
               'https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo',
@@ -57,12 +60,15 @@ export default function TestingPage() {
                 },
               }
             );
-            console.log(response.data);
-            router.push('/analysis/demographics')
+            const serializedData = encodeURIComponent(JSON.stringify(response.data.data))
+            console.log(response.data.data);
+            console.log(serializedData)
+            router.push(`/analysis/demographics?data=${serializedData}`)
+            
           } catch (error) {
             if (axios.isAxiosError(error)) {
-              console.log('Error Response:', error.response?.data);
-              console.log('Error Status:', error.response?.status);
+              console.log('Error Response:', error)
+              setPopup(true)
             } else {
               console.log('Unexpected Error:', error);
             }
@@ -80,31 +86,32 @@ export default function TestingPage() {
       getPhotoData(selectedPhoto);
     }
     return () => {
-      // Cleanup if needed
     };
   }, [selectedPhoto]);
+
+  if (pageLoader) {
+    return <PageLoader loaderText="PREPARING YOUR ANALYSIS..."/>
+  }
   
   return (
     <>
       <IntroSqrAnim />
-      <div className="section_container">
+  {popup && <Popup setShowPopup={setPopup} popupMsg="Error transferring file, please upload again."/>}
           <Header blackBtn="CONSULT CHEMIST"/>
-          <main className="flex-grow flex justify-around items-center relative">
+          <main className="relative flex justify-around items-center ">
           {galleryPopup && <FilePopup setSelectedPhoto={setSelectedPhoto} setPopup={setGalleryPopup} />}
-          <div className="overflow-hidden absolute top-6 left-0 w-fit h-fit">
+          <div className="overflow-hidden absolute top-6 left-8 w-fit h-fit">
             <h2 className="font-roobert font-bold text-[clamp(.65rem,1vw,0.75rem)] leading-none textMount2" id="formPageTitle">
               TO START ANALYSIS
-              <br />
-              <span className="mt-10">WE USE COMPUTER VISION </span>
-              <br />
-              <span>TO GREATLY SPEED UP THE PROCESS</span>
             </h2>
           </div>
           <ScanBtn setPopup={setGalleryPopup} scanType="Camera" />
           <ScanBtn setPopup={setGalleryPopup} scanType="Gallery" />
-          <Image className="absolute bottom-16" src={selectionIcon} alt="Selection Icon" />
+          <Image className="absolute -bottom-12" src={selectionIcon} alt="Selection Icon" />
         </main>
-      </div>
+        <footer className="relative py-6 flex items-center justify-between">
+          <NavBtn direction="left" routerLink="/introduction" />
+        </footer>
     </>
   );
 }

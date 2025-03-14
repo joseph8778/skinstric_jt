@@ -77,20 +77,17 @@ export default function IntroPage() {
         aria-label="Introduction Animation"
       />
 
-      <div
-        id="formPage"
-        className="section_container"
-      >
-        <Header
-          intro="hidden"
-          introText="INTRO"
-          logoText="SKINSTRIC"
-          logo="primaryStyle"
-          parent="primaryStyle"
-          aria-label="Website Header"
-        />
-        <main className="flex-grow flex flex-col justify-center items-center relative">
-          <div className="overflow-hidden absolute top-6 left-0 w-fit h-fit">
+<Header
+  intro="hidden"
+  introText="INTRO"
+  logoText="SKINSTRIC"
+  logo="primaryStyle"
+  parent="primaryStyle"
+  aria-label="Website Header"
+/>
+    
+        <main id="formPage" className="flex-grow flex flex-col justify-center items-center relative">
+          <div className="overflow-hidden absolute top-6 left-8 w-fit h-fit">
             <h2 className="font-roobert font-bold text-[clamp(.65rem,1vw,0.75rem)] leading-none textMount2" id="formPageTitle">
               TO START ANALYSIS
             </h2>
@@ -128,7 +125,7 @@ export default function IntroPage() {
           <BgSquare size="big" />
         </main>
 
-        <div className="footer w-full flex justify-between pb-10 px-0">
+        <footer className="footer flex justify-between pb-10">
           <NavBtn 
             showGlobPop={(bool) => setShowPopup((prev) => ({...prev, visible: bool}))} 
             pageNum={page} 
@@ -145,8 +142,7 @@ export default function IntroPage() {
               aria-label="Next page button"
             />
           )}
-        </div>
-      </div>
+        </footer>
     </>
   );
 }

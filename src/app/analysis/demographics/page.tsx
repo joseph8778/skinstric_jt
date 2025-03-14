@@ -1,138 +1,201 @@
-'use client'
+'use client';
 
 import { Header } from "@/components/Header";
 import { NavBtn } from "@/components/NavBtn";
+import { PageLoader } from "@/components/PageLoader";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 
 export default function TestingPage() {
+  const searchParams = useSearchParams();
+  const rawData = searchParams.get('data');
+  const [pageLoader, setPageLoader] = useState(false);
+
+  let demoData = null;
+  try {
+    demoData = rawData ? JSON.parse(rawData) : null;
+  } catch (error) {
+    console.error("Invalid JSON data:", error);
+    setPageLoader(true)
+  }
+  
+  const sortedData = useMemo(() => {
+    if (!demoData || typeof demoData !== "object") {
+      setPageLoader(true);
+    }
+    if (!demoData) return { race: [], gender: [], age: [] };
+    
+    return {
+      race: Object.entries(demoData.race as Record<string, number>).sort((a, b) => b[1] - a[1]),
+      gender: Object.entries(demoData.gender as Record<string, number>).sort((a, b) => b[1] - a[1]),
+      age: Object.entries(demoData.age as Record<string, number>).sort((a, b) => b[1] - a[1]),
+    };
+  }, [demoData]);
+
+  const [selectedDemo, setSelectedDemo] = useState<keyof typeof sortedData>('race');
+
+  // Store the selected category for each demo type.
+  const [selectedCategories, setSelectedCategories] = useState<{
+    [K in keyof typeof sortedData]: { key: string; value: number } | null;
+  }>({
+    race:
+      sortedData.race.length > 0
+        ? { key: sortedData.race[0][0], value: sortedData.race[0][1] }
+        : null,
+    gender:
+      sortedData.gender.length > 0
+        ? { key: sortedData.gender[0][0], value: sortedData.gender[0][1] }
+        : null,
+    age:
+      sortedData.age.length > 0
+        ? { key: sortedData.age[0][0], value: sortedData.age[0][1] }
+        : null,
+  });
+
+  // When switching demos, if there is no stored category, set it to the first item.
+  useEffect(() => {
+    if (sortedData[selectedDemo].length > 0 && !selectedCategories[selectedDemo]) {
+      setSelectedCategories((prev) => ({
+        ...prev,
+        [selectedDemo]: {
+          key: sortedData[selectedDemo][0][0],
+          value: sortedData[selectedDemo][0][1],
+        },
+      }));
+    }
+  }, [selectedDemo, sortedData, selectedCategories]);
+
+  // Convenience alias for the current demo's selected category.
+  const currentSelectedCategory = selectedCategories[selectedDemo];
+
   return (
     <>
-      {/* <IntroSqrAnim /> */}
-      <div className="section_container">
-        <Header blackBtn="CONSULT CHEMIST" />
-        
-        <main className="flex-grow flex flex-col justify-start items-center relative">
-          <div className="w-full flex flex-col h-[20%] justify-start items-start">
-            <h1 className="text-[42px] tracking-tighter">DEMOGRAPHICS</h1>
-            <p className="text-[12px]">PREDICTED AGE AND RACE</p>
-          </div>
-
-          <div className="w-full h-[80%] flex">
-            {/* Left Section */}
-            <div className="w-[13%] flex flex-col justify-start items-center">
-            <button
-  id="RaceBox"
-  className="w-full h-[20%] text-black font-roobert font-semibold border-[1px] border-t-black bg-[#f3f3f4] hover:bg-[#d1d1d3] focus:bg-black focus:text-white flex flex-col justify-between items-start p-3 mb-2"
->
-  <span className="text-[14px]">MIDDLE EASTERN</span>
-  <span className="text-[14px]">RACE</span>
-</button>
-
-<button
-  id="AgeBox"
-  className="w-full h-[20%] text-black font-roobert font-semibold border-[1px] border-t-black bg-[#f3f3f4] hover:bg-[#d1d1d3] focus:bg-black focus:text-white flex flex-col justify-between items-start p-3 mb-2"
->
-  <span className="text-[14px]">20-29</span>
-  <span className="text-[14px]">AGE</span>
-</button>
-
-<button
-  id="GenderBox"
-  className="w-full h-[20%] text-black font-roobert font-semibold border-[1px] border-t-black bg-[#f3f3f4] hover:bg-[#d1d1d3] focus:bg-black focus:text-white flex flex-col justify-between items-start p-3 mb-2"
->
-  <span className="text-[14px]">MALE</span>
-  <span className="text-[14px]">GENDER</span>
-</button>
-
-
+      {pageLoader ? (
+        <PageLoader loaderText="No skin data available, please revert back to previous page."/>
+      ) : (
+        <>
+          <Header blackBtn="CONSULT CHEMIST" />
+          <main className="relative  mb-4 ">
+            <div className="w-full flex flex-col h-[20%] justify-start items-start mb-8">
+              <h1 className="text-[42px] tracking-tighter">DEMOGRAPHICS</h1>
+              <p className="text-[12px] tracking-tighter ml-[4px]">PREDICTED AGE AND RACE</p>
             </div>
 
-            {/* Middle Section */}
-            <div className="w-[62%] mx-4 border-[1px] border-t-black bg-[#f3f3f4] p-4 relative">
-              <span>A.I. CONFIDENCE</span>
-              <div className="size-[306px] absolute bottom-5 right-5 border-2 border-black rounded-full flex justify-center items-center text-[35px]">
-                <span className="ml-2">5%</span>
+            <div className="w-full h-[60%] 900Brk:h-[20%] flex justify-around gap-4 min-h-[600px]">
+              {/* Left Section */}
+              <div className="900Brk:w-[13%] w-full smallest:w-[40%]  900Brk:h-auto gap-2 flex flex-col justify-start items-center">
+                {Object.keys(sortedData).map((key) => (
+                  <button
+                    key={key}
+                    id={`${key}Box`}
+                    onClick={() => {
+                      setSelectedDemo(key as keyof typeof sortedData);
+                    }}
+                    className={`w-full 900Brk:h-[20%] h-[33%] text-black font-roobert font-semibold border-[1px] border-t-black ${
+                      selectedDemo === key
+                        ? 'bg-black text-white hover:bg-[#1e1e1e]'
+                        : 'bg-[#f3f3f4] hover:bg-[#d1d1d3]'
+                    } flex flex-col justify-between items-start p-2`}
+                  >
+                    {sortedData[key as keyof typeof sortedData].length > 0 && (
+                      <>
+                        <span className="text-start text-xs 1150Brk:text-base">
+                          {sortedData[key as keyof typeof sortedData][0][0].toUpperCase()}
+                        </span>
+                        <span className="text-start text-xs 1150Brk:text-base">
+                          {key.toUpperCase()}
+                        </span>
+                      </>
+                    )}
+                  </button>
+                ))}
               </div>
-            </div>
 
-            {/* Right Section */}
-            <div className="w-[26%] border-[1px] border-t-black bg-[#f3f3f4] flex flex-col justify-start">
-              <div className="flex flex-col w-full h-full">
-              <div className="p-3 w-full h-[46px] flex items-center justify-between font-roobert text-[14.5px]">
-                <span>RACE</span>
+              {/* Middle Section */}
+              <div className="w-[45%] 900Brk:block hidden 1150Brk:w-[58%] border-[1px] border-t-black bg-[#f3f3f4] p-4 relative">
                 <span>A.I. CONFIDENCE</span>
+                <div className="size-[256px] 1150Brk:size-[306px] absolute bottom-5 right-5 border-2 border-black rounded-full flex justify-center items-center text-[35px]">
+                  <span className="ml-2">
+                    {(currentSelectedCategory ? currentSelectedCategory.value * 100 : 0).toFixed(0)}%
+                  </span>
+                </div>
               </div>
-<button className="p-3 w-full h-[46px] flex items-center justify-between transition-colors duration-100 ease-in-out text-black bg-[#f3f3f4] hover:bg-[#d1d1d3] focus:bg-black focus:text-white group">
-  <div className="text-[14px] font-roobert font-medium flex items-center p-1">
-    <span 
-      className="size-[.75rem] border-[2px] bg-transparent border-black rotate-45 mr-3 transition-colors   relative group-focus:border-white "
-      aria-hidden="true"
-    >
-        <span className="absolute size-[3px] bg-transparent bottom-[50%] right-[50%] translate-x-[40%] translate-y-[40%] group-focus:bg-white"></span>
-    </span>
-    <span>Black</span>
-  </div>
-  <span className="font-roobert text-[14px]">99.2</span>
-</button>
-<button className="p-3 w-full h-[46px] flex items-center justify-between transition-colors duration-100 ease-in-out text-black bg-[#f3f3f4] hover:bg-[#d1d1d3] focus:bg-black focus:text-white group">
-  <div className="text-[14px] font-roobert font-medium flex items-center p-1">
-    <span 
-      className="size-[.75rem] border-[2px] bg-transparent border-black rotate-45 mr-3 transition-colors   relative group-focus:border-white "
-      aria-hidden="true"
-    >
-        <span className="absolute size-[3px] bg-transparent bottom-[50%] right-[50%] translate-x-[40%] translate-y-[40%] group-focus:bg-white"></span>
-    </span>
-    <span>Black</span>
-  </div>
-  <span className="font-roobert text-[14px]">99.2</span>
-</button>
-<button className="p-3 w-full h-[46px] flex items-center justify-between transition-colors duration-100 ease-in-out text-black bg-[#f3f3f4] hover:bg-[#d1d1d3] focus:bg-black focus:text-white group">
-  <div className="text-[14px] font-roobert font-medium flex items-center p-1">
-    <span 
-      className="size-[.75rem] border-[2px] bg-transparent border-black rotate-45 mr-3 transition-colors   relative group-focus:border-white "
-      aria-hidden="true"
-    >
-        <span className="absolute size-[3px] bg-transparent bottom-[50%] right-[50%] translate-x-[40%] translate-y-[40%] group-focus:bg-white"></span>
-    </span>
-    <span>Black</span>
-  </div>
-  <span className="font-roobert text-[14px]">99.2</span>
-</button>
-<button className="p-3 w-full h-[46px] flex items-center justify-between transition-colors duration-100 ease-in-out text-black bg-[#f3f3f4] hover:bg-[#d1d1d3] focus:bg-black focus:text-white group">
-  <div className="text-[14px] font-roobert font-medium flex items-center p-1">
-    <span 
-      className="size-[.75rem] border-[2px] bg-transparent border-black rotate-45 mr-3 transition-colors   relative group-focus:border-white "
-      aria-hidden="true"
-    >
-        <span className="absolute size-[3px] bg-transparent bottom-[50%] right-[50%] translate-x-[40%] translate-y-[40%] group-focus:bg-white"></span>
-    </span>
-    <span>Black</span>
-  </div>
-  <span className="font-roobert text-[14px]">99.2</span>
-</button>
-<button className="p-3 w-full h-[46px] flex items-center justify-between transition-colors duration-100 ease-in-out text-black bg-[#f3f3f4] hover:bg-[#d1d1d3] focus:bg-black focus:text-white group">
-  <div className="text-[14px] font-roobert font-medium flex items-center p-1">
-    <span 
-      className="size-[.75rem] border-[2px] bg-transparent border-black rotate-45 mr-3 transition-colors   relative group-focus:border-white "
-      aria-hidden="true"
-    >
-        <span className="absolute size-[3px] bg-transparent bottom-[50%] right-[50%] translate-x-[40%] translate-y-[40%] group-focus:bg-white"></span>
-    </span>
-    <span>Black</span>
-  </div>
-  <span className="font-roobert text-[14px]">99.2</span>
-</button>
 
+              {/* Right Section */}
+              <div className="smallest:block w-[60%] 900Brk:w-[55%] 1150Brk:w-[26%] border-[1px] border-t-black bg-[#f3f3f4] flex flex-col justify-start">
+                <div className="flex flex-col w-full h-full">
+                  <div className="p-3 w-full h-[46px] flex items-center justify-between font-roobert text-[14.5px]">
+                    <span>{selectedDemo.toUpperCase()}</span>
+                    <span>A.I. CONFIDENCE</span>
+                  </div>
 
+                  {sortedData[selectedDemo].length > 0 ? (
+                    sortedData[selectedDemo].map(([key, val]) => (
+                      <button
+                        key={key}
+                        onClick={() =>
+                          setSelectedCategories((prev) => ({
+                            ...prev,
+                            [selectedDemo]: { key, value: val },
+                          }))
+                        }
+                        className={`group p-3 w-full h-[46px] flex items-center justify-between transition-colors duration-100 ease-in-out ${
+                          currentSelectedCategory?.key === key
+                            ? 'bg-black text-white'
+                            : 'text-black bg-[#f3f3f4] hover:bg-[#d1d1d3]'
+                        }`}
+                      >
+                        <div className="text-[14px] font-roobert font-medium flex items-center p-1">
+                          <span
+                            className="size-[.75rem] border-[2px] border-black rotate-45 mr-3 transition-colors relative group-[.text-white]:border-white"
+                            aria-hidden="true"
+                          >
+                            <span className="absolute size-[4px] bg-transparent bottom-[50%] right-[50%] translate-x-[40%] translate-y-[40%] group-[.text-white]:bg-white"></span>
+                          </span>
+                          <span>{key.toUpperCase()}</span>
+                        </div>
+                        <span className="font-roobert text-[14px]">{val.toFixed(2)}</span>
+                      </button>
+                    ))
+                  ) : (
+                    <p className="p-3 text-center text-sm">No data available</p>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        </main>
-
-        {/* Footer */}
-        <div className="footer w-full flex justify-between pb-10 px-0">
-          <NavBtn direction="left" aria-label="Previous page button" />
-        </div>
-      </div>
+          </main>
+          <footer className="relative py-6 flex items-center justify-between">
+            <NavBtn direction="left" routerLink="/testing" />
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  // Reset each demo's selected category to its initial first (highest value) item.
+                  setSelectedCategories({
+                    race:
+                      sortedData.race.length > 0
+                        ? { key: sortedData.race[0][0], value: sortedData.race[0][1] }
+                        : null,
+                    gender:
+                      sortedData.gender.length > 0
+                        ? { key: sortedData.gender[0][0], value: sortedData.gender[0][1] }
+                        : null,
+                    age:
+                      sortedData.age.length > 0
+                        ? { key: sortedData.age[0][0], value: sortedData.age[0][1] }
+                        : null,
+                  });
+                }}
+                className="w-[70px] h-8 bg-black text-white flex items-center justify-center hover:bg-slate-900"
+              >
+                <span className="text-[10px] font-roobert font-semibold">Reset</span>
+              </button>
+              <button className="w-[70px] h-8 bg-black text-white flex items-center justify-center hover:bg-slate-900">
+                <span className="text-[10px] font-roobert font-semibold">Confirm</span>
+              </button>
+            </div>
+          </footer>
+        </>
+      )}
     </>
   );
 }
