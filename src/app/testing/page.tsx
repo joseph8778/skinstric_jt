@@ -8,7 +8,7 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import FilePopup from "@/components/FilePopup";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Popup } from "@/components/Popup";
@@ -21,20 +21,21 @@ export default function TestingPage() {
   const [galleryPopup, setGalleryPopup] = useState(false);
   const [popup, setPopup] = useState(false);
   const [pageLoader, setpageLoader] = useState(false);
+  const animRef = useRef<gsap.core.Animation[] | null>(null);
   
   useGSAP(() => {
     const context = gsap.context(() => {
+      animRef.current = []
       
-      gsap.fromTo(
+      animRef.current?.push(gsap.fromTo(
         ".textMount",
         { clipPath: "inset(0% 50% 0% 50%)" },
         { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, delay: 5 }
-      );
+      ));
       
-      gsap.from(".textMount2", { y: "100%", duration: 0.2, delay: 5 });
-      gsap.from(".buttonMount", { x: "-25%", opacity: 0, duration: 1, delay: 5 });
+      animRef.current?.push(gsap.from(".textMount2", { y: "100%", duration: 0.2, delay: 5 }));
+      animRef.current?.push(gsap.from(".buttonMount", { x: "-25%", opacity: 0, duration: 1, delay: 5 }));
     });
-    
     return () => {
       context.revert();
     };
@@ -44,12 +45,21 @@ export default function TestingPage() {
   const router = useRouter()
   async function getPhotoData(selectedPhoto: File | null) {
     if (selectedPhoto) {
+      animRef.current?.forEach((animation) =>  {
+        animation.reverse()
+      })
+      setTimeout(() => {
+        setpageLoader(true)
+      }, 1700);
+    
+      
       const reader = new FileReader();
       
       reader.onloadend = async () => {
-        const base64Image = reader.result?.toString().split(',')[1];  // Remove the "data:image/*;base64," part
+        const base64Image = reader.result?.toString().split(',')[1];  
+
         if (base64Image) {
-          setpageLoader(true)
+         
           try {
             const response = await axios.post(
               'https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo',

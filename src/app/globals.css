@@ -21,6 +21,7 @@ html, body {
   overflow-y: auto;
 }
 
+
 body {
   color: var(--foreground);
   background: var(--background);

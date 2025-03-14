@@ -3,8 +3,11 @@
 import { Header } from "@/components/Header";
 import { NavBtn } from "@/components/NavBtn";
 import { PageLoader } from "@/components/PageLoader";
+import {PercentageCircle} from "@/components/PercentageCircle";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export default function TestingPage() {
   const searchParams = useSearchParams();
@@ -19,6 +22,23 @@ export default function TestingPage() {
     setPageLoader(true)
   }
   
+  const animRef = useRef<gsap.core.Animation[] | null>(null)
+  useGSAP(() => {
+    const context = gsap.context(() => {
+      animRef.current = []
+      
+      animRef.current?.push(gsap.fromTo(
+        ".textMount",
+        { clipPath: "inset(0% 100% 0% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 1, delay: .2 }
+      ));
+      animRef.current?.push(gsap.from(".fadeRight", { x: "25%", opacity: 0, duration: .75, delay: 0, stagger: .25 }));
+    });
+    return () => {
+      context.revert();
+    };
+  });
+
   const sortedData = useMemo(() => {
     if (!demoData || typeof demoData !== "object") {
       setPageLoader(true);
@@ -31,6 +51,7 @@ export default function TestingPage() {
       age: Object.entries(demoData.age as Record<string, number>).sort((a, b) => b[1] - a[1]),
     };
   }, [demoData]);
+
 
   const [selectedDemo, setSelectedDemo] = useState<keyof typeof sortedData>('race');
 
@@ -75,15 +96,15 @@ export default function TestingPage() {
       ) : (
         <>
           <Header blackBtn="CONSULT CHEMIST" />
-          <main className="relative  mb-4 ">
+          <main className="relative mb-4 ">
             <div className="w-full flex flex-col h-[20%] justify-start items-start mb-8">
-              <h1 className="text-[42px] tracking-tighter">DEMOGRAPHICS</h1>
-              <p className="text-[12px] tracking-tighter ml-[4px]">PREDICTED AGE AND RACE</p>
+              <h1 className="textMount text-[42px] tracking-tighter ">DEMOGRAPHICS</h1>
+              <p className="textMount text-[12px] tracking-tighter ml-[4px]">PREDICTED AGE AND RACE</p>
             </div>
 
             <div className="w-full h-[60%] 900Brk:h-[20%] flex justify-around gap-4 min-h-[600px]">
               {/* Left Section */}
-              <div className="900Brk:w-[13%] w-full smallest:w-[40%]  900Brk:h-auto gap-2 flex flex-col justify-start items-center">
+              <div className="fadeRight 900Brk:w-[13%] w-full smallest:w-[40%]  900Brk:h-auto gap-2 flex flex-col justify-start items-center">
                 {Object.keys(sortedData).map((key) => (
                   <button
                     key={key}
@@ -112,17 +133,15 @@ export default function TestingPage() {
               </div>
 
               {/* Middle Section */}
-              <div className="w-[45%] 900Brk:block hidden 1150Brk:w-[58%] border-[1px] border-t-black bg-[#f3f3f4] p-4 relative">
-                <span>A.I. CONFIDENCE</span>
-                <div className="size-[256px] 1150Brk:size-[306px] absolute bottom-5 right-5 border-2 border-black rounded-full flex justify-center items-center text-[35px]">
-                  <span className="ml-2">
-                    {(currentSelectedCategory ? currentSelectedCategory.value * 100 : 0).toFixed(0)}%
-                  </span>
-                </div>
-              </div>
+  <div className="fadeRight w-[45%] 900Brk:block hidden 1150Brk:w-[58%] border-[1px] border-t-black bg-[#f3f3f4] p-4 relative">
+  <span>A.I. CONFIDENCE</span>
+  <PercentageCircle currentSelectedCategory={currentSelectedCategory}></PercentageCircle>
+</div>
+
+              
 
               {/* Right Section */}
-              <div className="smallest:block w-[60%] 900Brk:w-[55%] 1150Brk:w-[26%] border-[1px] border-t-black bg-[#f3f3f4] flex flex-col justify-start">
+              <div className="fadeRight smallest:block w-[60%] 900Brk:w-[55%] 1150Brk:w-[26%] border-[1px] border-t-black bg-[#f3f3f4] flex flex-col justify-start">
                 <div className="flex flex-col w-full h-full">
                   <div className="p-3 w-full h-[46px] flex items-center justify-between font-roobert text-[14.5px]">
                     <span>{selectedDemo.toUpperCase()}</span>
