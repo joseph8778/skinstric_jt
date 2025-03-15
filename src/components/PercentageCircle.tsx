@@ -3,10 +3,16 @@ import React, { useEffect, useState } from 'react';
 type PercentageCircleProps = {
   currentSelectedCategory?: {
     value: number;
+   
   };
+  size?: string;
+  bgColor?: string;
+  borderCol?: string;
+  bgBorderCol?: string;
+  textColor?: string;
 };
 
-export const PercentageCircle = ({ currentSelectedCategory }: PercentageCircleProps) => {
+export const PercentageCircle = ({ currentSelectedCategory, size = "256", bgColor = 'bg-[#f3f3f4]', borderCol = 'black', bgBorderCol='lightgrey', textColor  }: PercentageCircleProps) => {
   const [animPerc, setAnimPerc] = useState(0);
 
   useEffect(() => {
@@ -30,13 +36,16 @@ export const PercentageCircle = ({ currentSelectedCategory }: PercentageCirclePr
 
   return (
     <div
-      className="absolute bottom-5 right-5 size-[256px] 1150Brk:size-[306px] rounded-full p-1"
+      className={`1150Brk:size-[306px]  rounded-full p-1 group`}
       style={{
-        background: `conic-gradient(black ${animPerc}deg, lightgrey 0deg)`,
+        background: `conic-gradient(${borderCol} ${animPerc}deg, ${bgBorderCol} 0deg)`,
         transform: 'scaleX(-1)',
+        height: `${size}px`,
+        width: `${size}px`,
+        color: textColor
       }}
     >
-      <div className="w-full h-full rounded-full bg-[#f3f3f4] flex items-center justify-center" style={{ transform: 'scaleX(-1)' }}>
+      <div className={`w-full h-full   rounded-full ${bgColor}  flex items-center justify-center`} style={{ transform: 'scaleX(-1)' }}>
         <span className="text-[35px]">
           {(currentSelectedCategory ? currentSelectedCategory.value * 100 : 0).toFixed(0)}%
         </span>

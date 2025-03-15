@@ -123,6 +123,9 @@ export default function TestingPage() {
                         <span className="text-start text-xs 1150Brk:text-base">
                           {sortedData[key as keyof typeof sortedData][0][0].toUpperCase()}
                         </span>
+                        
+                        <PercentageCircle size={'240'}  textColor="black" borderCol="grey" bgBorderCol='white' currentSelectedCategory={selectedCategories[key]}></PercentageCircle>
+                        
                         <span className="text-start text-xs 1150Brk:text-base">
                           {key.toUpperCase()}
                         </span>
@@ -135,7 +138,9 @@ export default function TestingPage() {
               {/* Middle Section */}
   <div className="fadeRight w-[45%] 900Brk:block hidden 1150Brk:w-[58%] border-[1px] border-t-black bg-[#f3f3f4] p-4 relative">
   <span>A.I. CONFIDENCE</span>
+  <div className="circleContainer absolute bottom-5 right-5">
   <PercentageCircle currentSelectedCategory={currentSelectedCategory}></PercentageCircle>
+  </div>
 </div>
 
               
