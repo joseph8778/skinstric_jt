@@ -108,16 +108,20 @@ export default function TestingPage() {
       <IntroSqrAnim />
   {popup && <Popup setShowPopup={setPopup} popupMsg="Error transferring file, please upload again."/>}
           <Header blackBtn="CONSULT CHEMIST"/>
-          <main className="relative flex justify-around items-center ">
-          {galleryPopup && <FilePopup setSelectedPhoto={setSelectedPhoto} setPopup={setGalleryPopup} />}
-          <div className="overflow-hidden absolute top-6 left-8 w-fit h-fit">
+          <div className="overflow-hidden absolute top-20 left-8 w-fit h-fit">
             <h2 className="font-roobert font-bold text-[clamp(.65rem,1vw,0.75rem)] leading-none textMount2" id="formPageTitle">
               TO START ANALYSIS
             </h2>
           </div>
+          <main className="relative flex md:flex-row flex-col justify-around md:justify-center items-center pb-0 md:p-[2rem]">
+          {galleryPopup && <FilePopup setSelectedPhoto={setSelectedPhoto} setPopup={setGalleryPopup} />}
+
           <ScanBtn setPopup={setGalleryPopup} scanType="Camera" />
           <ScanBtn setPopup={setGalleryPopup} scanType="Gallery" />
-          <Image className="absolute -bottom-12" src={selectionIcon} alt="Selection Icon" />
+
+
+
+          <Image className="absolute hidden md:block -bottom-12" src={selectionIcon} alt="Selection Icon" />
         </main>
         <footer className="relative py-6 flex items-center justify-between">
           <NavBtn direction="left" routerLink="/introduction" />

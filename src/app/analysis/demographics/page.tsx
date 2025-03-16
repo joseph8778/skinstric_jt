@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { NavBtn } from "@/components/NavBtn";
 import { PageLoader } from "@/components/PageLoader";
 import {PercentageCircle} from "@/components/PercentageCircle";
+import { Popup } from "@/components/Popup";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useSearchParams } from "next/navigation";
@@ -91,6 +92,7 @@ export default function TestingPage() {
 
   return (
     <>
+    <Popup popupMsg="Select the correct categories according to your demographics."/>
       {pageLoader ? (
         <PageLoader loaderText="No skin data available, please revert back to previous page."/>
       ) : (
@@ -116,17 +118,20 @@ export default function TestingPage() {
                       selectedDemo === key
                         ? 'bg-black text-white hover:bg-[#1e1e1e]'
                         : 'bg-[#f3f3f4] hover:bg-[#d1d1d3]'
-                    } flex flex-col justify-between items-start p-2`}
+                    } flex flex-col justify-between items-center p-2`}
                   >
                     {sortedData[key as keyof typeof sortedData].length > 0 && (
                       <>
-                        <span className="text-start text-xs 1150Brk:text-base">
+                        <span className="text-start w-full text-xs 1150Brk:text-base">
                           {sortedData[key as keyof typeof sortedData][0][0].toUpperCase()}
                         </span>
+                        <div className="900Brk:hidden visible p-4">
+
+                          <PercentageCircle size={'150px'}  textColor="black" borderCol="grey" bgBorderCol='white' currentSelectedCategory={selectedCategories[key]}></PercentageCircle>
+                        </div>
                         
-                        <PercentageCircle size={'240'}  textColor="black" borderCol="grey" bgBorderCol='white' currentSelectedCategory={selectedCategories[key]}></PercentageCircle>
                         
-                        <span className="text-start text-xs 1150Brk:text-base">
+                        <span className="text-start w-full text-xs 1150Brk:text-base">
                           {key.toUpperCase()}
                         </span>
                       </>

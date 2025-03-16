@@ -6,7 +6,7 @@ type PopupProps = {
   popupType?: string,
   displayTime?: number;
   popupMsg?: string,
-  setShowPopup: (value: boolean) => void;
+  setShowPopup?: (value: boolean) => void;
 };
 
 export const Popup = ({
@@ -44,7 +44,7 @@ export const Popup = ({
       opacity: 0,
       duration: 0.5,
       ease: 'back.inOut',
-      onComplete: () => setShowPopup(false)
+      onComplete: () => setShowPopup ? setShowPopup(false) : null
     });
   };
   
@@ -77,7 +77,7 @@ export const Popup = ({
             X
           </div>
         </div>
-        <div className="text-[15px] font-medium text-gray-500 w-3/5 max-w-full max-h-full text-start ml-8 text-ellipsis" aria-live="assertive">
+        <div className="text-[14px] font-medium text-gray-500 w-3/5 max-w-full max-h-full text-start ml-8 text-ellipsis" aria-live="assertive">
           {message}
         </div>
         <div className="progressBar absolute w-full h-1 bg-gray-200 bottom-0 left-0"></div>

@@ -36,12 +36,12 @@ export const PercentageCircle = ({ currentSelectedCategory, size = "256", bgColo
 
   return (
     <div
-      className={`1150Brk:size-[306px]  rounded-full p-1 group`}
+      className={`900Brk:size-[306px]   rounded-full p-1 group`}
       style={{
         background: `conic-gradient(${borderCol} ${animPerc}deg, ${bgBorderCol} 0deg)`,
         transform: 'scaleX(-1)',
-        height: `${size}px`,
-        width: `${size}px`,
+        height: `${size}`,
+        width: `${size}`,
         color: textColor
       }}
     >

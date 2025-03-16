@@ -23,7 +23,7 @@ export const BgSquare = ({size = 'small', customSize, spinSpeed, customOpacity}:
         medium: 'opacity-50',
         small: ''
     }
-    const finalSize = customSize ? (`clamp(${customSize - 40}px, ${customSize * 0.8}vw, ${customSize + 40}px)`) : (`clamp(${squareType[size]})`)
+    const finalSize = customSize ? (`clamp(${customSize - 40}px, ${customSize * 0.1}vw, ${customSize + 40}px)`) : (`clamp(${squareType[size]})`)
 
     const finalTime = spinSpeed ? (`${spinSpeed}s`) : (animationTime[size])
 
