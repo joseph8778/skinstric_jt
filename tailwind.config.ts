@@ -12,6 +12,7 @@ export default {
       screens: {
         '1150Brk' : '1150px',
         '900Brk' : '900px',
+        '520Brk' : '520px', 
         'smallest' : '420px'
       },
       colors: {

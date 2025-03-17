@@ -14,6 +14,7 @@ export default function TestingPage() {
   const searchParams = useSearchParams();
   const rawData = searchParams.get('data');
   const [pageLoader, setPageLoader] = useState(false);
+  const [showMobileCategories, setShowMobileCategories] = useState(false); 
 
   let demoData = null;
   try {
@@ -100,60 +101,88 @@ export default function TestingPage() {
           <Header blackBtn="CONSULT CHEMIST" />
           <main className="relative mb-4 ">
             <div className="w-full flex flex-col h-[20%] justify-start items-start mb-8">
-              <h1 className="textMount text-[42px] tracking-tighter ">DEMOGRAPHICS</h1>
+              <h1 className="textMount text-[38px] 520Brk:text-[42px] tracking-tighter ">DEMOGRAPHICS</h1>
               <p className="textMount text-[12px] tracking-tighter ml-[4px]">PREDICTED AGE AND RACE</p>
+              <div className="visible 900Brk:hidden mt-6 ml-2">
+            <NavBtn direction="left" routerLink="/testing" />
+            
+            </div>
             </div>
 
-            <div className="w-full h-[60%] 900Brk:h-[20%] flex justify-around gap-4 min-h-[600px]">
+            <div className="w-full h-[60%] 900Brk:h-[20%] flex justify-around gap-4 min-h-[600px] ">
               {/* Left Section */}
-              <div className="fadeRight 900Brk:w-[13%] w-full smallest:w-[40%]  900Brk:h-auto gap-2 flex flex-col justify-start items-center">
-                {Object.keys(sortedData).map((key) => (
-                  <button
+              <div className="fadeRight 900Brk:w-[13%] w-full smallest:w-full 520Brk:w-[40%] 900Brk:h-auto gap-2 flex flex-col justify-start items-center">
+                {Object.keys(sortedData).map((key) => {
+                  const typedKey = key as keyof typeof sortedData
+                  return (
+                    <button
                     key={key}
                     id={`${key}Box`}
                     onClick={() => {
-                      setSelectedDemo(key as keyof typeof sortedData);
+                      setSelectedDemo(typedKey);
+                      if(window.innerWidth < 520) {
+                        setShowMobileCategories(true)
+                        console.log('MobileCAts')
+                      }
                     }}
                     className={`w-full 900Brk:h-[20%] h-[33%] text-black font-roobert font-semibold border-[1px] border-t-black ${
                       selectedDemo === key
-                        ? 'bg-black text-white hover:bg-[#1e1e1e]'
-                        : 'bg-[#f3f3f4] hover:bg-[#d1d1d3]'
+                      ? 'bg-black text-white hover:bg-[#1e1e1e]'
+                      : 'bg-[#f3f3f4] hover:bg-[#d1d1d3]'
                     } flex flex-col justify-between items-center p-2`}
-                  >
-                    {sortedData[key as keyof typeof sortedData].length > 0 && (
+                    >
+                    {sortedData[typedKey].length > 0 && (
                       <>
-                        <span className="text-start w-full text-xs 1150Brk:text-base">
-                          {sortedData[key as keyof typeof sortedData][0][0].toUpperCase()}
+                        <span className="text-start w-full text-xs 1150Brk:text-base flex justify-between">
+                          {sortedData[typedKey][0][0].toUpperCase()}
+                          <span className="520Brk:hidden">
+                          {key.toUpperCase()}
+                        </span>
                         </span>
                         <div className="900Brk:hidden visible p-4">
 
-                          <PercentageCircle size={'150px'}  textColor="black" borderCol="grey" bgBorderCol='white' currentSelectedCategory={selectedCategories[key]}></PercentageCircle>
+                          <PercentageCircle size={'150px'}  textColor="black" borderCol="grey" bgBorderCol='white' currentSelectedCategory={!currentSelectedCategory as keyof typeof currentSelectedCategory}></PercentageCircle>
                         </div>
+                          <span className="font-roobert 520Brk:hidden ">EDIT</span>
                         
                         
-                        <span className="text-start w-full text-xs 1150Brk:text-base">
+                        <span className="hidden 520Brk:inline text-start w-full text-xs 1150Brk:text-base">
                           {key.toUpperCase()}
                         </span>
                       </>
                     )}
                   </button>
-                ))}
+                  )
+})}
               </div>
 
               {/* Middle Section */}
   <div className="fadeRight w-[45%] 900Brk:block hidden 1150Brk:w-[58%] border-[1px] border-t-black bg-[#f3f3f4] p-4 relative">
   <span>A.I. CONFIDENCE</span>
   <div className="circleContainer absolute bottom-5 right-5">
-  <PercentageCircle currentSelectedCategory={currentSelectedCategory}></PercentageCircle>
+  <PercentageCircle currentSelectedCategory={currentSelectedCategory as keyof typeof currentSelectedCategory}></PercentageCircle>
   </div>
 </div>
 
               
 
               {/* Right Section */}
-              <div className="fadeRight smallest:block w-[60%] 900Brk:w-[55%] 1150Brk:w-[26%] border-[1px] border-t-black bg-[#f3f3f4] flex flex-col justify-start">
-                <div className="flex flex-col w-full h-full">
-                  <div className="p-3 w-full h-[46px] flex items-center justify-between font-roobert text-[14.5px]">
+              
+              <div className={`category_container fadeRight w-screen 520Brk:w-[60%] top-0 h-screen fixed ${showMobileCategories ? 'block' : 'hidden'} 520Brk:static  520Brk:flex 900Brk:w-[55%] 1150Brk:w-[26%] border-[1px] border-t-black bg-[#f3f3f4] flex-col justify-start`}>
+                <div className="flex flex-col w-full h-full justify-between">
+                  <div className="p-2 520Brk:p-0">
+                    <div className=" px-3 py-3 520Brk:hidden">
+                      <div className="backBtnContainer pl-2" onClick={() => {
+                        if(showMobileCategories) {
+                          setShowMobileCategories((bool) => !bool)
+                        }
+                      }}>
+                  <NavBtn direction="left" />
+                      </div>
+                  
+                  <h1 className="pt-4 opacity-[60%]">Select race if correct</h1>
+                    </div>
+                  <div className="p-3 520Brk:border-transparent border-t-2 border-black w-full h-[46px] flex items-center justify-between font-roobert text-[14.5px]">
                     <span>{selectedDemo.toUpperCase()}</span>
                     <span>A.I. CONFIDENCE</span>
                   </div>
@@ -161,40 +190,71 @@ export default function TestingPage() {
                   {sortedData[selectedDemo].length > 0 ? (
                     sortedData[selectedDemo].map(([key, val]) => (
                       <button
-                        key={key}
-                        onClick={() =>
-                          setSelectedCategories((prev) => ({
-                            ...prev,
-                            [selectedDemo]: { key, value: val },
-                          }))
-                        }
-                        className={`group p-3 w-full h-[46px] flex items-center justify-between transition-colors duration-100 ease-in-out ${
-                          currentSelectedCategory?.key === key
-                            ? 'bg-black text-white'
-                            : 'text-black bg-[#f3f3f4] hover:bg-[#d1d1d3]'
+                      key={key}
+                      onClick={() =>
+                        setSelectedCategories((prev) => ({
+                          ...prev,
+                          [selectedDemo]: { key, value: val },
+                        }))
+                      }
+                      className={`group p-3 w-full h-[46px] flex items-center justify-between transition-colors duration-100 ease-in-out ${
+                        currentSelectedCategory?.key === key
+                        ? 'bg-black text-white'
+                        : 'text-black bg-[#f3f3f4] hover:bg-[#d1d1d3]'
                         }`}
-                      >
+                        >
                         <div className="text-[14px] font-roobert font-medium flex items-center p-1">
                           <span
                             className="size-[.75rem] border-[2px] border-black rotate-45 mr-3 transition-colors relative group-[.text-white]:border-white"
                             aria-hidden="true"
-                          >
+                            >
                             <span className="absolute size-[4px] bg-transparent bottom-[50%] right-[50%] translate-x-[40%] translate-y-[40%] group-[.text-white]:bg-white"></span>
                           </span>
                           <span>{key.toUpperCase()}</span>
                         </div>
                         <span className="font-roobert text-[14px]">{val.toFixed(2)}</span>
                       </button>
+                      
                     ))
                   ) : (
                     <p className="p-3 text-center text-sm">No data available</p>
                   )}
+                  </div>
+                            <div className=" gap-3 justify-end p-3 bg-black 900Brk:hidden flex">
+              <button
+                onClick={() => {
+                  // Reset each demo's selected category to its initial first (highest value) item.
+                  setSelectedCategories({
+                    race:
+                    sortedData.race.length > 0
+                    ? { key: sortedData.race[0][0], value: sortedData.race[0][1] }
+                    : null,
+                    gender:
+                    sortedData.gender.length > 0
+                    ? { key: sortedData.gender[0][0], value: sortedData.gender[0][1] }
+                    : null,
+                    age:
+                    sortedData.age.length > 0
+                    ? { key: sortedData.age[0][0], value: sortedData.age[0][1] }
+                    : null,
+                  });
+                }}
+                className="w-[70px] h-5 bg-black text-white flex items-center justify-center hover:bg-slate-900"
+                >
+                <span className="text-[10px] font-roobert font-semibold">RESET</span>
+              </button>
+              <button className="w-[70px] h-5 bg-black text-white flex items-center justify-center hover:bg-slate-900">
+                <span className="text-[10px] font-roobert font-semibold">CONFIRM</span>
+              </button>
+            </div>
                 </div>
+                
               </div>
+          
             </div>
           </main>
-          <footer className="relative py-6 flex items-center justify-between">
-            <NavBtn direction="left" routerLink="/testing" />
+          <footer className="relative hidden 900Brk:flex py-6  items-center justify-between">
+            <NavBtn direction="left" />
             <div className="flex gap-3">
               <button
                 onClick={() => {

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 type PercentageCircleProps = {
   currentSelectedCategory?: {
-    value: number;
-   
+    key: string 
+    value: number 
   };
   size?: string;
   bgColor?: string;
@@ -16,7 +16,7 @@ export const PercentageCircle = ({ currentSelectedCategory, size = "256", bgColo
   const [animPerc, setAnimPerc] = useState(0);
 
   useEffect(() => {
-    if (!currentSelectedCategory) return;
+    if (!currentSelectedCategory ) return;
 
     setAnimPerc(0); 
 

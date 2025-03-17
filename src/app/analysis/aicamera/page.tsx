@@ -6,7 +6,7 @@ export default function aiCameraPage() {
     return (
         <>
         <IntroSqrAnim />
-        <div className="flex justify-center items-center w-full h-full">
+        <div className="flex justify-center items-center w-screen h-screen">
         <span className="font-roobert font-semibold text-xs">SETTING UP CAMERA...</span>
         <BgSquare size="big"></BgSquare>
         <BgSquare size="medium"></BgSquare>

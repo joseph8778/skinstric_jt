@@ -113,7 +113,7 @@ export default function TestingPage() {
               TO START ANALYSIS
             </h2>
           </div>
-          <main className="relative flex md:flex-row flex-col justify-around md:justify-center items-center pb-0 md:p-[2rem]">
+          <main className="relative flex md:flex-row flex-col justify-between md:justify-center items-center pb-6 pt-24 md:p-[2rem]">
           {galleryPopup && <FilePopup setSelectedPhoto={setSelectedPhoto} setPopup={setGalleryPopup} />}
 
           <ScanBtn setPopup={setGalleryPopup} scanType="Camera" />

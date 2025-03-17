@@ -52,10 +52,10 @@ export const ScanBtn = ({scanType = 'Camera', setPopup, sqrSize = 200,}:ScanBtnP
             </div>)
 :
 (    <div className="absolute line_Container  flex justify-center bottom-1/2 left-1/2 items-center -z-20 size-44 mr-1">
-    <div className="absolute origin-bottom-left bottom-0 w-full border-t-[.1px] border-black -rotate-45">
+    <div className="absolute origin-bottom-left bottom-0 w-full border-t-[.1px] border-black -rotate-[49deg]">
     <div className="absolute -top-1 -right-2 rounded-full border-black border-[0.5px] size-2"/>
     </div>
-    <span className="absolute top-0 left-[35%] origin-top-right w-[160px] text-[14px] font-[400] textMount "> ALLOW AI TO ACCESS GALLERY</span>
+    <span className="absolute -top-3 left-[28%] origin-top-right w-[160px] text-[14px] font-[400] textMount "> ALLOW AI TO ACCESS GALLERY</span>
     </div> )
 
 }
