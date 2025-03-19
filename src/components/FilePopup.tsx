@@ -18,8 +18,8 @@ export const FilePopup = ({ setPopup, setSelectedPhoto }: fileProps) => {
     const tl = gsap.timeline();
     tl.fromTo(
       containerRef.current,
-      { clipPath: "inset(0% 100% 75% 0%)" },
-      { clipPath: "inset(0% 0% 75% 0%)", ease: "power2.inOut", duration: 0.5 }
+      { clipPath: "inset(0% 100% 99% 0%)" },
+      { clipPath: "inset(0% 0% 99% 0%)", ease: "power2.inOut", duration: 0.5 }
     );
 
     tl.to(containerRef.current, {
@@ -58,8 +58,8 @@ export const FilePopup = ({ setPopup, setSelectedPhoto }: fileProps) => {
   return (
   <>
     {showErrorPopup && <Popup setShowPopup={setshowErrorPopup} popupMsg="Invalid file type, please select a photo." />}
-    <div ref={containerRef} className="fixed inset-0 flex items-center justify-center z-[100] overflow-hidden">
-      <div className="w-[432px] h-[353px] bg-black text-white flex flex-col shadow-lg">
+    <div className="fixed inset-0 flex items-center justify-center z-[100] overflow-hidden">
+      <div  ref={containerRef} className="w-[432px] h-[353px] bg-black text-white flex flex-col shadow-lg">
         <div className="h-[15%] flex items-center font-roobert p-4 border-b border-gray-600">
           Please ensure your selfie has:
         </div>

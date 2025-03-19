@@ -46,7 +46,7 @@ export const ExitPopup = ({
         onComplete: () => {
           setIsVisible(false)
           showPopUp(false)
-          confirmFunc?.()
+         
         },
       });
     }
@@ -73,13 +73,16 @@ export const ExitPopup = ({
         <>
         <button
           onClick={() => {
+            confirmFunc?.()
             handleLeave()}}
           className="text-[9px] font-[500] tracking-tighter cursor-pointer hover:opacity-40 mr-10">
             {confirmBtn}
           </button>
           <button
             className="text-[9px] font-[500] tracking-tighter cursor-pointer hover:opacity-40"
-            onClick={() => handleStay()}
+            onClick={() => {
+              
+              handleStay()}}
             >
              {denyBtn}
           </button>

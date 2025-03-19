@@ -28,6 +28,8 @@ export default function DemographicsPage() {
   }
 
   const animRef = useRef<gsap.core.Animation[] | null>(null);
+  const tlRef = useRef<gsap.core.Timeline | null>(null);
+  
   useGSAP(() => {
     const context = gsap.context(() => {
       animRef.current = [];
@@ -38,14 +40,30 @@ export default function DemographicsPage() {
           { clipPath: "inset(0% 0% 0% 0%)", duration: 1, delay: 0.2 }
         )
       );
-      animRef.current?.push(
-        gsap.from(".fadeRight", { x: "25%", opacity: 0, duration: 0.75, delay: 0, stagger: 0.25 })
+
+      const tl = gsap.timeline();
+      tl.fromTo(
+        '.fadeRight',
+        { clipPath: "inset(0% 100% 99.5% 0%)" },
+        { clipPath: "inset(0% 0% 99.5% 0%)", ease: "power2.inOut", duration: 0.3, stagger: .05 }
       );
-    });
-    return () => {
-      context.revert();
-    };
-  });
+  
+      tl.to('.fadeRight', {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: .6,
+        ease: "power3.inOut",
+        stagger: .1
+      });
+  
+      tlRef.current = tl;
+ 
+  })
+  return () => {
+    context.revert();
+  };
+});
+
+
 
   const sortedData = useMemo(() => {
     if (!demoData || typeof demoData !== "object") {

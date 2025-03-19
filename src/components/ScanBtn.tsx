@@ -57,7 +57,7 @@ export const ScanBtn = ({scanType = 'Camera', setPopup, sqrSize = 200,}:ScanBtnP
         ( 
             <>
             {requestCameraPermission && 
-            <ExitPopup showPopUp={setRequestCameraPermission} popupText="Allow AI to access your camera?" confirmBtn="YES" denyBtn="NO" confirmFunc={confirmFunction} confirmText='Opening camera...'/>
+            <ExitPopup showPopUp={setRequestCameraPermission} popupText="Allow AI to access your camera?" confirmBtn="Allow" denyBtn="Deny" confirmFunc={confirmFunction} confirmText='Opening camera...'/>
             }
             <div className="absolute line_Container  flex justify-center top-1/2 right-1/2 items-center -z-20 size-44 ml-1 ">
             <div className="absolute origin-top-right top-0 w-full border-t-[.1px] border-black -rotate-45">
