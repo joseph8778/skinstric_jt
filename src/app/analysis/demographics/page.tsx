@@ -113,11 +113,10 @@ export default function DemographicsPage() {
                 setShowMobileCategories={setShowMobileCategories} 
                 selectedDemo={selectedDemo} 
                 currentSelectedCategory={currentSelectedCategory as keyof typeof currentSelectedCategory} 
-                selectedCategories={selectedCategories}
-              />
-              <ConfidenceDisplay currentSelectedCategory={currentSelectedCategory as keyof typeof currentSelectedCategory} 
-              
-                />
+                selectedCategories={selectedCategories}/>
+
+              <ConfidenceDisplay currentSelectedCategory={currentSelectedCategory as keyof typeof currentSelectedCategory}/>
+
               <CategorySelector 
                 sortedData={transformedData} 
                 setShowMobileCategories={setShowMobileCategories} 
@@ -128,25 +127,10 @@ export default function DemographicsPage() {
               />
             </div>
           </main>
+
           <footer className="relative hidden 900Brk:flex py-6 items-center justify-between">
             <NavBtn direction="left" />
-            <div className="flex gap-3">
-              <button
-                onClick={() => {
-                  setSelectedCategories({
-                    race: sortedData.race.length > 0 ? { key: sortedData.race[0][0], value: sortedData.race[0][1] } : null,
-                    gender: sortedData.gender.length > 0 ? { key: sortedData.gender[0][0], value: sortedData.gender[0][1] } : null,
-                    age: sortedData.age.length > 0 ? { key: sortedData.age[0][0], value: sortedData.age[0][1] } : null,
-                  });
-                }}
-                className="w-[70px] h-8 bg-black text-white flex items-center justify-center hover:bg-slate-900"
-              >
-                <span className="text-[10px] font-roobert font-semibold">Reset</span>
-              </button>
-              <button className="w-[70px] h-8 bg-black text-white flex items-center justify-center hover:bg-slate-900">
-                <span className="text-[10px] font-roobert font-semibold">Confirm</span>
-              </button>
-            </div>
+           
           </footer>
         </>
       )}

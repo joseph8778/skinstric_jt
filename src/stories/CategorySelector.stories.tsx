@@ -61,12 +61,20 @@ export default meta;
 type Story = StoryObj<StoryProps>;
 
 export const DefaultInput: Story = {
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   args: {
     sortedData: {
       race: [
         { key: "Asian", value: 50 },
         { key: "Caucasian", value: 30 },
         { key: "Black", value: 20 },
+        { key: "White", value: 24 },
+        { key: "Hispanic", value: 63 },
+        { key: "Middle Eastern", value: 35 },
       ],
       gender: [
         { key: "Male", value: 40 },
@@ -85,10 +93,17 @@ export const DefaultInput: Story = {
     showMobileCategories: false, // Initially set to false
     selectedDemo: 'race', // Initially set to 'race'
     currentSelectedCategory: { key: 'Asian', value: 50 }, // Default selected category
-    setSelectedCategories: (categories: { [key: string]: { key: string; value: number } }) => {
-      console.log(`Selected categories:`, categories);
-    },
-  },
+    setSelectedCategories: (update) => {
+      if (typeof update === "function") {
+        console.log("Updated selected categories:", update({
+          race: null,
+          gender: null,
+          age: null,
+        }));
+      } else {
+        console.log("Updated selected categories:", update);
+      }
+  }},
   render: ({ ...args }) => {
     return <CategorySelector {...args} />;
   },
