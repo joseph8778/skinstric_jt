@@ -68,7 +68,6 @@ export default function DemographicsPage() {
   );
 
   const [selectedDemo, setSelectedDemo] = useState<keyof typeof sortedData>('race');
-
   const [selectedCategories, setSelectedCategories] = useState({
     race: sortedData.race.length > 0 ? { key: sortedData.race[0][0], value: sortedData.race[0][1] } : null,
     gender: sortedData.gender.length > 0 ? { key: sortedData.gender[0][0], value: sortedData.gender[0][1] } : null,
@@ -86,8 +85,8 @@ export default function DemographicsPage() {
       }));
     }
   }, [selectedDemo, sortedData, selectedCategories]);
-
   const currentSelectedCategory = selectedCategories[selectedDemo];
+
 
   return (
     <>

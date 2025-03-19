@@ -1,6 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import { Popup } from "./Popup";
 
 type fileProps = {
   setPopup: (value: boolean) => void;
@@ -11,6 +12,7 @@ export const FilePopup = ({ setPopup, setSelectedPhoto }: fileProps) => {
   const containerRef = useRef(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [showErrorPopup, setshowErrorPopup] = useState(false);
 
   useGSAP(() => {
     const tl = gsap.timeline();
@@ -38,10 +40,12 @@ export const FilePopup = ({ setPopup, setSelectedPhoto }: fileProps) => {
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
+    if (file && file.type.startsWith('image/')) {
       console.log('Selected File:', file);
       setSelectedPhoto(file)
       handleClose();
+    } else {
+      setshowErrorPopup(true)
     }
   };
 
@@ -52,6 +56,8 @@ export const FilePopup = ({ setPopup, setSelectedPhoto }: fileProps) => {
   ];
 
   return (
+  <>
+    {showErrorPopup && <Popup setShowPopup={setshowErrorPopup} popupMsg="Invalid file type, please select a photo." />}
     <div ref={containerRef} className="fixed inset-0 flex items-center justify-center z-[100] overflow-hidden">
       <div className="w-[432px] h-[353px] bg-black text-white flex flex-col shadow-lg">
         <div className="h-[15%] flex items-center font-roobert p-4 border-b border-gray-600">
@@ -75,7 +81,7 @@ export const FilePopup = ({ setPopup, setSelectedPhoto }: fileProps) => {
           <button
             onClick={() => fileInputRef.current?.click()}
             className="px-4 py-1"
-          >
+            >
             Upload
           </button>
         </div>
@@ -85,8 +91,9 @@ export const FilePopup = ({ setPopup, setSelectedPhoto }: fileProps) => {
         ref={fileInputRef}
         onChange={handleFileSelect}
         style={{ display: 'none' }}
-      />
+        />
     </div>
+  </>
   );
 };
 
