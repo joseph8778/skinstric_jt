@@ -127,9 +127,9 @@ export default function DemographicsPage() {
             </div>
           </main>
 
-          <footer className="relative hidden 900Brk:flex py-6 items-center justify-between">
-            <NavBtn direction="left" />
-           
+          <footer className="
+          relative hidden 900Brk:flex py-6 items-center justify-between">
+            <NavBtn direction="left" routerLink="/testing" />
           </footer>
         </>
       )}

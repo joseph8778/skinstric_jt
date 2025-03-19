@@ -5,11 +5,14 @@ import { useGSAP } from "@gsap/react";
 type PopupProps = {
   popupText?: string;
   showPopUp: (value: boolean) => void;
+  confirmBtn?: string;
+  denyBtn?: string;
+  confirmFunc?: () => void;
+  confirmText?: string;
 };
 
 export const ExitPopup = ({
-  popupText = "You are about to leave analysis, are you sure?",
-  showPopUp
+  popupText = "You are about to leave analysis, are you sure?", confirmBtn = "LEAVE", denyBtn = 'STAY', confirmFunc, confirmText, showPopUp
 }: PopupProps) => {
   const popupRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(true);
@@ -43,13 +46,14 @@ export const ExitPopup = ({
         onComplete: () => {
           setIsVisible(false)
           showPopUp(false)
+          confirmFunc?.()
         },
       });
     }
   };
-
+  
   const handleLeave = () => {
-    setText('Sad to see you go...') 
+    setText(confirmText || 'Sad to see you go...') 
     setLeaveState(true)
     handleStay(2)
   }
@@ -58,7 +62,7 @@ export const ExitPopup = ({
 
   return (
     <div ref={popupRef} className="exit__popup absolute top-[48px] left-[32px]">
-      <div className=" h-[104px] flex flex-col shadow-lg relative bg-[#1A1B1C]"
+      <div className=" h-[104px] flex flex-col shadow-lg relative bg-[#1A1B1C] z-50"
       style={{ width: "clamp(200px, 50vw, 288px)" }}
       >
         <div className="p-3 text-[12px] font-[500] text-[rgb(252,252,252)] w-[90%] h-[65%] text-start">
@@ -68,15 +72,16 @@ export const ExitPopup = ({
           {!leaveState ? (
         <>
         <button
-          onClick={() => handleLeave()}
+          onClick={() => {
+            handleLeave()}}
           className="text-[9px] font-[500] tracking-tighter cursor-pointer hover:opacity-40 mr-10">
-            LEAVE
+            {confirmBtn}
           </button>
           <button
             className="text-[9px] font-[500] tracking-tighter cursor-pointer hover:opacity-40"
             onClick={() => handleStay()}
             >
-            STAY
+             {denyBtn}
           </button>
           </>
           ) : ('...')}
