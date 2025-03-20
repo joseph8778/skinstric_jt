@@ -17,7 +17,7 @@ type ScanBtnProps = {
     
 }
 
-export const ScanBtn = ({scanType = 'Camera', setPopup, sqrSize = 200,}:ScanBtnProps) => {
+export const ScanBtn = ({scanType = 'Camera', setPopup, sqrSize = 170,}:ScanBtnProps) => {
     const router = useRouter()
     const [requestCameraPermission, setRequestCameraPermission] = useState(false);
     const centerImg = {
@@ -60,19 +60,19 @@ export const ScanBtn = ({scanType = 'Camera', setPopup, sqrSize = 200,}:ScanBtnP
             <ExitPopup showPopUp={setRequestCameraPermission} popupText="Allow AI to access your camera?" confirmBtn="Allow" denyBtn="Deny" confirmFunc={confirmFunction} confirmText='Opening camera...'/>
             }
             <div className="absolute line_Container  flex justify-center top-1/2 right-1/2 items-center -z-20 size-44 ml-1 ">
-            <div className="absolute origin-top-right top-0 w-full border-t-[.1px] border-black -rotate-45">
+            <div className="absolute origin-top-right top-0 right-0 small w-1/2 smallest:w-full border-t-[.1px] border-black -rotate-45">
                 <div className="absolute -bottom-1 -left-2 rounded-full border-black border-[0.5px] size-2"/>
             </div>
-            <span className="absolute bottom-0 right-[20%] origin-top-right w-[160px] text-[14px] font-[400] textMount "> ALLOW AI TO ACCESS CAMERA</span>
+            <span className="absolute bottom-12 -right-[20%] smallest:bottom-0 smallest:right-[20%] origin-top-right w-[160px] text-[14px] font-[400] textMount "> ALLOW AI TO ACCESS CAMERA</span>
             </div>
             </>
             )
 :
 (    <div className="absolute line_Container  flex justify-center bottom-1/2 left-1/2 items-center -z-20 size-44 mr-1">
-    <div className="absolute origin-bottom-left bottom-0 w-full border-t-[.1px] border-black -rotate-[49deg]">
+    <div className="absolute origin-bottom-left bottom-0 left-0 w-1/2 smallest:w-full border-t-[.1px] border-black -rotate-[49deg]">
     <div className="absolute -top-1 -right-2 rounded-full border-black border-[0.5px] size-2"/>
     </div>
-    <span className="absolute -top-3 left-[28%] origin-top-right w-[160px] text-[14px] font-[400] textMount "> ALLOW AI TO ACCESS GALLERY</span>
+    <span className="absolute smallest:-top-3 smallest:left-[28%] top-9 left-[0%] origin-top-right w-[160px] text-[14px] font-[400] textMount "> ALLOW AI TO ACCESS GALLERY</span>
     </div> )
 
 }
