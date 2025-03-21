@@ -19,13 +19,13 @@ export const FilePopup = ({ setPopup, setSelectedPhoto }: fileProps) => {
     tl.fromTo(
       containerRef.current,
       { clipPath: "inset(0% 100% 99% 0%)" },
-      { clipPath: "inset(0% 0% 99% 0%)", ease: "power2.inOut", duration: 0.2 }
+      { clipPath: "inset(0% 0% 99% 0%)", ease: "power2.easeInOut", duration: 0.2 }
     );
 
     tl.to(containerRef.current, {
       clipPath: "inset(0% 0% 0% 0%)",
       duration: .5,
-      ease: "power3.inOut",
+      ease: "power3.easeInOut",
     });
 
     tlRef.current = tl;

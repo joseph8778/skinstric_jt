@@ -105,6 +105,13 @@ export default function DemographicsPage() {
   }, [selectedDemo, sortedData, selectedCategories]);
   const currentSelectedCategory = selectedCategories[selectedDemo];
 
+  const resetCategories = () => {
+    setSelectedCategories({
+      race: sortedData.race.length > 0 ? { key: sortedData.race[0][0], value: sortedData.race[0][1] } : null,
+      gender: sortedData.gender.length > 0 ? { key: sortedData.gender[0][0], value: sortedData.gender[0][1] } : null,
+      age: sortedData.age.length > 0 ? { key: sortedData.age[0][0], value: sortedData.age[0][1] } : null,
+    });
+  }
 
   return (
     <>
@@ -150,13 +157,7 @@ export default function DemographicsPage() {
             <NavBtn direction="left" routerLink="/testing" />
             <div className="flex gap-3">
               <button
-                onClick={() => {
-                  setSelectedCategories({
-                    race: sortedData.race.length > 0 ? { key: sortedData.race[0][0], value: sortedData.race[0][1] } : null,
-                    gender: sortedData.gender.length > 0 ? { key: sortedData.gender[0][0], value: sortedData.gender[0][1] } : null,
-                    age: sortedData.age.length > 0 ? { key: sortedData.age[0][0], value: sortedData.age[0][1] } : null,
-                  });
-                }}
+                onClick={() => resetCategories()}
                 className="w-[70px] h-8 bg-black text-white flex items-center justify-center hover:bg-slate-900"
               >
                 <span className="text-[10px] font-roobert font-semibold">Reset</span>
