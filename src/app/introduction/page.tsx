@@ -125,7 +125,7 @@ export default function IntroPage() {
           <BgSquare size="big" />
         </main>
 
-        <footer className="footer flex justify-between pb-10">
+        <footer>
           <NavBtn 
             showGlobPop={(bool) => setShowPopup((prev) => ({...prev, visible: bool}))} 
             pageNum={page} 

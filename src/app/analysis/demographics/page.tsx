@@ -4,6 +4,7 @@ import { CategorySelector } from "@/components/CategorySelector";
 import { ConfidenceDisplay } from "@/components/ConfidenceDisplay";
 import { DemoSelector } from "@/components/DemoSelector";
 import { Header } from "@/components/Header";
+import { LargeTitle } from "@/components/LargeTitle";
 import { NavBtn } from "@/components/NavBtn";
 import { PageLoader } from "@/components/PageLoader";
 import { Popup } from "@/components/Popup";
@@ -133,14 +134,7 @@ useEffect(() => {
         <>
           <Header blackBtn="CONSULT CHEMIST" />
           <main className="relative mb-4">
-            <div className="w-full flex flex-col h-[20%] justify-start items-start mb-8">
-              <h1 className="textMount text-[38px] 520Brk:text-[42px] tracking-tighter">DEMOGRAPHICS</h1>
-              <p className="textMount text-[12px] tracking-tighter ml-[4px]">PREDICTED AGE AND RACE</p>
-              <div className="visible 900Brk:hidden mt-6 ml-2">
-                <NavBtn direction="left" routerLink="/testing" />
-              </div>
-            </div>
-
+              <LargeTitle/>
             <div className="w-full h-[60%] 900Brk:h-[20%] flex justify-around gap-4 min-h-[600px]">
               <DemoSelector 
                 sortedData={transformedData} 
@@ -165,7 +159,7 @@ useEffect(() => {
           </main>
 
           <footer className="
-          relative hidden 900Brk:flex py-6 items-center justify-between">
+          relative hidden 900Brk:flex ">
             <NavBtn direction="left" routerLink="/testing" />
             <div className="flex gap-3">
               <button
