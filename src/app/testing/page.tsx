@@ -41,7 +41,6 @@ export default function TestingPage() {
     };
   });
   
-  // Convert selected photo to base64 and send it to the API
   const router = useRouter()
   async function getPhotoData(selectedPhoto: File | null) {
     if (selectedPhoto) {
@@ -86,7 +85,6 @@ export default function TestingPage() {
         }
       };
       
-      // Read the file as base64
       reader.readAsDataURL(selectedPhoto);
     }
   }

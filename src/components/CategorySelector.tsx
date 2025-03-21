@@ -12,13 +12,14 @@ type categorySelectorProps = {
     gender: { key: string; value: number } | null;
     age: { key: string; value: number } | null;
   }>>;
+  resetCategories: () => void;
 }
 
 
 export const CategorySelector = ({  sortedData,
     setShowMobileCategories,
     selectedDemo,
-    currentSelectedCategory, showMobileCategories, setSelectedCategories}:categorySelectorProps) => {
+    currentSelectedCategory, showMobileCategories, setSelectedCategories, resetCategories}:categorySelectorProps) => {
 
 return (
 <div className={`category_container fadeRight w-screen 520Brk:w-[60%] top-0 h-screen 520Brk:h-auto fixed ${showMobileCategories ? 'block' : 'hidden'} 520Brk:static  520Brk:flex 900Brk:w-[55%] 1150Brk:w-[26%] border-[1px] border-t-black bg-[#f3f3f4] flex-col justify-start`}>
@@ -75,23 +76,7 @@ return (
                   </div>
                             <div className=" gap-3 justify-end p-3 bg-black 900Brk:hidden flex">
               <button
-                onClick={() => {
-                  // Reset each demo's selected category to its initial first (highest value) item.
-                  setSelectedCategories({
-                    race:
-                    sortedData.race.length > 0
-                    ? { key: sortedData.race[0].key, value: sortedData.race[0].value }
-                    : null,
-                    gender:
-                    sortedData.gender.length > 0
-                    ? { key: sortedData.gender[0].key, value: sortedData.gender[0].value }
-                    : null,
-                    age:
-                    sortedData.age.length > 0
-                    ? { key: sortedData.age[0].key, value: sortedData.age[0].value }
-                    : null,
-                  });
-                }}
+                onClick={resetCategories}
                 className="w-[70px] h-5 bg-black text-white flex items-center justify-center hover:bg-slate-900"
                 >
                 <span className="text-[10px] font-roobert font-semibold">RESET</span>

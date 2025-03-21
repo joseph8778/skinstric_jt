@@ -9,6 +9,7 @@ import { PageLoader } from "@/components/PageLoader";
 import { Popup } from "@/components/Popup";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { produce } from "immer";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -18,15 +19,24 @@ export default function DemographicsPage() {
   const [pageLoader, setPageLoader] = useState(false);
   const [showMobileCategories, setShowMobileCategories] = useState(false);
 
-  let demoData = null;
-
-  try {
-    demoData = rawData ? JSON.parse(rawData) : null;
-  } catch (error) {
-    console.error("Invalid JSON data:", error);
-    setPageLoader(true);
+  interface DemoData {
+    race: Record<string, number>;
+    gender: Record<string, number>;
+    age: Record<string, number>;
   }
 
+  const [demoData, setDemoData] = useState<DemoData | null>(null);
+
+  useEffect(() => {
+    try {
+      const parsedData = rawData ? JSON.parse(rawData) : null;
+      setDemoData(parsedData);
+    } catch (error) {
+      setPageLoader(true);
+      console.error("Invalid JSON data:", error);
+    }
+  }, [rawData]);
+  
   const animRef = useRef<gsap.core.Animation[] | null>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
   
@@ -66,10 +76,10 @@ export default function DemographicsPage() {
 
 
   const sortedData = useMemo(() => {
-    if (!demoData || typeof demoData !== "object") {
-      setPageLoader(true);
-    }
-    if (!demoData) return { race: [], gender: [], age: [] };
+    if (!demoData) {
+      console.log('loading')
+      return { race: [], gender: [], age: [] };
+    } 
     
     return {
       race: Object.entries(demoData.race as Record<string, number>).sort((a, b) => b[1] - a[1]),
@@ -92,17 +102,18 @@ export default function DemographicsPage() {
     age: sortedData.age.length > 0 ? { key: sortedData.age[0][0], value: sortedData.age[0][1] } : null,
   });
 
-  useEffect(() => {
-    if (sortedData[selectedDemo].length > 0 && !selectedCategories[selectedDemo]) {
-      setSelectedCategories((prev) => ({
-        ...prev,
-        [selectedDemo]: {
-          key: sortedData[selectedDemo][0][0],
-          value: sortedData[selectedDemo][0][1],
-        },
-      }));
-    }
-  }, [selectedDemo, sortedData, selectedCategories]);
+
+useEffect(() => {
+  if (sortedData[selectedDemo].length > 0 && !selectedCategories[selectedDemo]) {
+    setSelectedCategories((prev) =>
+      produce(prev, (draft) => {
+        draft[selectedDemo] = sortedData[selectedDemo][0]
+          ? { key: sortedData[selectedDemo][0][0], value: sortedData[selectedDemo][0][1] }
+          : null;
+      })
+    );
+  }
+}, [selectedDemo, sortedData]);
   const currentSelectedCategory = selectedCategories[selectedDemo];
 
   const resetCategories = () => {
@@ -148,6 +159,7 @@ export default function DemographicsPage() {
                 currentSelectedCategory={currentSelectedCategory as keyof typeof currentSelectedCategory} 
                 showMobileCategories={showMobileCategories} 
                 setSelectedCategories={setSelectedCategories} 
+                resetCategories={resetCategories}
               />
             </div>
           </main>
