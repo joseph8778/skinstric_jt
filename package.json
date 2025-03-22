@@ -11,6 +11,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@gsap/react": "^2.1.2",
     "axios": "^1.7.9",
     "gsap": "^3.12.7",
