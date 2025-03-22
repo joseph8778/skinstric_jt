@@ -4,9 +4,18 @@ import { DataBox } from '@/components/DataBox';
 import { Header } from '@/components/Header';
 import { LargeTitle } from '@/components/LargeTitle';
 import { NavBtn } from '@/components/NavBtn';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 import React from 'react';
 
 const Page = () => {
+    useGSAP(() => {
+        gsap.fromTo(
+            ".textMount",
+            { clipPath: "inset(0% 100% 0% 0%)" },
+            { clipPath: "inset(0% 0% 0% 0%)", duration: 1, delay: 0.2 }
+          )
+    }, [])
     return (
         <>
         <Header/>
@@ -17,7 +26,7 @@ const Page = () => {
 
         <div className="flex items-center justify-start gap-2 py-3">
             <i className="fa-solid fa-location-dot text-[20px]"/>
-            <h1 className="location__title text-[32px] font-medium tracking-tighter">
+            <h1 className="textMount location__title text-[32px] font-medium tracking-tighter">
             CHICAGO, IL, USA</h1>
         </div>
         <div className="dataBox__wrapper flex gap-3 w-full h-[450px]">
