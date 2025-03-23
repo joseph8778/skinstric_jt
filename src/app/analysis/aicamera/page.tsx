@@ -1,17 +1,38 @@
 'use client'
-import { BgSquare } from "@/components/BgSquare";
 import { IntroSqrAnim } from "@/components/IntroSqrAnim";
+import { PageLoader } from "@/components/PageLoader";
+import shutter from '@/assets/shutter.svg'
+import Image from "next/image";
 
 export default function aiCameraPage() {
     return (
         <>
-        <IntroSqrAnim />
-        <div className="flex justify-center items-center w-screen h-screen">
-        <span className="font-roobert font-semibold text-xs">SETTING UP CAMERA...</span>
-        <BgSquare size="big"></BgSquare>
-        <BgSquare size="medium"></BgSquare>
-        <BgSquare size="small"></BgSquare>
-        </div>
+        <IntroSqrAnim linesAnimDuration={2.5} />
+        <main> 
+            <PageLoader customSize={300}>
+                <div className="flex flex-col justify-center items-center">
+                    <Image width={152} height={152} src={shutter} alt="shutterPicture"/>
+                    <span className="text-[16px] font-[600] tracking-wide mt-7">SETTING UP CAMERA...</span>
+
+                    <div className="flex flex-col justify-center items-center absolute bottom-24 w-full max-w-[550px] gap-5 font-[400]">
+                        <h1 className="text-[16px]">TO GET BETTER RESULTS BE SURE TO HAVE</h1>
+                        <h1 className="flex w-full justify-around">
+                            <span className="flex justify-start items-center gap-1">
+                                <div className="rotate-45 w-[12px] h-[12px] outline-1 outline mr-2"/>
+                                NUETRAL EXPRESSION</span>
+                            <span className="flex justify-start items-center gap-1">
+                                <div className="rotate-45 w-[12px] h-[12px] outline-1 outline mr-2"/>
+                                FRONTAL POSE</span>
+                            <span className="flex justify-start items-center gap-1">
+                                <div className="rotate-45 w-[12px] h-[12px] outline-1 outline mr-2"/>
+                                ADEQUATE LIGHTING</span>
+                        </h1>
+                    </div>
+                </div>
+            </PageLoader>
+
+        
+        </main>
         </>
     )
 }

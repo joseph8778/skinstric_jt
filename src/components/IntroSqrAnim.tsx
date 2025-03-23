@@ -49,9 +49,9 @@ export const IntroSqrAnim = ({
        <div className="squares overflow-clip bg-white absolute z-10 w-screen h-screen
        flex justify-center items-center">
         <h1>{centerText}</h1>
-        <IntroSquare startVisible={false} clampVW="40" minSize = '140' maxSize="300"/>
-        <IntroSquare startVisible={false} clampVW="50" minSize = '180' maxSize="340"/>
         <IntroSquare startVisible={false} clampVW="60" minSize = '220' maxSize="380"/>
+        <IntroSquare startVisible={false} clampVW="50" minSize = '180' maxSize="340"/>
+        <IntroSquare startVisible={false} clampVW="40" minSize = '140' maxSize="300"/>
        </div>
     );
 }

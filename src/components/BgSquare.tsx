@@ -19,8 +19,8 @@ export const BgSquare = ({size = 'small', customSize, spinSpeed, customOpacity}:
         small: '160s'
     }
     const opacity = {
-        big: 'opacity-25',
-        medium: 'opacity-50',
+        big: 'opacity-[.25]',
+        medium: 'opacity-[.50]',
         small: ''
     }
     const finalSize = customSize ? (`clamp(${customSize - 40}px, ${customSize * 0.1}vw, ${customSize + 40}px)`) : (`clamp(${squareType[size]})`)

@@ -22,7 +22,6 @@ export const LocInput = ({
   focusText = 'INTRODUCE YOURSELF',
   topText = 'CLICK TO TYPE',
 }: inputProps) => {
-
   const [isFocused, setIsFocused] = useState(false);
 
 
@@ -40,8 +39,16 @@ export const LocInput = ({
       autocomplete.addListener("place_changed", () => {
         const place = autocomplete!.getPlace();
         if (place && place.formatted_address) {
+          const lat = place.geometry?.location?.lat()
+          const lng = place.geometry?.location?.lng()
+          console.log('setting location ' + lat, lng)
+          if (lat !== undefined && lng !== undefined) {
+               
+        localStorage.setItem('latitude', lat.toString());
+        localStorage.setItem('longitude', lng.toString());
+        localStorage.setItem('Location_Name', place.formatted_address.toString());
           setInput(place.formatted_address);
-          sendData(place.formatted_address)
+          sendData(place.formatted_address)}
         } else {
           console.log('Select place from dropdown')
           setShowPopup(true, 'location_error')

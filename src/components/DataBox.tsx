@@ -6,7 +6,7 @@ type DataBoxProps = {
     title?: string;
     titleClasses?: string;
 
-    infoNum?: number;
+    infoNum?: number | null;
     infoText?: string;
     infoNumClasses?: string
     infoTextClasses?: string
@@ -68,7 +68,7 @@ export const DataBox = ({
                 <span className={`text-[32px] ${infoNumClasses}`}>
                     {infoNum}
                 </span>
-                <span className={` tracking-tight text-[14px] ${infoTextClasses}`}>
+                <span className={` tracking-tight text-[14px] text-wrap wrap w-[75%] text-right ${infoTextClasses}`}>
                         {infoText}
                 </span>    
             </div>

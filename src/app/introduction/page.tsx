@@ -52,6 +52,7 @@ export default function IntroPage() {
       );
       console.log(response.data);
       setShowPopup({visible: true, popupType: '', popupMsg: `${nameInput} from ${locationParam.length > 20 ? (locationParam.slice(0, 20) + '...') : (locationParam)} has been added!`})
+      localStorage.setItem('username', nameInput.toString());
       setTimeout(() => router.push('/testing'), 3000);
     }
     catch (error: unknown) {

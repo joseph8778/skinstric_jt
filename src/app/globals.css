@@ -53,9 +53,7 @@ footer {
   padding: 0;
   box-sizing: border-box;
 }
-span {
-  font: 'Roobert TRIAL';
-}
+
 
 .section_container {
   width: 100vw;
@@ -67,7 +65,7 @@ span {
   padding-right: 2rem;
 }
 
-h1, h2, h3, h4, p {
+h1, h2, h3, h4, p, span {
   font-family: 'Roobert TRIAL';
 }
 
@@ -88,10 +86,10 @@ h1, h2, h3, h4, p {
 
 .square {
   background-image: 
-  repeating-linear-gradient(-18deg, #58595a, #58595a 1px, #0000 0, #0000 5px, #58595a 0), 
-  repeating-linear-gradient(72deg, #58595a, #58595a 1px, #0000 0, #0000 5px, #58595a 0), 
-  repeating-linear-gradient(162deg, #58595a, #58595a 1px, #0000 0, #0000 5px, #58595a 0), 
-  repeating-linear-gradient(252deg, #58595a, #58595a 1px, #0000 0, #0000 5px, #58595a 0);
+  repeating-linear-gradient(-18deg, #0f0f0f, #0f0f0f 1px, #0000 0, #0000 5px, #0f0f0f 0), 
+  repeating-linear-gradient(72deg, #0f0f0f, #0f0f0f 1px, #0000 0, #0000 5px, #0f0f0f 0), 
+  repeating-linear-gradient(162deg, #0f0f0f, #0f0f0f 1px, #0000 0, #0000 5px, #0f0f0f 0), 
+  repeating-linear-gradient(252deg, #0f0f0f, #0f0f0f 1px, #0000 0, #0000 5px, #0f0f0f 0);
     background-position: 100% 0, 100% 100%, 0% 100%, 0 0;
     background-repeat: no-repeat;
     background-size: 1px 0%, 0% 1px, 1px 0%, 0% 1px; 

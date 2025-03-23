@@ -69,10 +69,10 @@ export default function TestingPage() {
                 },
               }
             );
-            const serializedData = encodeURIComponent(JSON.stringify(response.data.data))
+           
             console.log(response.data.data);
-            console.log(serializedData)
-            router.push(`/analysis/demographics?data=${serializedData}`)
+            localStorage.setItem('DemoData', JSON.stringify(response.data.data))
+            router.push(`/analysis/demographics`)
             
           } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -98,7 +98,9 @@ export default function TestingPage() {
   }, [selectedPhoto]);
 
   if (pageLoader) {
-    return <PageLoader loaderText="PREPARING YOUR ANALYSIS..."/>
+    return <PageLoader >
+              <span>PREPARING YOUR ANALYSIS...</span>
+           </PageLoader>
   }
   
   return (

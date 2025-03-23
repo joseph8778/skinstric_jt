@@ -11,12 +11,10 @@ import { Popup } from "@/components/Popup";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { produce } from "immer";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 export default function DemographicsPage() {
-  const searchParams = useSearchParams();
-  const rawData = searchParams.get('data');
+  const rawData = localStorage.getItem('DemoData');
   const [pageLoader, setPageLoader] = useState(false);
   const [showMobileCategories, setShowMobileCategories] = useState(false);
 
