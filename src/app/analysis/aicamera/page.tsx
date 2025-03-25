@@ -1,15 +1,14 @@
 'use client'
 import { IntroSqrAnim } from "@/components/IntroSqrAnim";
-import { PageLoader } from "@/components/PageLoader";
-import shutter from '@/assets/shutter.svg'
-import Image from "next/image";
+import CameraAccess from "@/components/CameraAccess";
+import { Header } from "@/components/Header";
 
 export default function aiCameraPage() {
     return (
         <>
         <IntroSqrAnim linesAnimDuration={2.5} />
         <main> 
-            <PageLoader customSize={300}>
+            {/* <PageLoader customSize={300}>
                 <div className="flex flex-col justify-center items-center">
                     <Image width={152} height={152} src={shutter} alt="shutterPicture"/>
                     <span className="text-[16px] font-[600] tracking-wide mt-7">SETTING UP CAMERA...</span>
@@ -29,8 +28,11 @@ export default function aiCameraPage() {
                         </h1>
                     </div>
                 </div>
-            </PageLoader>
-
+            </PageLoader> */}
+            <div className="absolute top-0 left-0 z-[100]">
+                <Header></Header>
+            </div>
+            <CameraAccess></CameraAccess>
         
         </main>
         </>

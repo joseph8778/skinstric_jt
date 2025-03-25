@@ -95,7 +95,7 @@ export default function TestingPage() {
     }
     return () => {
     };
-  }, [selectedPhoto]);
+  }, [selectedPhoto])
 
   if (pageLoader) {
     return <PageLoader >
