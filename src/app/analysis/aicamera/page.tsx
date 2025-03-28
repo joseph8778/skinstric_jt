@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import BetterResultsDisclaimer from "@/components/BetterResultsDisclaimer";
+import cameraIcon from '@/assets/CameraIcon.svg'
 
 export default function AiCameraPage() {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -84,9 +85,18 @@ export default function AiCameraPage() {
             
             <Header intro="visible"></Header>
             <main > 
-                <video ref={videoBlurRef} autoPlay playsInline className="absolute top-0 left-0 w-full h-full object-cover blur-sm"></video>
-                
-                <video ref={videoRef} autoPlay playsInline  className="absolute top-0 left-0 w-full h-full object-cover [mask-image:radial-gradient(ellipse_25%_80%,#000_45%,transparent_55%)]" />
+                <video ref={videoBlurRef} autoPlay playsInline className="absolute top-0 left-0 w-full h-full object-cover blur-sm "></video>
+                <video ref={videoRef} autoPlay playsInline  className="absolute top-0 left-0 w-full h-full object-cover [mask-image:radial-gradient(ellipse_25%_80%,#000_45%,transparent_55%)] z-0" />
+                <div className="group absolute
+                top-1/2 right-0 -translate-x-[10%] -translate-y-[50%]
+                flex justify-center items-center gap-5"> 
+                    <h1 className="z-10 dark:text-white font-semibold group-hover:-translate-x-[15%] transition-all ease-in-out duration-300">TAKE PICTURE</h1>
+                        <div className="z-10 relative rounded-full bg-white size-16 flex justify-center items-center hover:cursor-pointer group-hover:scale-[1.2] transition-all duration-300 ease-in-out">
+                            <div className="z-11 rounded-full border-2 border-gray-400 size-[95%] absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] ">
+                                <Image src={cameraIcon} className='absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%]' alt="cameraIcon"/>
+                            </div>
+                        </div>
+                </div>
                 <div className="flex justify-center">
                 <BetterResultsDisclaimer parentProps="static bottom-[30]"/>
                 </div>
