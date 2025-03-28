@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import { ThemeProvider } from "next-themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,8 +44,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}
       >
-        
+        <ThemeProvider attribute={"class"} defaultTheme="system" enableSystem enableColorScheme>
+          {/* <div className="bg-white dark:bg-[#0d1117] text-black dark:text-white min-h-screen flex flex-col justify-between"> */}
         {children}
+          {/* </div> */}
+        </ThemeProvider>
       </body>
     </html>
   );

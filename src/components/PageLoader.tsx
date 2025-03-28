@@ -10,7 +10,7 @@ customSize?: number;
 export const PageLoader = ({children, customSize}:PageLoaderProps) => {
 
 const sizes = customSize ? [customSize, 
-  customSize + 40, customSize + 80] : ['big', 'medium', 'small'];
+  customSize + 60, customSize + 120] : ['big', 'medium', 'small'];
 
 return (
 <div className="flex justify-center items-center w-screen h-screen">

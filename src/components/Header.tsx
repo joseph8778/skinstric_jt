@@ -35,17 +35,18 @@ Header = ({
   };
 
   return (
-  <div className={`${parentClasses[parent]} pl-8 pr-8`}>
-    <div className="flex items-center justify-center">
+  <div className={`${parentClasses[parent]} pl-8 pr-8 z-[100]`}>
+    <div className="flex items-center justify-center ">
 
       <Link href='/' className={`
+      dark:text-white
         ${logoClasses[logo]}`} >
         {logoText}
       </Link>
       
-      <button className={`${introClasses[intro]}`} >
+      <button className={`${introClasses[intro]} dark:brightness-[5000]`} >
         <Image src={leftBracket} alt="leftBracket" />
-        <span className="mx-2 text-sm">
+        <span className="mx-2 text-sm dark:text-white">
         {introText}
         </span>
         <Image src={rightBracket} alt="rightBracket" />
