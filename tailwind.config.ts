@@ -8,6 +8,7 @@ export default {
     "./stories/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: 'class',
+  lightMode: 'class',
   theme: {
     extend: {
       screens: {

@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         
       <Script
@@ -40,16 +40,18 @@ export default function RootLayout({
       defer
     />
 
+
       </head>
-      <body
+      <body lang="en"
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}
       >
-        <ThemeProvider attribute={"class"} defaultTheme="system" enableSystem enableColorScheme>
-          {/* <div className="bg-white dark:bg-[#0d1117] text-black dark:text-white min-h-screen flex flex-col justify-between"> */}
+        <ThemeProvider attribute="class" defaultTheme="light" >
         {children}
-          {/* </div> */}
         </ThemeProvider>
       </body>
     </html>
   );
 }
+
+{/* <div className="bg-white dark:bg-[#0d1117] text-black dark:text-white min-h-screen flex flex-col justify-between"> */}
+{/* </div> */}

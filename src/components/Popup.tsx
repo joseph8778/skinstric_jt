@@ -59,7 +59,7 @@ export const Popup = ({
 
   return (
     <div
-      className="popup overflow-hidden absolute p-5 top-0 right-0 z-10"
+      className="popup overflow-hidden absolute p-5 top-0 right-0 z-[150]"
       onMouseEnter={() => timeline.current?.pause()}
       onMouseLeave={() => timeline.current?.resume()}
     >
