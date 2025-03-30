@@ -1,9 +1,9 @@
 import React from 'react';
 
 type introSqrProps = {
-    maxSize: string,
-    minSize: string,
-    clampVW: string
+    maxSize?: string,
+    minSize?: string,
+    clampVW?: string
     startVisible: boolean,
 }
 

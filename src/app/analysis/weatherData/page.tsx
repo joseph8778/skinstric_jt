@@ -8,7 +8,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import React, { useEffect } from 'react';
 
-const Page = () => {
+const WeatherPage = () => {
     const latitude = localStorage.getItem('latitude')  // Access latitude
     const longitude = localStorage.getItem('longitude')  // Access latitude
     const locationName = localStorage.getItem('Location_Name')  
@@ -88,4 +88,4 @@ const Page = () => {
     );
 }
 
-export default Page;
+export default WeatherPage;
