@@ -6,7 +6,7 @@ type BetterResultsDisclaimerProps = {
 export default function BetterResultsDisclaimer({ parentProps = '' }:BetterResultsDisclaimerProps) {
 
     return (
-        <div className={` flex flex-col justify-center items-center  w-full max-w-[550px] gap-5 font-[400] absolute bottom-24 dark:text-white ${parentProps}`}>
+        <div className={` flex flex-col justify-center items-center  w-full max-w-[550px] gap-5 font-[400] absolute bottom-[50] dark:text-white ${parentProps}`}>
                 <h1 className="text-[16px]">TO GET BETTER RESULTS BE SURE TO HAVE</h1>
                 <h1 className="flex w-full justify-around">
                     <span className="flex justify-start items-center gap-1">

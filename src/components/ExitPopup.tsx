@@ -9,10 +9,11 @@ type PopupProps = {
   denyBtn?: string;
   confirmFunc?: () => void;
   confirmText?: string;
+  parentClassName?: string;
 };
 
 export const ExitPopup = ({
-  popupText = "You are about to leave analysis, are you sure?", confirmBtn = "LEAVE", denyBtn = 'STAY', confirmFunc, confirmText, showPopUp
+  popupText = "You are about to leave analysis, are you sure?", confirmBtn = "LEAVE", denyBtn = 'STAY', confirmFunc, confirmText, showPopUp, parentClassName = ''
 }: PopupProps) => {
   const popupRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(true);
@@ -61,7 +62,7 @@ export const ExitPopup = ({
   if (!isVisible) return null;
 
   return (
-    <div ref={popupRef} className="exit__popup absolute top-[48px] left-[32px]">
+    <div ref={popupRef} className={`exit__popup absolute top-[48px] left-[32px] ${parentClassName}`}>
       <div className=" h-[104px] flex flex-col shadow-lg relative bg-[#1A1B1C] z-50"
       style={{ width: "clamp(200px, 50vw, 288px)" }}
       >

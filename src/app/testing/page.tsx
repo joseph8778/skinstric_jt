@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { Popup } from "@/components/Popup";
 import { PageLoader } from "@/components/PageLoader";
 import { NavBtn } from "@/components/NavBtn";
+import { HandleDemoData } from "@/utils/HandleDemoData";
 
 
 export default function TestingPage() {
@@ -42,52 +43,29 @@ export default function TestingPage() {
   });
   
   const router = useRouter()
-  async function getPhotoData(selectedPhoto: File | null) {
+  const getPhotoData = async (selectedPhoto: File | null) => {
     if (selectedPhoto) {
-      animRef.current?.forEach((animation) =>  {
-        animation.reverse()
-      })
-      setTimeout(() => {
-        setpageLoader(true)
-      }, 1700);
-    
-      
-      const reader = new FileReader();
-      
-      reader.onloadend = async () => {
-        const base64Image = reader.result?.toString().split(',')[1];  
-
-        if (base64Image) {
-         
-          try {
-            const response = await axios.post(
-              'https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo',
-              { image: base64Image },
-              {
-                headers: {
-                  "Content-Type": 'application/json',  
-                },
-              }
-            );
-           
-            console.log(response.data.data);
-            localStorage.setItem('DemoData', JSON.stringify(response.data.data))
-            router.push(`/analysis/demographics`)
-            
-          } catch (error) {
-            if (axios.isAxiosError(error)) {
-              console.log('Error Response:', error)
-              setPopup(true)
-            } else {
-              console.log('Unexpected Error:', error);
-            }
-          }
+      await HandleDemoData(selectedPhoto, {
+        preProcess: () => {
+          // Reverse animations
+          if (animRef.current) {
+          animRef.current.forEach((animation) => {
+            animation.reverse();
+          });
+          // Set loader after a delay
+          setTimeout(() => {
+            setpageLoader(true);
+          }, 1700);
         }
-      };
-      
-      reader.readAsDataURL(selectedPhoto);
+        },
+        postProcess: () => {
+          router.push('/analysis/demographics')
+        },
+        onError: (error) => {
+          setPopup(true);
+        },});
     }
-  }
+  };
   
   useEffect(() => {
     if (selectedPhoto) {
@@ -96,7 +74,7 @@ export default function TestingPage() {
     return () => {
     };
   }, [selectedPhoto])
-
+  
   if (pageLoader) {
     return <PageLoader >
               <span>PREPARING YOUR ANALYSIS...</span>
@@ -129,3 +107,50 @@ export default function TestingPage() {
     </>
   );
 }
+
+// async function getPhotoData(selectedPhoto: File | null) {
+//   if (selectedPhoto) {
+//     animRef.current?.forEach((animation) =>  {
+//       animation.reverse()
+//     })
+//     setTimeout(() => {
+//       setpageLoader(true)
+//     }, 1700);
+  
+    
+//     const reader = new FileReader();
+    
+//     reader.onloadend = async () => {
+//       const base64Image = reader.result?.toString().split(',')[1];  
+
+//       if (base64Image) {
+       
+//         try {
+//           const response = await axios.post(
+//             'https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo',
+//             { image: base64Image },
+//             {
+//               headers: {
+//                 "Content-Type": 'application/json',  
+//               },
+//             }
+//           );
+         
+//           console.log(response.data.data);
+//           localStorage.setItem('DemoData', JSON.stringify(response.data.data))
+//           router.push(`/analysis/demographics`)
+          
+//         } catch (error) {
+//           if (axios.isAxiosError(error)) {
+//             console.log('Error Response:', error)
+//             setPopup(true)
+//           } else {
+//             console.log('Unexpected Error:', error);
+//           }
+//         }
+//       }
+//     };
+    
+//     reader.readAsDataURL(selectedPhoto);
+//   }
+// }
