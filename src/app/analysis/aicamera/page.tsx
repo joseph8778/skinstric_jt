@@ -195,7 +195,7 @@ export default function AiCameraPage() {
                 {timer === 0 && <div ref={flashRef} className="absolute top-0 left-0 w-screen h-screen bg-white opacity-75 z-[121]" />}
                 <canvas ref={canvasRef} className="hidden" />
                 <div className="flex justify-center">
-                  <BetterResultsDisclaimer parentProps="static bottom-[30]" />
+                  <BetterResultsDisclaimer parentProps="static bottom-[62px]" />
                 </div>
               </main>
               <footer>
