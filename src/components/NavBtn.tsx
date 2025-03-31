@@ -10,9 +10,10 @@ type btnProps = {
     pageNum?: number;
     showGlobPop?: (bool: boolean) => void;
     routerLink?: string
+    containerClasses?: string;
 };
 
-export const NavBtn = ({routerLink, pageNum, setPage, direction = 'left', showGlobPop }: btnProps) => {
+export const NavBtn = ({routerLink, pageNum, setPage, direction = 'left', showGlobPop, containerClasses }: btnProps) => {
     const [showPopup, setShowPopup] = useState(false);
     const router = useRouter()
 
@@ -59,7 +60,7 @@ export const NavBtn = ({routerLink, pageNum, setPage, direction = 'left', showGl
                     ${mountAnimation[direction]} 
                     group relative flex justify-center items-center 
                     font-roobert text-[clamp(.65rem,1vw,0.75rem)] 
-                    tracking-tighter font-bold dark:text-white text-black
+                    tracking-tighter font-bold dark:text-white text-black ${containerClasses}
                 `}
             >
                 <Image

@@ -7,15 +7,19 @@ type introProps = {
     linesAnimDuration?: number,
     fadeOutDuration?: number,
     centerText?: string,
+    onComplete?: () => void,
 }
 
 export const IntroSqrAnim = ({
     linesAnimDuration = 3, 
-    fadeOutDuration = 1, centerText = ''}:introProps)=>{
+    fadeOutDuration = 1, 
+    centerText = '',
+    onComplete = () => {},
+    }:introProps)=>{
         
     useGSAP(() => {
         const context = gsap.context(() => {
-            const tl = gsap.timeline();
+            const tl = gsap.timeline({onComplete});
             
             tl.to('.introSquare', {
                 duration: linesAnimDuration,
@@ -29,13 +33,13 @@ export const IntroSqrAnim = ({
                 ],
             });
             
-            tl.to('.introSquare', {
-                opacity: 0,
+            tl.from('.introSquare', {
+                opacity: 1,
                 duration: fadeOutDuration,
                 stagger: 0.25,
             });
             
-            tl.to('.introSquare, .squares', {
+            tl.to('.squares', {
                 display: "none",
                 duration: 0.01,
             });
@@ -49,9 +53,9 @@ export const IntroSqrAnim = ({
        <div className="squares overflow-clip bg-white absolute z-10 w-screen h-screen
        flex justify-center items-center">
         <h1>{centerText}</h1>
-        <IntroSquare startVisible={false} clampVW="60" minSize = '220' maxSize="380"/>
-        <IntroSquare startVisible={false} clampVW="50" minSize = '180' maxSize="340"/>
-        <IntroSquare startVisible={false} clampVW="40" minSize = '140' maxSize="300"/>
+        <IntroSquare startVisible={false} clampVW="60" minSize = '220' maxSize="380" opacity={0}/>
+        <IntroSquare startVisible={false} clampVW="50" minSize = '180' maxSize="340" opacity={0}/>
+        <IntroSquare startVisible={false} clampVW="40" minSize = '140' maxSize="300" opacity={0}/>
        </div>
     );
 }
