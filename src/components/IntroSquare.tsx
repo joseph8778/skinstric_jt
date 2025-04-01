@@ -4,16 +4,17 @@ type introSqrProps = {
     maxSize?: string,
     minSize?: string,
     opacity?: number,
-    clampVW?: string
-    startVisible: boolean,
+    clampVW?: string,
+    className?: string,
+    startVisible?: boolean,
     children?: React.ReactNode;
 }
 
 
-export const IntroSquare = ({maxSize = '360', minSize = '140', startVisible = false, clampVW = '40', opacity = 1, children}:introSqrProps) => {
+export const IntroSquare = ({maxSize = '360', minSize = '140', startVisible = false, clampVW = '40', opacity = 1, children, className}:introSqrProps) => {
 
 return (
-    <div className="square introSquare absolute -rotate-45" style={{    
+    <div className={`square introSquare absolute -rotate-45 ${className}`} style={{    
         width: `clamp(${minSize}px, ${clampVW}vw, ${maxSize}px)`, 
         height: `clamp(${minSize}px, ${clampVW}vw, ${maxSize}px)`,
         opacity: opacity,
