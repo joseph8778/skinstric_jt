@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 type introSqrProps = {
     maxSize?: string,
@@ -11,10 +11,10 @@ type introSqrProps = {
 }
 
 
-export const IntroSquare = ({maxSize = '360', minSize = '140', startVisible = false, clampVW = '40', opacity = 1, children, className}:introSqrProps) => {
+export const IntroSquare = forwardRef<HTMLDivElement, introSqrProps>(({maxSize = '360', minSize = '140', startVisible = false, clampVW = '40', opacity = 1, children, className}, ref) => {
 
 return (
-    <div className={`square introSquare absolute -rotate-45 ${className}`} style={{    
+    <div ref={ref} className={`square introSquare absolute -rotate-45 ${className}`} style={{    
         width: `clamp(${minSize}px, ${clampVW}vw, ${maxSize}px)`, 
         height: `clamp(${minSize}px, ${clampVW}vw, ${maxSize}px)`,
         opacity: opacity,
@@ -25,4 +25,7 @@ return (
         {children}
     </div>
 )}
+)
 
+
+IntroSquare.displayName = 'IntroSquare'
