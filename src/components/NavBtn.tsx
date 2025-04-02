@@ -11,9 +11,11 @@ type btnProps = {
     showGlobPop?: (bool: boolean) => void;
     routerLink?: string
     containerClasses?: string;
+    navText?: string;
+    backButton?: boolean
 };
 
-export const NavBtn = ({routerLink, pageNum, setPage, direction = 'left', showGlobPop, containerClasses }: btnProps) => {
+export const NavBtn = ({routerLink, pageNum, setPage, direction = 'left', showGlobPop, containerClasses, navText, backButton=false }: btnProps) => {
     const [showPopup, setShowPopup] = useState(false);
     const router = useRouter()
 
@@ -37,13 +39,21 @@ export const NavBtn = ({routerLink, pageNum, setPage, direction = 'left', showGl
         right: 2,
     };
 
+    function routeBack() {
+        router.back()
+    }
+
     return (
         <>
-            {showPopup && pageNum === 1 && <ExitPopup showPopUp={setShowPopup} />}
+            {showPopup && pageNum === 1 && <ExitPopup confirmFunc={routeBack} showPopUp={setShowPopup} />}
             <button
                 onClick={() => {
                     if(showGlobPop) {
                         showGlobPop(false)
+                    }
+                    if(backButton) {
+                        router.back()
+                        return
                     }
                     if(routerLink) {
                         router.push(routerLink)
@@ -76,7 +86,7 @@ export const NavBtn = ({routerLink, pageNum, setPage, direction = 'left', showGl
                         mr-4 transition-all ease-in-out duration-[400ms] 
                         group-hover:-translate-x-8 dark:text-white text-black
                     ">
-                        PROCEED
+                       {navText ? navText : 'PROCEED'}
                     </span>
                 )}
 
@@ -104,7 +114,7 @@ export const NavBtn = ({routerLink, pageNum, setPage, direction = 'left', showGl
                         transition-all ease-in-out duration-[400ms] 
                         group-hover:translate-x-8
                     ">
-                        BACK
+                        {navText ? navText : 'BACK'}
                     </span>
                 )}
             </button>

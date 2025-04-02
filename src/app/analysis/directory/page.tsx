@@ -4,6 +4,7 @@ import { Header } from '@/components/Header';
 import { IntroSqrAnim } from '@/components/IntroSqrAnim';
 import { IntroSquare } from '@/components/IntroSquare';
 import { NavBtn } from '@/components/NavBtn';
+import { Popup } from '@/components/Popup';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Link from 'next/link';
@@ -39,6 +40,7 @@ const DirectoryPage = () => {
         <IntroSqrAnim onComplete={() => setloading(false)}></IntroSqrAnim> :
         (
         <>
+        <Popup popupMsg={`Choose the skin data you'd like to see.`}></Popup>
             <Header></Header>
         <main>
             <div className="w-full h-full flex justify-center items-center pt-[150px]">
@@ -79,7 +81,7 @@ const DirectoryPage = () => {
             </div>
         </main>
             <footer>
-                <NavBtn direction='left'/>
+                <NavBtn direction='left' backButton/>
             </footer>
         </>
             )}

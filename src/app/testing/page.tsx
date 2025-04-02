@@ -9,7 +9,6 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import FilePopup from "@/components/FilePopup";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Popup } from "@/components/Popup";
 import { PageLoader } from "@/components/PageLoader";
@@ -47,21 +46,19 @@ export default function TestingPage() {
     if (selectedPhoto) {
       await HandleDemoData(selectedPhoto, {
         preProcess: () => {
-          // Reverse animations
           if (animRef.current) {
           animRef.current.forEach((animation) => {
             animation.reverse();
           });
-          // Set loader after a delay
           setTimeout(() => {
             setpageLoader(true);
           }, 1700);
         }
         },
         postProcess: () => {
-          router.push('/analysis/demographics')
+          router.push('/analysis/directory')
         },
-        onError: (error) => {
+        onError: () => {
           setPopup(true);
         },});
     }
@@ -88,7 +85,7 @@ export default function TestingPage() {
           <Header blackBtn="CONSULT CHEMIST"/>
           <div className="overflow-hidden absolute top-20 left-8 w-fit h-fit">
             <h2 className="font-roobert font-bold text-[clamp(.65rem,1vw,0.75rem)] leading-none textMount2" id="formPageTitle">
-              TO START ANALYSIS
+              TO START ANALYSIS UPLOAD A PHOTO OF YOURSELF.
             </h2>
           </div>
           <main className="relative flex md:flex-row flex-col justify-between md:justify-center items-center pb-6 pt-24 md:p-[2rem]">
@@ -108,49 +105,4 @@ export default function TestingPage() {
   );
 }
 
-// async function getPhotoData(selectedPhoto: File | null) {
-//   if (selectedPhoto) {
-//     animRef.current?.forEach((animation) =>  {
-//       animation.reverse()
-//     })
-//     setTimeout(() => {
-//       setpageLoader(true)
-//     }, 1700);
-  
-    
-//     const reader = new FileReader();
-    
-//     reader.onloadend = async () => {
-//       const base64Image = reader.result?.toString().split(',')[1];  
-
-//       if (base64Image) {
-       
-//         try {
-//           const response = await axios.post(
-//             'https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo',
-//             { image: base64Image },
-//             {
-//               headers: {
-//                 "Content-Type": 'application/json',  
-//               },
-//             }
-//           );
-         
-//           console.log(response.data.data);
-//           localStorage.setItem('DemoData', JSON.stringify(response.data.data))
-//           router.push(`/analysis/demographics`)
-          
-//         } catch (error) {
-//           if (axios.isAxiosError(error)) {
-//             console.log('Error Response:', error)
-//             setPopup(true)
-//           } else {
-//             console.log('Unexpected Error:', error);
-//           }
-//         }
-//       }
-//     };
-    
-//     reader.readAsDataURL(selectedPhoto);
-//   }
-// }
+// 

@@ -82,7 +82,7 @@ const WeatherPage = () => {
         </div>
         </main>
         <footer>
-            <NavBtn direction='left' routerLink='/analysis/demographics'></NavBtn>
+            <NavBtn direction='left' backButton={true}></NavBtn>
         </footer>
         </>
     );

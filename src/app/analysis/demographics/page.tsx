@@ -127,7 +127,7 @@ useEffect(() => {
     <>
       <Popup popupMsg="Select the correct categories according to your demographics." />
       {pageLoader ? (
-        <PageLoader loaderText="No skin data available, please revert back to previous page." />
+        <PageLoader>No skin data available, please revert back to previous page.</PageLoader>
       ) : (
         <>
           <Header blackBtn="CONSULT CHEMIST" />
@@ -158,7 +158,7 @@ useEffect(() => {
 
           <footer className="
           relative hidden 900Brk:flex ">
-            <NavBtn direction="left" routerLink="/testing" />
+            <NavBtn direction="left" backButton />
             <div className="flex gap-3">
               <button
                 onClick={() => resetCategories()}

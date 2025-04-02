@@ -9,9 +9,6 @@ import { useTheme } from "next-themes";
 import BetterResultsDisclaimer from "@/components/BetterResultsDisclaimer";
 import cameraIcon from '@/assets/CameraIcon.svg'
 import ActionButton from "@/components/ActionButton";
-// import { blob } from "stream/consumers";
-// import axios from "axios";
-// import { useRouter } from "next/navigation";
 import { HandleDemoData } from "@/utils/HandleDemoData";
 import { useRouter } from "next/navigation";
 
@@ -27,7 +24,7 @@ export default function AiCameraPage() {
   const flashRef = useRef<HTMLDivElement | null>(null);
   const shuttermp3Ref = useRef<HTMLAudioElement | null>(null);
   const beepRef = useRef<HTMLAudioElement | null>(null);
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
   const router = useRouter();
   
   useEffect(() => {
@@ -135,7 +132,7 @@ export default function AiCameraPage() {
             setVideoError('An error occurred while processing the image. Please try again.');
           },
           postProcess: () => {
-          router.push('/analysis/demographics');
+          router.push('/analysis/directory');
           }
       });
     }
