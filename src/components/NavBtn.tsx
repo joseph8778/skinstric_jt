@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import triangle from '../assets/Polygon.svg';
 import Image from 'next/image';
 import { ExitPopup } from './ExitPopup';
@@ -18,6 +18,14 @@ type btnProps = {
 export const NavBtn = ({routerLink, pageNum, setPage, direction = 'left', showGlobPop, containerClasses, navText, backButton=false }: btnProps) => {
     const [showPopup, setShowPopup] = useState(false);
     const router = useRouter()
+    const [isClient, setisClient] = useState(false);
+
+    useEffect(() => {
+        setisClient(true)
+        return () => {
+            
+        };
+    }, []);
 
     const mountAnimation = {
         left: 'buttonMountL',
@@ -51,7 +59,7 @@ export const NavBtn = ({routerLink, pageNum, setPage, direction = 'left', showGl
                     if(showGlobPop) {
                         showGlobPop(false)
                     }
-                    if(backButton) {
+                    if(backButton && isClient) {
                         router.back()
                         return
                     }

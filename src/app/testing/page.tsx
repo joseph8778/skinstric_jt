@@ -45,6 +45,7 @@ export default function TestingPage() {
   const getPhotoData = async (selectedPhoto: File | null) => {
     if (selectedPhoto) {
       await HandleDemoData(selectedPhoto, {
+
         preProcess: () => {
           if (animRef.current) {
           animRef.current.forEach((animation) => {
@@ -53,8 +54,8 @@ export default function TestingPage() {
           setTimeout(() => {
             setpageLoader(true);
           }, 1700);
-        }
-        },
+        }},
+
         postProcess: () => {
           router.push('/analysis/directory')
         },
@@ -65,11 +66,7 @@ export default function TestingPage() {
   };
   
   useEffect(() => {
-    if (selectedPhoto) {
-      getPhotoData(selectedPhoto);
-    }
-    return () => {
-    };
+    if (selectedPhoto) getPhotoData(selectedPhoto);
   }, [selectedPhoto])
   
   if (pageLoader) {
@@ -81,23 +78,23 @@ export default function TestingPage() {
   return (
     <>
       <IntroSqrAnim />
-  {popup && <Popup setShowPopup={setPopup} popupMsg="Error transferring file, please upload again."/>}
-          <Header blackBtn="CONSULT CHEMIST"/>
+      {popup && <Popup setShowPopup={setPopup} popupMsg="Error transferring file, please upload again."/>}
+        <Header blackBtn="CONSULT CHEMIST"/>
           <div className="overflow-hidden absolute top-20 left-8 w-fit h-fit">
             <h2 className="font-roobert font-bold text-[clamp(.65rem,1vw,0.75rem)] leading-none textMount2" id="formPageTitle">
               TO START ANALYSIS UPLOAD A PHOTO OF YOURSELF.
             </h2>
           </div>
-          <main className="relative flex md:flex-row flex-col justify-between md:justify-center items-center pb-6 pt-24 md:p-[2rem]">
-          {galleryPopup && <FilePopup setSelectedPhoto={setSelectedPhoto} setPopup={setGalleryPopup} />}
+            <main className="relative flex md:flex-row flex-col justify-between md:justify-center items-center pb-6 pt-24 md:p-[2rem]">
+            {galleryPopup && <FilePopup setSelectedPhoto={setSelectedPhoto} setPopup={setGalleryPopup} />}
 
-          <ScanBtn setPopup={setGalleryPopup} scanType="Camera" />
-          <ScanBtn setPopup={setGalleryPopup} scanType="Gallery" />
+            <ScanBtn setPopup={setGalleryPopup} scanType="Camera" />
+            <ScanBtn setPopup={setGalleryPopup} scanType="Gallery" />
 
 
 
-          <Image className="absolute hidden md:block -bottom-12" src={selectionIcon} alt="Selection Icon" />
-        </main>
+            <Image className="absolute hidden md:block -bottom-12" src={selectionIcon} alt="Selection Icon" />
+          </main>
         <footer className="relative py-6 flex items-center justify-between">
           <NavBtn direction="left" routerLink="/introduction" />
         </footer>

@@ -46,7 +46,7 @@ export const DemoSelector: React.FC<demoSelectorProps> = ({
               setSelectedDemo(typedKey as keyof typeof setSelectedDemo);
               if (window.innerWidth < 520) {
                 setShowMobileCategories(true);
-                console.log("MobileCAts");
+                console.log("MobileCats");
               }
             }}
             className={`w-full 900Brk:h-[20%] h-[33%] text-black font-roobert font-semibold border-[1px] border-t-black ${

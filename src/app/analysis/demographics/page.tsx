@@ -101,6 +101,29 @@ export default function DemographicsPage() {
     age: sortedData.age.length > 0 ? { key: sortedData.age[0][0], value: sortedData.age[0][1] } : null,
   });
 
+  useEffect(() => {
+    if (demoData) {
+      setSelectedCategories((prev) => ({
+        race:
+          prev.race ||
+          (sortedData.race.length > 0
+            ? { key: sortedData.race[0][0], value: sortedData.race[0][1] }
+            : {key: 'NO DATA' , value: 0}),
+        gender:
+          prev.gender ||
+          (sortedData.gender.length > 0
+            ? { key: sortedData.gender[0][0], value: sortedData.gender[0][1] }
+            : {key: 'NO DATA' , value: 0}),
+        age:
+          prev.age ||
+          (sortedData.age.length > 0
+            ? { key: sortedData.age[0][0], value: sortedData.age[0][1] }
+            : {key: 'NO DATA' , value: 0}),
+      }));
+    }
+  }, [demoData, sortedData]);
+  
+
 
 useEffect(() => {
   if (sortedData[selectedDemo].length > 0 && !selectedCategories[selectedDemo]) {
@@ -112,8 +135,10 @@ useEffect(() => {
       })
     );
   }
-}, [selectedDemo, sortedData]);
-  const currentSelectedCategory = selectedCategories[selectedDemo];
+
+}, [selectedDemo, sortedData, selectedCategories, demoData]);
+
+const currentSelectedCategory = selectedCategories[selectedDemo];
 
   const resetCategories = () => {
     setSelectedCategories({

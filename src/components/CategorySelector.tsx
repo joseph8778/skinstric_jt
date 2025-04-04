@@ -66,7 +66,7 @@ return (
                           </span>
                           <span>{key.toUpperCase()}</span>
                         </div>
-                        <span className="font-roobert text-[14px]">{value.toFixed(2)}</span>
+                        <span className="font-roobert text-[14px]">{Math.round(value * 100).toFixed(0)}%</span>
                       </button>
                       
                     ))

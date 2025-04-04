@@ -6,8 +6,7 @@ import { IntroSquare } from "@/components/IntroSquare";
 import { NavBtn } from "@/components/NavBtn";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 export default function Home() {
   const tlLeft = useRef<gsap.core.Timeline>(null)
   const tlRight = useRef<gsap.core.Timeline>(null)
@@ -18,7 +17,8 @@ export default function Home() {
   const rightSquares = useRef<HTMLDivElement[]>([])
   const headerRef = useRef<HTMLHeadingElement[]>([])
   const [loading, setloading] = useState(true);
-  const router = useRouter()
+
+  
   useGSAP(() => {
     if (loading === true) return
     const ctx = gsap.context(() => {
@@ -26,11 +26,10 @@ export default function Home() {
       .fromTo(
         ".textMount",
         { clipPath: "inset(0% 50% 0% 50%)" },
-        { clipPath: "inset(0% 0% 0% 0%)", duration: .5, })
-        .to('.textMount',{ clipPath: "", duration: 0.01, });
-
-      gsap.from(".buttonMountL", { x: "25%", opacity: 0, duration: 1, });
-      gsap.from(".buttonMountR", { x: "-25%", opacity: 0, duration: 1, });
+        { clipPath: "inset(0% 0% 0% 0%)", duration: .5, }, .1)
+        .to('.textMount',{ clipPath: "", duration: 0.01, })
+        .from(".buttonMountL", { x: "25%", opacity: 0, duration: 1, }, 0)
+        .from(".buttonMountR", { x: "-25%", opacity: 0, duration: 1, }, 0);
 
 
        tlLeft.current = gsap.timeline({paused: true})
@@ -51,21 +50,21 @@ export default function Home() {
   }, [loading])
 
   const handleResize = () => {
-    gsap.killTweensOf("*"); // Stop any running tweens
+    gsap.killTweensOf("*"); 
     if (tlLeft.current) tlLeft.current.invalidate().progress(0).pause();
     if (tlRight.current) tlRight.current.invalidate().progress(0).pause();
   };
   
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
+    if ( !loading) {
+      window.addEventListener("resize", handleResize);
+    }
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [loading]);
   
-  useEffect(() => {
-    tlMount.current?.reverse()
-    return () => {}
-  }, [router]);
-
+ function reverseAnim() {
+   tlMount.current?.reverse()
+ }
 
   
 
@@ -84,6 +83,7 @@ return (
 
        }}
        onMouseLeave={() => {if (tlRight.current) tlRight.current.reverse()}}
+       onClick={() => reverseAnim()}
       >
           <NavBtn 
           navText="TAKE TEST"

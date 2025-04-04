@@ -46,14 +46,14 @@ Header = ({
       
       <button className={`${introClasses[intro]} dark:brightness-[5000]`} >
         <Image src={leftBracket} alt="leftBracket" />
-        <span className="mx-2 text-sm dark:text-white">
+        <span className="mx-2 text-sm dark:text-white textMount">
         {introText}
         </span>
         <Image src={rightBracket} alt="rightBracket" />
       </button>
     </div>
       {blackBtn.length > 0 &&
-      <button className="w-[140px] h-8 bg-black text-white flex items-center justify-center hover:bg-slate-900">
+      <button className="textMount w-[140px] h-8 bg-black text-white flex items-center justify-center hover:bg-slate-900 ">
             <span className="text-[10px] font-roobert font-semibold ">{blackBtn}</span>
       </button>
       }

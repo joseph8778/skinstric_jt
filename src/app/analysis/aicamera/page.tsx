@@ -13,28 +13,28 @@ import { HandleDemoData } from "@/utils/HandleDemoData";
 import { useRouter } from "next/navigation";
 
 export default function AiCameraPage() {
+  const router = useRouter();
+  const [routerLoader, setRouterLoader] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [videoerror, setVideoError] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoBlurRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [videoerror, setVideoError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [routerLoader, setRouterLoader] = useState(false);
   const [timer, setTimer] = useState<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const flashRef = useRef<HTMLDivElement | null>(null);
   const shuttermp3Ref = useRef<HTMLAudioElement | null>(null);
   const beepRef = useRef<HTMLAudioElement | null>(null);
   const { setTheme } = useTheme();
-  const router = useRouter();
-  
+
   useEffect(() => {
     setTheme('system');
-    
+
     const startCamera = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         setLoading(false);
-        
+
         if (videoRef.current && videoBlurRef.current) {
           videoRef.current.srcObject = stream;
           videoBlurRef.current.srcObject = stream;
@@ -79,7 +79,7 @@ export default function AiCameraPage() {
       }, 1000);
     } else if (timer === 0) {
       console.log('Timer finished');
-      shuttermp3Ref.current.currentTime = 0.3; // Reset the audio to the beginning
+      shuttermp3Ref.current.currentTime = 0.3;
       shuttermp3Ref.current?.play();
       setTimeout(() => {
         setTimer(null);
@@ -125,20 +125,19 @@ export default function AiCameraPage() {
 
   const getDemoData = async (selectedPhoto: File | null) => {
     if (selectedPhoto) {
-        await HandleDemoData(selectedPhoto, {
-          setLoader: setRouterLoader,
-          onError: () => {
-            setRouterLoader(false)
-            setVideoError('An error occurred while processing the image. Please try again.');
-          },
-          postProcess: () => {
+      await HandleDemoData(selectedPhoto, {
+        setLoader: setRouterLoader,
+        onError: () => {
+          setRouterLoader(false);
+          setVideoError('An error occurred while processing the image. Please try again.');
+        },
+        postProcess: () => {
           router.push('/analysis/directory');
-          }
+        }
       });
     }
   }
 
-  
   return (
     <>
       {loading ? (
@@ -152,8 +151,10 @@ export default function AiCameraPage() {
               }}
               src={shutter}
               alt="shutterPicture"
-              />
-            <span className="text-[16px] font-[600] tracking-wide">SETTING UP CAMERA...</span>
+            />
+            <span className="text-[16px] font-[600] tracking-wide">
+              SETTING UP CAMERA...
+            </span>
             <BetterResultsDisclaimer />
           </div>
         </PageLoader>
@@ -166,7 +167,9 @@ export default function AiCameraPage() {
           </p>
         ) : (
           routerLoader ? (
-            <PageLoader>PREPARING YOUR ANALYSIS</PageLoader>
+            <PageLoader>
+              PREPARING YOUR ANALYSIS
+            </PageLoader>
           ) : (
             <>
               <Header intro="visible" />
@@ -175,21 +178,29 @@ export default function AiCameraPage() {
                   ref={videoBlurRef}
                   autoPlay
                   playsInline
-                  className="absolute top-0 left-0 w-full h-full object-cover blur-sm "
-                  ></video>
+                  className="absolute top-0 left-0 w-full h-full object-cover blur-sm"
+                ></video>
                 <video
                   ref={videoRef}
                   autoPlay
                   playsInline
                   className="absolute top-0 left-0 w-full h-full object-cover [mask-image:radial-gradient(ellipse_25%_70%,#000_65%,transparent_75%)] z-0"
-                  />
-                <ActionButton onClick={() => { if (timer === null) triggerTimer(); }} icon={cameraIcon} />
+                />
+                <ActionButton
+                  onClick={() => { if (timer === null) triggerTimer(); }}
+                  icon={cameraIcon}
+                />
                 {timer !== null && timer > 0 && (
                   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold z-10">
                     {timer}
                   </div>
                 )}
-                {timer === 0 && <div ref={flashRef} className="absolute top-0 left-0 w-screen h-screen bg-white opacity-75 z-[121]" />}
+                {timer === 0 && (
+                  <div
+                    ref={flashRef}
+                    className="absolute top-0 left-0 w-screen h-screen bg-white opacity-75 z-[121]"
+                  />
+                )}
                 <canvas ref={canvasRef} className="hidden" />
                 <div className="flex justify-center">
                   <BetterResultsDisclaimer parentProps="static bottom-[62px]" />
@@ -205,40 +216,3 @@ export default function AiCameraPage() {
     </>
   );
 }
-
-// async function getDemoData(selectedPhoto: File | null) {
-//   if (selectedPhoto) {
-//     const reader = new FileReader();
-//     reader.onloadend = async () => {
-//       const base64Image = reader.result?.toString().split(',')[1];
-
-//       if (base64Image) {
-//         try {
-//           setRouterLoader(true);
-//           const response = await axios.post(
-//             'https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo',
-//             { image: base64Image },
-//             {
-//               headers: {
-//                 "Content-Type": 'application/json',
-//               },
-//             }
-//           );
-
-//           localStorage.setItem('DemoData', JSON.stringify(response.data.data));
-//           router.push(`/analysis/demographics`);
-//         } catch (error) {
-//           if (axios.isAxiosError(error)) {
-//             console.log('Error Response:', error);
-//             setRouterLoader(false);
-//             setVideoError('An error occurred while processing the image. Please try again.');
-//           } else {
-//             console.log('Unexpected Error:', error);
-//           }
-//         }
-//       }
-//     };
-
-//     reader.readAsDataURL(selectedPhoto);
-//   }
-// }

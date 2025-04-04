@@ -52,6 +52,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-{/* <div className="bg-white dark:bg-[#0d1117] text-black dark:text-white min-h-screen flex flex-col justify-between"> */}
-{/* </div> */}

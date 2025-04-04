@@ -90,9 +90,9 @@ export const DefaultInput: Story = {
     setShowMobileCategories: (value: boolean | ((prevState: boolean) => boolean)) => {
       console.log(`Show mobile categories: ${value}`);
     },
-    showMobileCategories: false, // Initially set to false
-    selectedDemo: 'race', // Initially set to 'race'
-    currentSelectedCategory: { key: 'Asian', value: 50 }, // Default selected category
+    showMobileCategories: false, 
+    selectedDemo: 'race', 
+    currentSelectedCategory: { key: 'Asian', value: 50 }, 
     setSelectedCategories: (update) => {
       if (typeof update === "function") {
         console.log("Updated selected categories:", update({
