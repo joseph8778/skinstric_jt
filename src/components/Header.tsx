@@ -2,6 +2,13 @@ import rightBracket from '../assets/rightBracket.svg';
 import leftBracket from '../assets/leftBracket.svg';
 import Image from "next/image";
 import Link from 'next/link';
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs'
 
 type NavProps = {
   onClick?: () => void;
@@ -52,11 +59,24 @@ Header = ({
         <Image src={rightBracket} alt="rightBracket" />
       </button>
     </div>
-      {blackBtn.length > 0 &&
+    <div className="flex gap-3 items-center content-around">
+
+      <SignedOut>
+              <SignInButton >
       <button className="textMount w-[140px] h-8 bg-black text-white flex items-center justify-center hover:bg-slate-900 ">
-            <span className="text-[10px] font-roobert font-semibold ">{blackBtn}</span>
+            <span className="text-[12px] font-roobert font-semibold ">{blackBtn || 'SIGN IN'}</span>
       </button>
-      }
+              </SignInButton>
+              <SignUpButton >
+          <button className="textMount w-[140px] h-8 bg-black text-white flex items-center justify-center hover:bg-slate-900 ">
+                <span className="text-[12px] font-roobert font-semibold ">{blackBtn || 'SIGN UP'}</span>
+          </button>
+              </SignUpButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+        </SignedIn>
+      </div>
   </div>
   );
 };

@@ -72,7 +72,7 @@ return (
   <>
   {loading ? <IntroSqrAnim onComplete={() => setloading(false)}/> :
   <>
-  <Header blackBtn="ENTER CODE"
+  <Header
   intro="visible"/>
     <main className="flex justify-center items-center min-h-[500px]">
       <div className="w-full flex justify-center items-center relative">
