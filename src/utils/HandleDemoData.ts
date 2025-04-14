@@ -28,7 +28,7 @@ export async function HandleDemoData(
         if (config.setLoader) config.setLoader(true);
         
         const response = await axios.post(
-          'https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo',
+          'https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo',
           { image: base64Image },
           {
             headers: {

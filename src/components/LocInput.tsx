@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-
+import { syncUser } from '../utils/syncUser'
+import { useUser } from '@clerk/nextjs';
 type inputProps = {
   focusText: string,
   topText: string,
@@ -12,6 +13,7 @@ type inputProps = {
   setShowPopup: (bool: boolean, popType: string) => void,
 }
 
+
 export const LocInput = ({
   value = '',
   sendData,
@@ -23,6 +25,7 @@ export const LocInput = ({
   topText = 'CLICK TO TYPE',
 }: inputProps) => {
   const [isFocused, setIsFocused] = useState(false);
+  const { user } = useUser();
 
 
   useEffect(() => {
@@ -47,8 +50,13 @@ export const LocInput = ({
         localStorage.setItem('latitude', lat.toString());
         localStorage.setItem('longitude', lng.toString());
         localStorage.setItem('Location_Name', place.formatted_address.toString());
+        
           setInput(place.formatted_address);
-          sendData(place.formatted_address)}
+          sendData(place.formatted_address)
+        if (user) {
+          syncUser(user)
+        }
+        }
         } else {
           console.log('Select place from dropdown')
           setShowPopup(true, 'location_error')

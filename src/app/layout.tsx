@@ -4,6 +4,7 @@ import "./globals.css";
 import Script from "next/script";
 import { ThemeProvider } from "next-themes";
 import { ClerkProvider } from '@clerk/nextjs'
+import { SyncClerkUser } from "@/components/SyncClerkUser";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,6 +51,7 @@ export default function RootLayout({
         >
          
         <ThemeProvider attribute="class" defaultTheme="light" >
+          <SyncClerkUser/>
         {children}
         </ThemeProvider>
       </body>

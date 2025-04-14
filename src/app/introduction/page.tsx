@@ -47,7 +47,7 @@ export default function IntroPage() {
     setShowPopup({visible: true, popupType: 'loading_Data', popupMsg: ''})
     try {
       const response = await axios.post(
-        "https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseOne",
+        "https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseOne",
         { name: nameInput, location: locationParam }
       );
       console.log(response.data);

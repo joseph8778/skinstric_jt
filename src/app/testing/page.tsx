@@ -79,7 +79,7 @@ export default function TestingPage() {
     <>
       <IntroSqrAnim />
       {popup && <Popup setShowPopup={setPopup} popupMsg="Error transferring file, please upload again."/>}
-        <Header blackBtn="CONSULT CHEMIST"/>
+        <Header />
           <div className="overflow-hidden absolute top-20 left-8 w-fit h-fit">
             <h2 className="font-roobert font-bold text-[clamp(.65rem,1vw,0.75rem)] leading-none textMount2" id="formPageTitle">
               TO START ANALYSIS UPLOAD A PHOTO OF YOURSELF.

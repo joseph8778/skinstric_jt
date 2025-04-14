@@ -4,6 +4,8 @@ import { Header } from "@/components/Header";
 import { IntroSqrAnim } from "@/components/IntroSqrAnim";
 import { IntroSquare } from "@/components/IntroSquare";
 import { NavBtn } from "@/components/NavBtn";
+import { Popup } from "@/components/Popup";
+import { useUser } from "@clerk/nextjs";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import {  useEffect, useRef, useState } from "react";
@@ -17,6 +19,9 @@ export default function Home() {
   const rightSquares = useRef<HTMLDivElement[]>([])
   const headerRef = useRef<HTMLHeadingElement[]>([])
   const [loading, setloading] = useState(true);
+  const [userPopup, setUserPopup] = useState(false);
+  const user = useUser();
+
 
   
   useGSAP(() => {
@@ -62,33 +67,38 @@ export default function Home() {
     return () => window.removeEventListener("resize", handleResize);
   }, [loading]);
   
- function reverseAnim() {
-   tlMount.current?.reverse()
+ function leavePage() {
+  if (!user.isSignedIn) {
+    setUserPopup(true)
+    return
+  }
+  tlMount.current?.reverse()
  }
 
-  
 
 return (
   <>
   {loading ? <IntroSqrAnim onComplete={() => setloading(false)}/> :
   <>
+
+
   <Header
   intro="visible"/>
     <main className="flex justify-center items-center min-h-[500px]">
+      {userPopup && <Popup popupMsg="Please sign in to continue" setShowPopup={setUserPopup}/>
+      }
       <div className="w-full flex justify-center items-center relative">
-
       <div ref={rightContainer} className="homeDirectory absolute size-[360px]  flex justify-start items-center right-0 translate-x-[220px] -bottom-1/8 pointer pointer-events-none"
        onMouseEnter={() => {if (tlRight.current) tlRight.current.play()
-        console.log('mouse entered right!')
 
        }}
        onMouseLeave={() => {if (tlRight.current) tlRight.current.reverse()}}
-       onClick={() => reverseAnim()}
+       onClick={() => leavePage()}
       >
           <NavBtn 
           navText="TAKE TEST"
           direction="right" containerClasses="pointer-events-auto h-5"
-          routerLink="/introduction"
+          routerLink="/"
           ></  NavBtn>
           <IntroSquare minSize="360" 
           clampVW="100"
