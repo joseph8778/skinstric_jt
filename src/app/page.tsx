@@ -8,6 +8,7 @@ import { Popup } from "@/components/Popup";
 import { useUser } from "@clerk/nextjs";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useRouter } from "next/navigation";
 import {  useEffect, useRef, useState } from "react";
 export default function Home() {
   const tlLeft = useRef<gsap.core.Timeline>(null)
@@ -20,6 +21,7 @@ export default function Home() {
   const headerRef = useRef<HTMLHeadingElement[]>([])
   const [loading, setloading] = useState(true);
   const [userPopup, setUserPopup] = useState(false);
+  const router = useRouter()
   const user = useUser();
 
 
@@ -73,6 +75,7 @@ export default function Home() {
     return
   }
   tlMount.current?.reverse()
+  router.push('/introduction')
  }
 
 
@@ -98,7 +101,6 @@ return (
           <NavBtn 
           navText="TAKE TEST"
           direction="right" containerClasses="pointer-events-auto h-5"
-          routerLink="/"
           ></  NavBtn>
           <IntroSquare minSize="360" 
           clampVW="100"
