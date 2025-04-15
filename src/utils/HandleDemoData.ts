@@ -12,8 +12,10 @@ interface DemoDataConfig {
 export async function HandleDemoData(
   selectedPhoto: File | null,
   config: DemoDataConfig
-) {
+) 
 
+{
+  
   if (!selectedPhoto) return;
   
   if (config.preProcess) {

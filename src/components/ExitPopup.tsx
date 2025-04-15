@@ -63,7 +63,7 @@ export const ExitPopup = ({
   if (!isVisible) return null;
 
   return (
-    <div ref={popupRef} className={`exit__popup absolute top-[48px] left-[32px] ${parentClassName}`}>
+    <div ref={popupRef} className={`exit__popup absolute top-[48px] left-[32px] ${parentClassName} z-50`}>
       <div className=" h-[104px] flex flex-col shadow-lg relative bg-[#1A1B1C] z-50"
       style={{ width: "clamp(200px, 50vw, 288px)" }}
       >

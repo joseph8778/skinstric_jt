@@ -12,6 +12,8 @@ import { LocInput } from "@/components/LocInput";
 import { IntroSqrAnim } from "@/components/IntroSqrAnim";
 import { Popup } from "@/components/Popup";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
+import { syncUser } from "@/utils/syncUser";
 
 export default function IntroPage() {
   const router = useRouter()
@@ -23,6 +25,7 @@ export default function IntroPage() {
     popupType: '',
     popupMsg: '',
   });
+  const { user } = useUser();
 
   // INTRO ANIMATIONS
   useGSAP(() => {
@@ -33,7 +36,6 @@ export default function IntroPage() {
         { clipPath: "inset(0% 50% 0% 50%)" },
         { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, delay: 5 }
       );
-      
       gsap.from(".textMount2", { y: "100%", duration: 0.2, delay: 5 });
       gsap.from(".buttonMountL", { x: "25%", opacity: 0, duration: 1, delay: 5 });
     })
@@ -53,6 +55,9 @@ export default function IntroPage() {
       console.log(response.data);
       setShowPopup({visible: true, popupType: '', popupMsg: `${nameInput} from ${locationParam.length > 20 ? (locationParam.slice(0, 20) + '...') : (locationParam)} has been added!`})
       localStorage.setItem('username', nameInput.toString());
+      if (user) {
+        syncUser(user)
+      }
       setTimeout(() => router.push('/testing'), 3000);
     }
     catch (error: unknown) {

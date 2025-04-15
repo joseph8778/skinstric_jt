@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { syncUser } from '../utils/syncUser'
-import { useUser } from '@clerk/nextjs';
+
 type inputProps = {
   focusText: string,
   topText: string,
@@ -25,7 +24,6 @@ export const LocInput = ({
   topText = 'CLICK TO TYPE',
 }: inputProps) => {
   const [isFocused, setIsFocused] = useState(false);
-  const { user } = useUser();
 
 
   useEffect(() => {
@@ -53,9 +51,7 @@ export const LocInput = ({
         
           setInput(place.formatted_address);
           sendData(place.formatted_address)
-        if (user) {
-          syncUser(user)
-        }
+        
         }
         } else {
           console.log('Select place from dropdown')

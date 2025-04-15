@@ -14,6 +14,8 @@ import { Popup } from "@/components/Popup";
 import { PageLoader } from "@/components/PageLoader";
 import { NavBtn } from "@/components/NavBtn";
 import { HandleDemoData } from "@/utils/HandleDemoData";
+import { useUser } from "@clerk/nextjs";
+import { syncUser } from "@/utils/syncUser";
 
 
 export default function TestingPage() {
@@ -22,6 +24,7 @@ export default function TestingPage() {
   const [popup, setPopup] = useState(false);
   const [pageLoader, setpageLoader] = useState(false);
   const animRef = useRef<gsap.core.Animation[] | null>(null);
+  const { user } = useUser();
   
   useGSAP(() => {
     const context = gsap.context(() => {
@@ -58,6 +61,9 @@ export default function TestingPage() {
 
         postProcess: () => {
           router.push('/analysis/directory')
+          if (user) {
+            syncUser(user)
+          }
         },
         onError: () => {
           setPopup(true);
