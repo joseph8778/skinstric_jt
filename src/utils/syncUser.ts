@@ -6,7 +6,6 @@ export const syncUser = async (user: UserResource | null) => {
   console.log('syncing user')
   if (!user) return
   
-
   try {
     const preferredName = localStorage.getItem('username') ?? null;
     const formattedAddress = localStorage.getItem('Location_Name') ?? null;

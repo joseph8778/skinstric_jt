@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { syncUser } from './syncUser';
+import { useUser } from '@clerk/nextjs';
 
 interface DemoDataConfig {
   preProcess?: () => void; 
@@ -9,13 +11,13 @@ interface DemoDataConfig {
 
 
 
+
 export async function HandleDemoData(
   selectedPhoto: File | null,
   config: DemoDataConfig
 ) 
 
 {
-  
   if (!selectedPhoto) return;
   
   if (config.preProcess) {
@@ -41,7 +43,7 @@ export async function HandleDemoData(
         
         // console.log('setting localStorage to:', response.data.data);
         localStorage.setItem('DemoData', JSON.stringify(response.data.data));
-        
+
         if (config.postProcess) {
           config.postProcess(response.data.data);
         }

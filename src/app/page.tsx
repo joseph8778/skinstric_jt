@@ -1,12 +1,15 @@
 'use client';
 
+import FullBlkPopup from "@/components/FullBlkPopup";
 import { Header } from "@/components/Header";
 import { IntroSqrAnim } from "@/components/IntroSqrAnim";
 import { IntroSquare } from "@/components/IntroSquare";
 import { NavBtn } from "@/components/NavBtn";
 import { Popup } from "@/components/Popup";
+import { syncUser } from "@/utils/syncUser";
 import { useUser } from "@clerk/nextjs";
 import { useGSAP } from "@gsap/react";
+import axios from "axios";
 import gsap from "gsap";
 import { useRouter } from "next/navigation";
 import {  useEffect, useRef, useState } from "react";
@@ -21,8 +24,11 @@ export default function Home() {
   const headerRef = useRef<HTMLHeadingElement[]>([])
   const [loading, setloading] = useState(true);
   const [userPopup, setUserPopup] = useState(false);
+  const [userDataPopup, setUserDataPopup] = useState(false);
   const router = useRouter()
-  const user = useUser();
+  const {user, isSignedIn, isLoaded} = useUser();
+
+ 
 
 
   
@@ -70,13 +76,56 @@ export default function Home() {
   }, [loading]);
   
  function leavePage() {
-  if (!user.isSignedIn) {
+  if (!isSignedIn) {
     setUserPopup(true)
     return
+  } else if (isSignedIn) {
+    fetchAndSyncUserData();
+    return
   }
-  tlMount.current?.reverse()
-  router.push('/introduction')
+
  }
+
+
+ const fetchAndSyncUserData = async () => {
+   try {
+     const res = await axios.get(`http://localhost:5000/api/user/${user?.id}`);
+     const userData = res.data.user
+    if (
+      (userData &&
+      userData.demoData &&
+      userData.preferredName &&
+      userData.formattedAddress &&
+      userData.latitude !== undefined &&
+      userData.longitude !== undefined)
+    ) {
+      localStorage.setItem('DemoData', userData.demoData);
+      localStorage.setItem('username', userData.preferredName);
+      localStorage.setItem('Location_Name', userData.formattedAddress);
+      localStorage.setItem('latitude', userData.latitude.toString());
+      localStorage.setItem('longitude', userData.longitude.toString());
+    
+      if (isLoaded && isSignedIn && user) {
+        setUserDataPopup(true);
+        syncUser(user);
+      } 
+    } 
+  } catch (error) {
+    if (user) {
+      localStorage.setItem('DemoData', '')
+      localStorage.setItem('username', '');
+      localStorage.setItem('Location_Name', '');
+      localStorage.setItem('latitude', '');
+      localStorage.setItem('longitude', '');
+      if (user) syncUser(user)
+      router.push('/introduction')
+    } else console.error('❌ Error fetching user data:', error);
+  }
+};
+
+
+
+
 
 
 return (
@@ -89,6 +138,28 @@ return (
   intro="visible"/>
     <main className="flex justify-center items-center min-h-[500px]">
       {userPopup && <Popup popupMsg="Please sign in to continue" setShowPopup={setUserPopup}/>
+      }
+      {userDataPopup &&  <FullBlkPopup title='YOUR ACCOUNT CONTAINS DATA, EITHER:' actionButtonText='VIEW' cancelButtonText='UPDATE'
+          onAction={() => {
+            
+            tlMount.current?.reverse().then(() => router.push('/analysis/directory'))
+          }}
+          onCancel={() => {
+            
+            tlMount.current?.reverse().then(() => router.push('/introduction'))
+          }}
+          onComplete={() => {
+            setUserDataPopup(false) 
+          }
+          }
+          
+          checklistItems={[
+            {title: 'Update your data', description: ``},
+            {title: 'OR', description: ` `},
+            {title: 'View your data', description: ``},
+          ]}
+          ></FullBlkPopup>
+
       }
       <div className="w-full flex justify-center items-center relative">
       <div ref={rightContainer} className="homeDirectory absolute size-[360px]  flex justify-start items-center right-0 translate-x-[220px] -bottom-1/8 pointer pointer-events-none"

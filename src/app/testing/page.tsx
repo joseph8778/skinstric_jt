@@ -50,17 +50,14 @@ export default function TestingPage() {
       await HandleDemoData(selectedPhoto, {
 
         preProcess: () => {
-          if (animRef.current) {
-          animRef.current.forEach((animation) => {
-            animation.reverse();
-          });
-          setTimeout(() => {
-            setpageLoader(true);
-          }, 1700);
-        }},
+          },
 
         postProcess: () => {
-          router.push('/analysis/directory')
+          if (animRef.current) {
+            animRef.current.forEach((animation) => {
+              animation.reverse().then(() => router.push('/analysis/directory'))
+            });
+          }
           if (user) {
             syncUser(user)
           }

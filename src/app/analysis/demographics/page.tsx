@@ -17,6 +17,7 @@ export default function DemographicsPage() {
   const rawData = localStorage.getItem('DemoData');
   const [pageLoader, setPageLoader] = useState(false);
   const [showMobileCategories, setShowMobileCategories] = useState(false);
+  const [ShowPopup, setShowPopup] = useState(true);
 
   interface DemoData {
     race: Record<string, number>;
@@ -150,7 +151,7 @@ const currentSelectedCategory = selectedCategories[selectedDemo];
 
   return (
     <>
-      <Popup popupMsg="Select the correct categories according to your demographics." />
+      {ShowPopup && <Popup popupMsg="Select the correct categories according to your demographics." setShowPopup={setShowPopup}/>}
       {pageLoader ? (
         <PageLoader>No skin data available, please revert back to previous page.</PageLoader>
       ) : (
