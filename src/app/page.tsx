@@ -63,9 +63,8 @@ export default function Home() {
   }, [loading])
 
   const handleResize = () => {
-    gsap.killTweensOf("*"); 
-    if (tlLeft.current) tlLeft.current.invalidate().progress(0).pause();
-    if (tlRight.current) tlRight.current.invalidate().progress(0).pause();
+    if (tlLeft.current) tlLeft.current.invalidate().progress(0);
+    if (tlRight.current) tlRight.current.invalidate().progress(0);
   };
   
   useEffect(() => {
@@ -109,7 +108,12 @@ export default function Home() {
         setUserDataPopup(true);
         syncUser(user);
       } 
-    } 
+    }  else if (userData && !userData.demoData) {
+      if (isLoaded && isSignedIn && user) {
+        setUserDataPopup(true);
+        syncUser(user);
+      } 
+    }
   } catch (error) {
     if (user) {
       localStorage.setItem('DemoData', '')
@@ -122,10 +126,6 @@ export default function Home() {
     } else console.error('❌ Error fetching user data:', error);
   }
 };
-
-
-
-
 
 
 return (
@@ -162,7 +162,7 @@ return (
 
       }
       <div className="w-full flex justify-center items-center relative">
-      <div ref={rightContainer} className="homeDirectory absolute size-[360px]  flex justify-start items-center right-0 translate-x-[220px] -bottom-1/8 pointer pointer-events-none"
+      <div ref={rightContainer} className="homeDirectory absolute size-[360px] flex justify-start items-center right-0 translate-x-[285px] 520Brk:translate-x-[220px] -bottom-1/8 pointer pointer-events-none"
        onMouseEnter={() => {if (tlRight.current) tlRight.current.play()
 
        }}
@@ -171,10 +171,10 @@ return (
       >
           <NavBtn 
           navText="TAKE TEST"
-          direction="right" containerClasses="pointer-events-auto h-5"
+          direction="right" containerClasses="pointer-events-auto h-5 "
           ></  NavBtn>
-          <IntroSquare minSize="360" 
-          clampVW="100"
+          <IntroSquare minSize="240" 
+          clampVW="70"
           startVisible={true}
           opacity={1}
           >
@@ -199,15 +199,15 @@ return (
       <h1 ref={(el) => {if (el) headerRef.current.push(el)}} className="textMount lg:hidden  text-[45px] md:text-[85px] text-center text-wrap max-w-[450px] font-light leading-[.9] absolute bottom-[150]">Sophisticated </h1>
       <h1 ref={(el) => {if (el) headerRef.current.push(el)}} className="textMount lg:hidden text-[45px] md:text-[85px] text-center text-wrap max-w-[450px] font-light leading-[.9] absolute top-[150]">Skincare</h1>
 
-      <div ref={leftContainer} className="homeDirectory absolute  flex justify-end items-center left-0 -translate-x-[220px] -bottom-1/8 size-[360px] pointer-events-none"
+      <div ref={leftContainer} className="homeDirectory absolute  flex justify-end items-center left-0 -translate-x-[285px] 520Brk:-translate-x-[220px] -bottom-1/8 size-[360px] pointer-events-none"
       onMouseEnter={() => {if (tlLeft.current) tlLeft.current.play()}}
       onMouseLeave={() => {if (tlLeft.current) tlLeft.current.reverse()}}
       >
           <NavBtn 
           navText="DISCOVER A.I."
-          direction="left" containerClasses="pointer-events-auto h-5 "></  NavBtn>
-          <IntroSquare minSize="360" 
-          clampVW="100"
+          direction="left" containerClasses="pointer-events-auto h-5 translate-x-[30px]"></  NavBtn>
+          <IntroSquare minSize="240" 
+          clampVW="70"
           startVisible={true}
           opacity={1}
           >
