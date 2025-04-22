@@ -108,22 +108,19 @@ export default function Home() {
         setUserDataPopup(true);
         syncUser(user);
       } 
-    }  else if (userData && !userData.demoData) {
-      if (isLoaded && isSignedIn && user) {
-        setUserDataPopup(true);
-        syncUser(user);
+    }  else {
+      if (user) {
+        localStorage.setItem('DemoData', '')
+        localStorage.setItem('username', '');
+        localStorage.setItem('Location_Name', '');
+        localStorage.setItem('latitude', '');
+        localStorage.setItem('longitude', '');
+        syncUser(user)
+        router.push('/introduction')
       } 
     }
   } catch (error) {
-    if (user) {
-      localStorage.setItem('DemoData', '')
-      localStorage.setItem('username', '');
-      localStorage.setItem('Location_Name', '');
-      localStorage.setItem('latitude', '');
-      localStorage.setItem('longitude', '');
-      if (user) syncUser(user)
-      router.push('/introduction')
-    } else console.error('❌ Error fetching user data:', error);
+    console.error('❌ Error fetching user data:', error);
   }
 };
 
