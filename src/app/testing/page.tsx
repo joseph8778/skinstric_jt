@@ -48,14 +48,16 @@ export default function TestingPage() {
   const getPhotoData = async (selectedPhoto: File | null) => {
     if (selectedPhoto) {
       await HandleDemoData(selectedPhoto, {
-
+        
         preProcess: () => {
+          setpageLoader(true)
           },
 
         postProcess: () => {
           if (animRef.current) {
             animRef.current.forEach((animation) => {
               animation.reverse().then(() => router.push('/analysis/directory'))
+              
             });
           }
           if (user) {
@@ -63,6 +65,7 @@ export default function TestingPage() {
           }
         },
         onError: () => {
+          setpageLoader(false)
           setPopup(true);
         },});
     }

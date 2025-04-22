@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { syncUser } from './syncUser';
-import { useUser } from '@clerk/nextjs';
 
 interface DemoDataConfig {
   preProcess?: () => void; 

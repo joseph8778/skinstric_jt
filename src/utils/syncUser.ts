@@ -13,7 +13,7 @@ export const syncUser = async (user: UserResource | null) => {
     const longitude = localStorage.getItem('longitude');
     const demoData = localStorage.getItem('DemoData') ?? null
     
-    const res = await axios.post('https://skinstric-backend.onrender.com//api/user', {
+    const res = await axios.post('https://skinstric-backend.onrender.com/api/user', {
       clerkUserId: user.id,
       email: user.primaryEmailAddress?.emailAddress || '',
       preferredName: preferredName,
