@@ -88,6 +88,7 @@ export default function Home() {
 
 
  const fetchAndSyncUserData = async () => {
+  console.log('fetching user data')
    try {
      const res = await axios.get(`https://skinstric-backend.onrender.com/api/user/${user?.id}`);
      const userData = res.data.user
@@ -121,6 +122,7 @@ export default function Home() {
 };
 
 function clearData(user: UserResource | null | undefined) {
+  console.log('Clearing user data')
   localStorage.setItem('DemoData', '')
   localStorage.setItem('username', '');
   localStorage.setItem('Location_Name', '');
