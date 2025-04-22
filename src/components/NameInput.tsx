@@ -30,6 +30,10 @@ export const NameInput = ({
       if (/[0-9]/.test(value)) {
         setShowPopup(true, 'number_error')
         return
+      } 
+      const trimmedValue = value.trim()
+      if (!/[a-zA-Z]/.test(trimmedValue)) {
+        return;
       }
       if (pageNum === 1 && value.length > 0) {
         setPage(2);
