@@ -93,10 +93,10 @@ export default function Home() {
     if (
       (userData &&
       userData.demoData &&
-      userData.preferredName &&
-      userData.formattedAddress &&
-      userData.latitude !== undefined &&
-      userData.longitude !== undefined)
+      userData.preferredName.length > 0 &&
+      userData.formattedAddress.length > 0 &&
+      userData.latitude !== null &&
+      userData.longitude !== null)
     ) {
       localStorage.setItem('DemoData', userData.demoData);
       localStorage.setItem('username', userData.preferredName);
