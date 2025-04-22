@@ -88,7 +88,7 @@ export default function Home() {
 
  const fetchAndSyncUserData = async () => {
    try {
-     const res = await axios.get(`http://localhost:5000/api/user/${user?.id}`);
+     const res = await axios.get(`https://skinstric-backend.onrender.com//api/user/${user?.id}`);
      const userData = res.data.user
     if (
       (userData &&
