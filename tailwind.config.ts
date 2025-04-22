@@ -8,7 +8,6 @@ export default {
     "./stories/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: 'class',
-  lightMode: 'class',
   theme: {
     extend: {
       screens: {
@@ -16,10 +15,6 @@ export default {
         '900Brk' : '900px',
         '520Brk' : '520px', 
         'smallest' : '420px'
-      },
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
       },
       fontFamily: {
         roobert: ['Roobert TRIAL', 'sans-serif'],

@@ -78,34 +78,33 @@ export default function Home() {
  function leavePage() {
   if (!isSignedIn) {
     setUserPopup(true)
-    return
-  } else if (isSignedIn) {
-    fetchAndSyncUserData();
-    return
-  }
+  return
+  } 
+  router.push('/introduction')
+}
 
- }
+useEffect(() => {
+  
+  async function fetchUserData() {
 
-
- const fetchAndSyncUserData = async () => {
-  console.log('fetching user data')
-   try {
-     const res = await axios.get(`https://skinstric-backend.onrender.com/api/user/${user?.id}`);
-     const userData = res.data.user
-    if (
+    console.log('fetching user data')
+    try {
+      const res = await axios.get(`https://skinstric-backend.onrender.com/api/user/${user?.id}`);
+      const userData = res.data.user
+      if (
       (userData &&
-      userData.demoData &&
-      userData.preferredName.length > 0 &&
-      userData.formattedAddress.length > 0 &&
-      userData.latitude !== null &&
-      userData.longitude !== null)
-    ) {
+        userData.demoData &&
+        userData.preferredName.length > 0 &&
+        userData.formattedAddress.length > 0 &&
+        userData.latitude !== null &&
+        userData.longitude !== null)
+      ) {
       localStorage.setItem('DemoData', userData.demoData);
       localStorage.setItem('username', userData.preferredName);
       localStorage.setItem('Location_Name', userData.formattedAddress);
       localStorage.setItem('latitude', userData.latitude.toString());
       localStorage.setItem('longitude', userData.longitude.toString());
-    
+      
       if (isLoaded && isSignedIn && user) {
         setUserDataPopup(true);
         syncUser(user);
@@ -119,9 +118,13 @@ export default function Home() {
     clearData(user)
     console.error('❌ Error fetching user data:', error);
   }
-};
+}
 
-function clearData(user: UserResource | null | undefined) {
+fetchUserData()
+}, [isLoaded, isSignedIn, user]);
+
+  
+  function clearData(user: UserResource | null | undefined) {
   console.log('Clearing user data')
   localStorage.setItem('DemoData', '')
   localStorage.setItem('username', '');
@@ -129,7 +132,7 @@ function clearData(user: UserResource | null | undefined) {
   localStorage.setItem('latitude', '');
   localStorage.setItem('longitude', '');
   if (user) syncUser(user)
-  router.push('/introduction')
+
 }
 
 return (

@@ -49,7 +49,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}
         >
          
-        <ThemeProvider attribute="class"  defaultTheme="light" >
+        <ThemeProvider attribute="class"  defaultTheme="light" forcedTheme="light" >
         {children}
         </ThemeProvider>
       </body>
