@@ -8,6 +8,7 @@ import { NavBtn } from "@/components/NavBtn";
 import { Popup } from "@/components/Popup";
 import { syncUser } from "@/utils/syncUser";
 import { useUser } from "@clerk/nextjs";
+import { UserResource } from "@clerk/types";
 import { useGSAP } from "@gsap/react";
 import axios from "axios";
 import gsap from "gsap";
@@ -110,20 +111,24 @@ export default function Home() {
       } 
     }  else {
       if (user) {
-        localStorage.setItem('DemoData', '')
-        localStorage.setItem('username', '');
-        localStorage.setItem('Location_Name', '');
-        localStorage.setItem('latitude', '');
-        localStorage.setItem('longitude', '');
-        syncUser(user)
-        router.push('/introduction')
+        clearData(user)
       } 
     }
   } catch (error) {
+    clearData(user)
     console.error('❌ Error fetching user data:', error);
   }
 };
 
+function clearData(user: UserResource | null | undefined) {
+  localStorage.setItem('DemoData', '')
+  localStorage.setItem('username', '');
+  localStorage.setItem('Location_Name', '');
+  localStorage.setItem('latitude', '');
+  localStorage.setItem('longitude', '');
+  if (user) syncUser(user)
+  router.push('/introduction')
+}
 
 return (
   <>
