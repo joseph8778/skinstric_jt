@@ -14,20 +14,20 @@ import { produce } from "immer";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 export default function DemographicsPage() {
-  const rawData = localStorage.getItem('DemoData');
   const [pageLoader, setPageLoader] = useState(false);
   const [showMobileCategories, setShowMobileCategories] = useState(false);
   const [ShowPopup, setShowPopup] = useState(true);
-
+  
   interface DemoData {
     race: Record<string, number>;
     gender: Record<string, number>;
     age: Record<string, number>;
   }
-
+  
   const [demoData, setDemoData] = useState<DemoData | null>(null);
-
+  
   useEffect(() => {
+    const rawData = localStorage?.getItem('DemoData');
     try {
       const parsedData = rawData ? JSON.parse(rawData) : null;
       setDemoData(parsedData);
@@ -35,7 +35,7 @@ export default function DemographicsPage() {
       setPageLoader(true);
       console.error("Invalid JSON data:", error);
     }
-  }, [rawData]);
+  }, []);
   
   const animRef = useRef<gsap.core.Animation[] | null>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
