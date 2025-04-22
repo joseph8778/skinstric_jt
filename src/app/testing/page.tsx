@@ -50,13 +50,16 @@ export default function TestingPage() {
       await HandleDemoData(selectedPhoto, {
         
         preProcess: () => {
-          setpageLoader(true)
+         
           },
 
         postProcess: () => {
           if (animRef.current) {
             animRef.current.forEach((animation) => {
-              animation.reverse().then(() => router.push('/analysis/directory'))
+              animation.reverse().then(() => {
+                setpageLoader(true)
+                router.push('/analysis/directory')
+            }).then(() => setpageLoader(false))
               
             });
           }
@@ -65,7 +68,6 @@ export default function TestingPage() {
           }
         },
         onError: () => {
-          setpageLoader(false)
           setPopup(true);
         },});
     }
