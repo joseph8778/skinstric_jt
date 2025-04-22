@@ -6,14 +6,10 @@ import { LargeTitle } from '@/components/LargeTitle';
 import { NavBtn } from '@/components/NavBtn';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const WeatherPage = () => {
-    const latitude = localStorage.getItem('latitude')  // Access latitude
-    const longitude = localStorage.getItem('longitude')  // Access latitude
-    const locationName = localStorage.getItem('Location_Name')  
-
-    
+    let locationName = useRef<string>('')
     useGSAP(() => {
         gsap.fromTo(
             ".textMount",
@@ -23,13 +19,16 @@ const WeatherPage = () => {
     }, [])
     
     useEffect(() => {
+        const latitude = localStorage.getItem('latitude')  
+        const longitude = localStorage.getItem('longitude')  
+         locationName.current = localStorage.getItem('Location_Name') ?? ''
         if (latitude && longitude) {
             console.log(latitude, longitude); 
             console.log(locationName)
         } else {
             console.log('Lat and Lng missing');
         }
-    }, [latitude, longitude]); 
+    }, []); 
     return (
         <>
         <Header/>
@@ -41,7 +40,7 @@ const WeatherPage = () => {
         <div className="flex items-center justify-start gap-2 py-3">
             <i className="fa-solid fa-location-dot text-[20px]"/>
             <h1 className="textMount location__title text-[32px] font-medium tracking-tighter">
-            {locationName}</h1>
+            {locationName.current}</h1>
         </div>
         <div className="dataBox__wrapper flex gap-3 w-full h-[450px]">
             <div className="dataBox__column flex flex-col gap-3  w-[33%] h-full">
