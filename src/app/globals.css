@@ -7,7 +7,12 @@
   --foreground: #171717;
 }
 
-
+@media (prefers-color-scheme: white) {
+  :root {
+    --background: #ededed;
+    --foreground: #171717;
+  }
+}
 
 html, body {
   margin: 0;
