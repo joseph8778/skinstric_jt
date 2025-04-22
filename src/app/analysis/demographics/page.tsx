@@ -31,6 +31,7 @@ export default function DemographicsPage() {
     try {
       const parsedData = rawData ? JSON.parse(rawData) : null;
       setDemoData(parsedData);
+      if (!rawData) setPageLoader(true)
     } catch (error) {
       setPageLoader(true);
       console.error("Invalid JSON data:", error);
