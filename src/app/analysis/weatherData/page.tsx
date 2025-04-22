@@ -9,7 +9,7 @@ import gsap from 'gsap';
 import React, { useEffect, useRef } from 'react';
 
 const WeatherPage = () => {
-    let locationName = useRef<string>('')
+    const locationName = useRef<string>('')
     useGSAP(() => {
         gsap.fromTo(
             ".textMount",
