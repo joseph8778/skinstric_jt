@@ -198,8 +198,8 @@ return (
       </div>
 
       <h1 ref={(el) => {if (el) headerRef.current.push(el)}} className="textMount hidden lg:inline-block md:text-[85px] text-center text-wrap max-w-[450px] font-light leading-[.9] absolute">Sophisticated skincare</h1>
-      <h1 ref={(el) => {if (el) headerRef.current.push(el)}} className="textMount lg:hidden  text-[45px] md:text-[85px] text-center text-wrap max-w-[450px] font-light leading-[.9] absolute bottom-[150]">Sophisticated </h1>
-      <h1 ref={(el) => {if (el) headerRef.current.push(el)}} className="textMount lg:hidden text-[45px] md:text-[85px] text-center text-wrap max-w-[450px] font-light leading-[.9] absolute top-[150]">Skincare</h1>
+      <h1 ref={(el) => {if (el) headerRef.current.push(el)}} className="textMount lg:hidden  text-[45px] md:text-[85px] text-center text-wrap max-w-[450px] font-light leading-[.9] absolute bottom-[150px]">Sophisticated </h1>
+      <h1 ref={(el) => {if (el) headerRef.current.push(el)}} className="textMount lg:hidden text-[45px] md:text-[85px] text-center text-wrap max-w-[450px] font-light leading-[.9] absolute top-[150px]">Skincare</h1>
 
       <div ref={leftContainer} className="homeDirectory absolute  flex justify-end items-center left-0 -translate-x-[285px] 520Brk:-translate-x-[220px] -bottom-1/8 size-[360px] pointer-events-none"
       onMouseEnter={() => {if (tlLeft.current) tlLeft.current.play()}}

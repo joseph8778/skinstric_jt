@@ -87,7 +87,7 @@ export const LocInput = ({
         value={value}
         onFocus={() => setIsFocused(true)}
         onBlur={() => {setIsFocused(false)}}
-        className={`textMount peer ${pageNum === 1 ? "main_input" : "location_input"} placeholder-gray-900 bg-transparent border-b-[1px] border-black outline-none font-roobert font-[400] -tracking-[5] h-20 text-[clamp(1.5rem,13vw,3rem)] text-center`}
+        className={`textMount peer ${pageNum === 1 ? "main_input" : "location_input"} placeholder-gray-900 bg-transparent border-b-[1px] border-black outline-none font-roobert font-[400] -tracking-[5px] h-20 text-[clamp(1.5rem,13vw,3rem)] text-center`}
         />
     </div>
     </>
