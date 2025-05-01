@@ -184,11 +184,21 @@ export default function AiCameraPage() {
                   ref={videoRef}
                   autoPlay
                   playsInline
-                  className="absolute top-0 left-0 w-full h-full object-cover [mask-image:radial-gradient(ellipse_25%_70%,#000_65%,transparent_75%)] z-0"
+                  className="absolute top-0 left-0 w-full h-full object-cover sm:[mask-image:radial-gradient(ellipse_25%_40%,#000_65%,transparent_75%)]
+                  md:[mask-image:radial-gradient(ellipse_20%_45%,#000_65%,transparent_75%)]
+
+                  lg:[mask-image:radial-gradient(ellipse_25%_50%,#000_65%,transparent_75%)]
+                  520Brk:[mask-image:radial-gradient(ellipse_30%_50%,#000_65%,transparent_75%)]
+                  [mask-image:radial-gradient(ellipse_45%_40%,#000_65%,transparent_75%)]
+                  z-0"
                 />
                 <ActionButton
                   onClick={() => { if (timer === null) triggerTimer(); }}
                   icon={cameraIcon}
+
+                  parentClassName="sm:top-1/2 
+                  sm:text-[16px]
+                  -bottom-[24] text-[12px]"
                 />
                 {timer !== null && timer > 0 && (
                   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold z-10">

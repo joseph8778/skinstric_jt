@@ -63,12 +63,12 @@ Header = ({
 
       <SignedOut>
               <SignInButton >
-      <button className="textMount w-[140px] h-8 bg-black text-white flex items-center justify-center hover:bg-slate-900 ">
+      <button className="textMount 520Brk:w-[140px] w-[70px] h-8 bg-black text-white flex items-center justify-center hover:bg-slate-900 ">
             <span className="text-[12px] font-roobert font-semibold ">{blackBtn || 'SIGN IN'}</span>
       </button>
               </SignInButton>
               <SignUpButton >
-          <button className="textMount w-[140px] h-8 bg-black text-white flex items-center justify-center hover:bg-slate-900 ">
+          <button className="textMount 520Brk:w-[140px] w-[70px]  h-8 bg-black text-white flex items-center justify-center hover:bg-slate-900 ">
                 <span className="text-[12px] font-roobert font-semibold ">{blackBtn || 'SIGN UP'}</span>
           </button>
               </SignUpButton>

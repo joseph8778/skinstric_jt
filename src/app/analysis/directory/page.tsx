@@ -59,7 +59,7 @@ const DirectoryPage = () => {
                     <Popup popupMsg={`Choose the skin data you'd like to see.`}></Popup>
                     <Header></Header>
                     <main>
-                        <div className="w-full h-full flex justify-center items-center pt-[150px]">
+                        <div className="w-full h-full flex justify-center items-center pt-[200px] smallest:pt-[150px]">
                             <IntroSquare
                                 maxSize="420"
                                 minSize="200"
@@ -77,7 +77,8 @@ const DirectoryPage = () => {
                             <IntroSquare maxSize="340" minSize="140" startVisible={true} />
 
                             <div
-                                className="directoryDiamond rotate-45 flex flex-wrap gap-1"
+                                className="directoryDiamond rotate-45 grid grid-cols-2 grid-rows-2 gap-1
+                                "
                                 style={{
                                     width: `clamp(70px, 40vw, 260px)`,
                                     height: `clamp(70px, 40vw, 260px)`,
@@ -86,30 +87,30 @@ const DirectoryPage = () => {
                                 <Link
                                     href="/analysis/demographics"
                                     onClick={(e) => handleLinkClick(e, '/analysis/demographics')}
-                                    className="hover:cursor-pointer text-[12px] font-semibold tracking-tighter hover:bg-gray-200 w-[49%] h-[49%] bg-gray-100"
+                                    className="hover:cursor-pointerfont-semibold tracking-tighter hover:bg-gray-200 w-[100%] h-[100%] text-[8px]  520Brk:text-[12px] bg-gray-100 "
                                 >
-                                    <p className="-rotate-45">DEMOGRAPHICS</p>
+                                    <p className="-rotate-45 font-semibold">DEMOGRAPHICS</p>
                                 </Link>
                                 <Link
                                     href="#"
-                                    onClick={(e) => handleLinkClick(e, '#')}
-                                    className="hover:cursor-pointer text-[12px] font-semibold tracking-tighter hover:bg-gray-200 w-[49%] h-[49%] bg-gray-100"
+                                    
+                                    className="hover:cursor-not-allowed font-semibold tracking-tighter hover:bg-gray-200 w-[100%] h-[100%] text-[8px]  520Brk:text-[12px] bg-gray-100"
                                 >
                                     <p className="-rotate-45">SKIN TYPE DATA</p>
                                 </Link>
                                 <Link
                                     href="/analysis/weatherData"
                                     onClick={(e) => handleLinkClick(e, '/analysis/weatherData')}
-                                    className="hover:cursor-pointer text-[12px] font-semibold tracking-tighter hover:bg-gray-200 w-[49%] h-[49%] bg-gray-100"
+                                    className="hover:cursor-not-allowed font-semibold tracking-tighter hover:bg-gray-200 w-[100%] h-[100%] text-[8px]  520Brk:text-[12px] bg-gray-100"
                                 >
                                     <p className="-rotate-45">WEATHER</p>
                                 </Link>
                                 <Link
                                     href="#"
-                                    onClick={(e) => handleLinkClick(e, '#')}
-                                    className="hover:cursor-pointer text-[12px] font-semibold tracking-tighter hover:bg-gray-200 w-[49%] h-[49%] bg-gray-100"
+                                    
+                                    className="hover:cursor-not-allowed font-semibold tracking-tighter hover:bg-gray-200 w-[100%] h-[100%] text-[8px]  520Brk:text-[12px] bg-gray-100"
                                 >
-                                    <p className="-rotate-45">COSMETIC CONCERNS</p>
+                                    <p className="-rotate-45 text-nowrap">COSMETIC CONCERNS</p>
                                 </Link>
                             </div>
                         </div>

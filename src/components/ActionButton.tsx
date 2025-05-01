@@ -5,13 +5,14 @@ type ActionButtonProps = {
     onClick: () => void;
     icon?: string | StaticImageData;
     iconAlt?: string;
+    parentClassName?: string;
 }
 
-export default function ActionButton({ text = 'Take a picture', onClick, icon = '@/assets/CameraIcon.svg', iconAlt = 'Camera Icon' }: ActionButtonProps) {
+export default function ActionButton({ text = 'Take a picture', onClick, icon = '@/assets/CameraIcon.svg', iconAlt = 'Camera Icon', parentClassName }: ActionButtonProps) {
     return (
-        <div className="group absolute
-                top-1/2 right-0 -translate-x-[10%] -translate-y-[50%]
-                flex justify-center items-center gap-5"
+        <div className={`group absolute
+                 right-0 -translate-x-[10%] -translate-y-[50%]
+                flex justify-center items-center gap-5  ${parentClassName}`}
                 onClick={onClick}
                 > 
                     <h1 className="z-10 dark:text-white font-semibold group-hover:-translate-x-[15%] transition-all ease-in-out duration-300">{text.toUpperCase()}</h1>

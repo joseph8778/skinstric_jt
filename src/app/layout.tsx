@@ -46,10 +46,11 @@ export default function RootLayout({
 
       </head>
       <body lang="en"
+      suppressHydrationWarning={true}
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}
         >
          
-        <ThemeProvider attribute="class"  defaultTheme="light" forcedTheme="light" >
+        <ThemeProvider attribute="class"  defaultTheme="light" enableSystem={false}>
         {children}
         </ThemeProvider>
       </body>

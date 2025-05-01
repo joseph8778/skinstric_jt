@@ -63,7 +63,7 @@ export const ScanBtn = ({scanType = 'Camera', setPopup, sqrSize = 170,}:ScanBtnP
             confirmBtn="Allow" denyBtn="Deny" 
             confirmFunc={confirmFunction} 
             confirmText='Opening camera...'
-            parentClassName="left-[100%]"
+            parentClassName="-left-[100%] smallest:left-[50%]"
             />
             
             }

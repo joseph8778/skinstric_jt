@@ -29,6 +29,18 @@ export default function Home() {
   const router = useRouter()
   const {user, isSignedIn, isLoaded} = useUser();
 
+  useEffect(() => {
+    if (isLoaded && isSignedIn && user) {
+      fetchAndSyncUserData()
+    } 
+  }, [isLoaded, isSignedIn, user])
+
+  
+  // useEffect(() => {
+  //   if (isLoaded && isSignedIn && user) {
+  //     fetchAndSyncUserData()
+  //   }
+  // }, [])
  
 
 
@@ -78,27 +90,30 @@ export default function Home() {
  function leavePage() {
   if (!isSignedIn) {
     setUserPopup(true)
-  return
-  } 
-  router.push('/introduction')
-}
+    return
+  } else if (isSignedIn) {
+    router.push('/introduction')
+    return
+  }
 
-useEffect(() => {
-  
-  async function fetchUserData() {
+ }
 
-    console.log('fetching user data')
-    try {
-      const res = await axios.get(`https://skinstric-backend.onrender.com/api/user/${user?.id}`);
-      const userData = res.data.user
-      if (
+
+ const fetchAndSyncUserData = async () => {
+  console.log('fetching user data')
+   try {
+    // http://localhost:5000/api/user/${user?.id}
+     const res = await axios.get(`https://skinstric-backend.onrender.com/api/user/${user?.id}`);
+     const userData = res.data.user
+     console.log('user data: ', userData)
+    if (
       (userData &&
-        userData.demoData &&
-        userData.preferredName.length > 0 &&
-        userData.formattedAddress.length > 0 &&
-        userData.latitude !== null &&
-        userData.longitude !== null)
-      ) {
+      userData.demoData &&
+      userData.preferredName.length > 0 &&
+      userData.formattedAddress.length > 0 &&
+      userData.latitude !== null &&
+      userData.longitude !== null)
+    ) {
       localStorage.setItem('DemoData', userData.demoData);
       localStorage.setItem('username', userData.preferredName);
       localStorage.setItem('Location_Name', userData.formattedAddress);
@@ -109,7 +124,8 @@ useEffect(() => {
         setUserDataPopup(true);
         syncUser(user);
       } 
-    }  else {
+    }  
+    else {
       if (user) {
         clearData(user)
       } 
@@ -118,13 +134,9 @@ useEffect(() => {
     clearData(user)
     console.error('❌ Error fetching user data:', error);
   }
-}
+};
 
-fetchUserData()
-}, [isLoaded, isSignedIn, user]);
-
-  
-  function clearData(user: UserResource | null | undefined) {
+function clearData(user: UserResource | null | undefined) {
   console.log('Clearing user data')
   localStorage.setItem('DemoData', '')
   localStorage.setItem('username', '');
@@ -132,7 +144,6 @@ fetchUserData()
   localStorage.setItem('latitude', '');
   localStorage.setItem('longitude', '');
   if (user) syncUser(user)
-
 }
 
 return (
@@ -142,7 +153,7 @@ return (
 
 
   <Header
-  intro="visible"/>
+  intro="hidden"/>
     <main className="flex justify-center items-center min-h-[500px]">
       {userPopup && <Popup popupMsg="Please sign in to continue" setShowPopup={setUserPopup}/>
       }
@@ -206,13 +217,13 @@ return (
       <h1 ref={(el) => {if (el) headerRef.current.push(el)}} className="textMount lg:hidden  text-[45px] md:text-[85px] text-center text-wrap max-w-[450px] font-light leading-[.9] absolute bottom-[150px]">Sophisticated </h1>
       <h1 ref={(el) => {if (el) headerRef.current.push(el)}} className="textMount lg:hidden text-[45px] md:text-[85px] text-center text-wrap max-w-[450px] font-light leading-[.9] absolute top-[150px]">Skincare</h1>
 
-      <div ref={leftContainer} className="homeDirectory absolute  flex justify-end items-center left-0 -translate-x-[285px] 520Brk:-translate-x-[220px] -bottom-1/8 size-[360px] pointer-events-none"
+      <div ref={leftContainer} className="homeDirectory absolute  flex justify-end items-center left-0 -translate-x-[285px] 520Brk:-translate-x-[220px] -bottom-1/8 size-[360px] pointer-events-none "
       onMouseEnter={() => {if (tlLeft.current) tlLeft.current.play()}}
       onMouseLeave={() => {if (tlLeft.current) tlLeft.current.reverse()}}
       >
           <NavBtn 
           navText="DISCOVER A.I."
-          direction="left" containerClasses="pointer-events-auto h-5 translate-x-[30px]"></  NavBtn>
+          direction="left" containerClasses="pointer-events-auto h-5 translate-x-[30px] hover:cursor-not-allowed"></  NavBtn>
           <IntroSquare minSize="240" 
           clampVW="70"
           startVisible={true}

@@ -185,7 +185,7 @@ const currentSelectedCategory = selectedCategories[selectedDemo];
 
           <footer className="
           relative hidden 900Brk:flex ">
-            <NavBtn direction="left" backButton />
+            <NavBtn direction="left" routerLink="/analysis/directory" />
             <div className="flex gap-3">
               <button
                 onClick={() => resetCategories()}
