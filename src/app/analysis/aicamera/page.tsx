@@ -11,6 +11,7 @@ import cameraIcon from '@/assets/CameraIcon.svg'
 import ActionButton from "@/components/ActionButton";
 import { HandleDemoData } from "@/utils/HandleDemoData";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 
 export default function AiCameraPage() {
   const router = useRouter();
@@ -26,6 +27,7 @@ export default function AiCameraPage() {
   const shuttermp3Ref = useRef<HTMLAudioElement | null>(null);
   const beepRef = useRef<HTMLAudioElement | null>(null);
   const { setTheme } = useTheme();
+  const {user} = useUser()
 
   useEffect(() => {
     setTheme('system');
@@ -127,6 +129,7 @@ export default function AiCameraPage() {
     if (selectedPhoto) {
       await HandleDemoData(selectedPhoto, {
         setLoader: setRouterLoader,
+        user: user,
         onError: () => {
           setRouterLoader(false);
           setVideoError('An error occurred while processing the image. Please try again.');

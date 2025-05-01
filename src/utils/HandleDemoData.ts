@@ -1,12 +1,16 @@
 import axios from 'axios';
+import { syncUser } from './syncUser';
+import { UserResource } from '@clerk/types'
+
+
 
 interface DemoDataConfig {
   preProcess?: () => void; 
   postProcess?: (data: string) => void; 
   onError?: (error: unknown) => void; 
   setLoader?: (loading: boolean) => void; 
+  user?: UserResource | null;
 }
-
 
 
 
@@ -40,7 +44,13 @@ export async function HandleDemoData(
         );
         
         // console.log('setting localStorage to:', response.data.data);
-        localStorage.setItem('DemoData', JSON.stringify(response.data.data));
+        localStorage.setItem('DemoData', JSON.stringify(response.data.data))
+        
+        setTimeout(() => {
+          if (config.user) {
+            syncUser(config.user);
+          }
+        }, 1);
 
         if (config.postProcess) {
           config.postProcess(response.data.data);
